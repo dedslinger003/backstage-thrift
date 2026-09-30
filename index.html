@@ -74,6 +74,14 @@ header{display:flex;align-items:center;justify-content:space-between;padding:10p
 .add{min-height:40px;padding:0 10px;border-radius:8px;background:var(--card2);border:1px solid var(--line);font-size:12px;font-weight:900}
 .add:not(:disabled):active{background:var(--red)}
 .add:disabled{color:#52525b;cursor:not-allowed}
+textarea{min-height:84px;resize:vertical}
+.car{direction:ltr;display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.car::-webkit-scrollbar{display:none}
+.car img{flex:none;width:100%;height:100%;object-fit:cover;scroll-snap-align:center}
+.cn{position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,.75);font-size:11px;font-weight:700;padding:1px 8px;border-radius:99px}
+.sl{position:absolute;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.65);color:#fff;font-size:18px}
+.sl.p{left:6px}.sl.n{right:6px}
+@media(hover:none){.sl{display:none}}
 .empty{text-align:center;padding:50px 10px;border:2px dashed var(--line);border-radius:12px;color:var(--mut)}
 .studio{margin-top:50px;border:2px solid var(--red);border-radius:16px;padding:16px;background:linear-gradient(90deg,#09090b,#0d0d10);box-shadow:4px 4px 0 #000;display:grid;gap:22px}
 @media(min-width:900px){.studio{grid-template-columns:5fr 7fr;padding:32px}}
@@ -144,19 +152,20 @@ footer h4{color:#fff;font-size:22px;margin-bottom:6px}footer a{color:#f472b6}
   <a class="brand" href="#"><div class="logo">☠</div><div><b>BACKSTAGE</b><small>1-OF-1 THRIFT • SKIKDA</small></div></a>
   <div style="display:flex;gap:8px">
     <a class="ic" href="https://www.instagram.com/backstage_thrift.dz" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
+    <button class="ic hide" id="outBtn" onclick="doLogout()" aria-label="تسجيل الخروج" title="تسجيل الخروج" style="border-color:var(--red)">⏻</button>
     <button class="ic" onclick="openAdmin()" aria-label="لوحة التحكم">🛡</button>
   </div>
 </header>
 
 <section class="hero">
-  <span class="chip">⚡ أرشيف الفريب الروكستار • كل قطعة بحبة واحدة (1 of 1)</span>
+  <span class="chip">⚡ أرشيف ملابس الروك الأصلية • كل قطعة متوفرة بنسخة واحدة فقط (1 of 1)</span>
   <h1 class="hd">NO RULES. <em>PURE ROCKSTAR</em> DRIP.</h1>
-  <p>بوتس غربية، جاكيتات جلد ودينيم، فلانيل ثقيل، وتيشيرتات كاستم تتطبع على ذوقك.</p>
+  <p>بوتس ويسترن، جاكيتات جلد ودينيم، قمصان فلانيل ثقيلة، وتيشيرتات كاستم تُطبع حسب ذوقك.</p>
   <div class="gsw">
     <button class="btn b-red" data-g="men" onclick="setGender('men')"><span class="hd">HOMME • رجال</span></button>
     <button class="btn b-dark" data-g="women" onclick="setGender('women')"><span class="hd">FEMME • نساء</span></button>
   </div>
-  <p style="margin-top:16px"><a href="#studio" style="color:var(--gold);font-size:13px">✦ صمّم التيشيرت الخاص بيك ↓</a></p>
+  <p style="margin-top:16px"><a href="#studio" style="color:var(--gold);font-size:13px">✦ صمّم تيشيرتك الخاص ↓</a></p>
 </section>
 
 <div class="bar"><div class="pills" id="pills"></div></div>
@@ -174,13 +183,13 @@ footer h4{color:#fff;font-size:22px;margin-bottom:6px}footer a{color:#f472b6}
       <div class="mock">
         <svg viewBox="0 0 100 100" id="tee"><path d="M30,10 L40,18 Q50,22 60,18 L70,10 L92,26 L82,42 L72,34 L72,92 L28,92 L28,34 L18,42 L8,26 Z"/></svg>
         <img class="art hide" id="art" alt="">
-        <span id="artHint" style="position:absolute;top:44%;font-size:12px;color:var(--mut);border:2px dashed #52525b;padding:8px 12px;border-radius:6px">التصميم يظهر هنا</span>
+        <span id="artHint" style="position:absolute;top:44%;font-size:12px;color:var(--mut);border:2px dashed #52525b;padding:8px 12px;border-radius:6px">سيظهر تصميمك هنا</span>
       </div>
       <p style="font-size:11px;color:var(--mut);text-align:center;margin-top:10px">طباعة DTG عالية الدقة على قطن 100% ثقيل (Vintage Cut)</p>
     </div>
     <div>
-      <h2 class="hd" style="font-size:38px;line-height:1">صمم التيشيرت الخاص بيك</h2>
-      <p style="color:var(--mut);font-size:13px;margin-top:4px">اطبع ألبوم الباند لي تحبو أو أي تصميم على تيشيرت فنتج ثقيل.</p>
+      <h2 class="hd" style="font-size:38px;line-height:1">صمّم تيشيرتك الخاص</h2>
+      <p style="color:var(--mut);font-size:13px;margin-top:4px">اطبع غلاف ألبوم فرقتك المفضلة أو أي تصميم تريده على تيشيرت فينتاج ثقيل.</p>
       <div style="margin-top:10px"><span class="pr" id="teePrice" style="font-size:36px">2,800 دج</span> <small style="color:var(--mut)">(تيشيرت + طباعة A4/A3)</small></div>
       <span class="lbl">1. لون التيشيرت: <span id="colName" style="color:var(--mut)">Vintage Faded Black</span></span>
       <div class="opts" id="cols"></div>
@@ -197,7 +206,7 @@ footer h4{color:#fff;font-size:22px;margin-bottom:6px}footer a{color:#f472b6}
 </main>
 
 <footer class="wrap">
-  <div><h4 class="hd">BACKSTAGE THRIFT</h4><p>أرشيف الفريب الروكستار والغرنج والـ Y2K. كل قطعة فريدة.</p><p style="color:#d4d4d8">سكيكدة • شحن لـ 58 ولاية عبر Guepex</p></div>
+  <div><h4 class="hd">BACKSTAGE THRIFT</h4><p>أرشيف ملابس مستعملة (Thrift) بطابع الروك والغرنج والـ Y2K. كل قطعة فريدة.</p><p style="color:#d4d4d8">سكيكدة • شحن لـ 58 ولاية عبر Guepex</p></div>
   <div><h4 class="hd">الطلبات</h4><p>واتساب: <b style="color:var(--gold)">0697783635</b></p><p><a href="https://www.instagram.com/backstage_thrift.dz" target="_blank" rel="noopener">@backstage_thrift.dz</a></p><p>الدفع عند الاستلام (COD)</p></div>
   <div><h4 class="hd">شحن Guepex</h4><p>سكيكدة: 550 / 450 دج</p><p>الشمال الشرقي: 700 / 550 دج</p><p>الوسط والغرب: 900 / 650 دج</p><p>الجنوب: 950 إلى 1600 دج</p><p style="font-size:11px">(منزل / مكتب)</p></div>
 </footer>
@@ -250,13 +259,13 @@ footer h4{color:#fff;font-size:22px;margin-bottom:6px}footer a{color:#f472b6}
   <div class="sb" id="tp">
     <form onsubmit="addProduct(event)" style="display:grid;gap:10px;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px">
       <b>＋ قطعة جديدة (1 of 1)</b>
-      <input id="nTitle" placeholder="العنوان: Vintage Leather Biker Jacket" required>
+      <div class="f"><label>اسم المنتج *</label><input id="nTitle" placeholder="مثال: Vintage Leather Biker Jacket" required></div>
       <div class="two"><select id="nCat"><option value="boots">Boots</option><option value="jackets">Jackets</option><option value="sneakers">Sneakers</option><option value="jeans">Jeans</option><option value="flannels">Flannels</option><option value="accessories">Accessories</option><option value="tees">Tees</option></select>
       <select id="nGen"><option value="men">رجال</option><option value="women">نساء</option><option value="unisex">Unisex</option></select></div>
       <div class="two"><input id="nSize" placeholder="القياس: L / EU 43" required><input id="nPrice" type="number" inputmode="numeric" min="100" placeholder="السعر دج" required></div>
-      <label class="btn b-dark" style="cursor:pointer">📷 صورة من الهاتف<input type="file" accept="image/*" id="nFile" class="hide" onchange="document.getElementById('nFileName').textContent=this.files[0]?.name||''"></label>
+      <label class="btn b-dark" style="cursor:pointer">📷 صور من الهاتف (حتى 8)<input type="file" accept="image/*" multiple id="nFile" class="hide" onchange="document.getElementById('nFileName').textContent=this.files.length?this.files.length+' صور مختارة':''"></label>
       <span id="nFileName" style="font-size:12px;color:var(--mut)"></span>
-      <input id="nUrl" type="url" placeholder="أو رابط صورة / Google Drive">
+      <textarea id="nUrl" placeholder="أو روابط الصور (رابط في كل سطر) — Google Drive مقبول بشرط: مشاركة «أي شخص لديه الرابط»"></textarea>
       <button class="btn b-red" id="nBtn" type="submit">نشر القطعة</button>
     </form>
     <div id="aList" style="display:grid;gap:8px"></div>
@@ -266,8 +275,9 @@ footer h4{color:#fff;font-size:22px;margin-bottom:6px}footer a{color:#f472b6}
 
   <div class="sb hide" id="ts">
     <div class="f"><label>سعر التيشيرت الكاستم (دج)</label><div style="display:flex;gap:8px"><input id="sTee" type="number" inputmode="numeric"><button class="btn b-gold" onclick="saveTee()">حفظ</button></div></div>
-    <div class="f"><label>🎸 موسيقى الروك — رابط يوتيوب (فيديو، بث مباشر 24/7، أو Playlist)</label><div style="display:flex;gap:8px"><input id="sMusic" type="url" placeholder="https://www.youtube.com/watch?v=..."><button class="btn b-gold" onclick="saveMusic()">حفظ</button></div><p style="font-size:11px;color:var(--mut);margin-top:6px">الرابط يتغير عند كل الزوار مباشرة. اتركه فارغاً لإخفاء المشغل.</p></div>
+    <div class="f"><label>🎸 موسيقى الروك — رابط يوتيوب (فيديو، بث مباشر 24/7، أو Playlist)</label><div style="display:flex;gap:8px"><input id="sMusic" type="url" placeholder="https://www.youtube.com/watch?v=..."><button class="btn b-gold" onclick="saveMusic()">حفظ</button></div><p style="font-size:11px;color:var(--mut);margin-top:6px">يتغير الرابط مباشرة عند جميع الزوار. اتركه فارغاً لإخفاء المشغّل.</p></div>
     <button class="btn b-dark" onclick="seed()">استيراد قطع تجريبية</button>
+    <button class="btn b-red" onclick="doLogout()">⏻ تسجيل الخروج من حساب المالك</button>
   </div>
 </aside>
 
@@ -332,7 +342,7 @@ db.collection('products').orderBy('createdAt', 'desc').onSnapshot(s => {
   loaded = true;
   const before = cart.length;
   cart = cart.filter(i => i.custom || products.some(p => p.id === i.id && !p.sold));
-  if (cart.length !== before) { saveCart(); toast('تمت إزالة قطع بيعت من سلتك'); }
+  if (cart.length !== before) { saveCart(); toast('تمت إزالة القطع المباعة من سلتك'); }
   renderCatalog(); renderCart(); if (isAdmin) renderAdminList();
 }, e => { loaded = true; renderCatalog(); toast('تعذّر تحميل المنتجات: ' + e.code); });
 
@@ -344,7 +354,14 @@ db.doc('settings/main').onSnapshot(d => {
   musicSet(s.musicUrl || '');
 }, () => {});
 
-auth.onAuthStateChanged(u => { isAdmin = !!u; if (u) { watchOrders(); renderAdminList(); } else stopOrders(); });
+let idleT;
+function idleReset() { clearTimeout(idleT); if (isAdmin) idleT = setTimeout(() => { auth.signOut(); closeAll(); toast('تم تسجيل خروجك تلقائياً بعد 20 دقيقة من عدم النشاط'); }, 20 * 60 * 1000); }
+['pointerdown', 'keydown'].forEach(ev => addEventListener(ev, idleReset, { passive: true }));
+auth.onAuthStateChanged(u => {
+  isAdmin = !!u; $('outBtn').classList.toggle('hide', !u);
+  if (u) { watchOrders(); renderAdminList(); idleReset(); }
+  else { stopOrders(); clearTimeout(idleT); $('oList').innerHTML = ''; $('aList').innerHTML = ''; }
+});
 
 /* ============ CATALOG ============ */
 function renderPills() {
@@ -366,18 +383,29 @@ function renderCatalog() {
   $('empty').classList.toggle('hide', !loaded || list.length > 0);
   $('grid').innerHTML = list.map(p => `
     <article class="card ${p.sold ? 'sold' : ''}">
-      <div class="ph"><img loading="lazy" decoding="async" src="${esc(img(p.image))}" alt="${esc(p.title)}" onerror="this.onerror=null;this.src=PH"><span class="tag">★ 1 OF 1</span>${p.sold ? '<div class="so">SOLD OUT<br>بيعت</div>' : ''}</div>
+      <div class="ph">${gallery(p)}<span class="tag">★ 1 OF 1</span>${p.sold ? '<div class="so">SOLD OUT<br>بيعت</div>' : ''}</div>
       <div class="cb"><h3>${esc(p.title)}</h3><span class="sz">${esc(p.size)}</span>
         <div class="row"><b class="pr">${fmt(p.price)}</b><button class="add" ${p.sold ? 'disabled' : ''} onclick="addPiece('${p.id}')">${p.sold ? 'مباعة' : '＋ للسلة'}</button></div></div>
     </article>`).join('');
 }
 
+/* ============ GALLERY ============ */
+const imgsOf = p => (p.images && p.images.length) ? p.images : [p.image];
+function gallery(p) {
+  const im = imgsOf(p);
+  return `<div class="car" onscroll="cnt(this)">${im.map(u => `<img loading="lazy" decoding="async" src="${esc(img(u))}" alt="${esc(p.title)}" onerror="this.onerror=null;this.src=PH">`).join('')}</div>` +
+    (im.length > 1 ? `<span class="cn">1/${im.length}</span><button class="sl p" onclick="slide(this,-1)" aria-label="السابقة">‹</button><button class="sl n" onclick="slide(this,1)" aria-label="التالية">›</button>` : '');
+}
+const cnt = c => { const n = c.parentElement.querySelector('.cn'); if (n) n.textContent = (Math.round(c.scrollLeft / c.clientWidth) + 1) + '/' + c.children.length; };
+const slide = (b, d) => { const c = b.parentElement.querySelector('.car'); c.scrollBy({ left: d * c.clientWidth, behavior: 'smooth' }); };
+function rename(id) { const p = products.find(x => x.id === id); const n = prompt('اسم المنتج:', p ? p.title : ''); if (n && n.trim()) upd(id, { title: n.trim() }); }
+
 /* ============ CART ============ */
 function addPiece(id) {
   const p = products.find(x => x.id === id);
-  if (!p || p.sold) return toast('هذه القطعة بيعت (Sold Out)');
-  if (cart.some(i => i.id === id)) { toast('قطعة فريدة وموجودة في سلتك'); return cartOpen(true); }
-  cart.push({ cartId: 'c_' + id, id, title: p.title, price: p.price, size: p.size, image: img(p.image) });
+  if (!p || p.sold) return toast('بيعت هذه القطعة (Sold Out)');
+  if (cart.some(i => i.id === id)) { toast('هذه القطعة فريدة وهي موجودة بالفعل في سلتك'); return cartOpen(true); }
+  cart.push({ cartId: 'c_' + id, id, title: p.title, price: p.price, size: p.size, image: img(imgsOf(p)[0]) });
   saveCart(); renderCart(); toast('تمت الإضافة ⚡');
 }
 function rmItem(cid) { cart = cart.filter(i => i.cartId !== cid); saveCart(); renderCart(); }
@@ -403,10 +431,10 @@ function closeAll() { document.querySelectorAll('.sheet').forEach(s => s.classLi
 async function sendOrder() {
   if (!cart.length) return toast('السلة فارغة!');
   const name = $('cName').value.trim(), phone = $('cPhone').value.trim(), w = Number($('cWil').value), com = $('cCom').value.trim(), mode = document.querySelector('[name=dm]:checked').value;
-  if (!name || !phone || !w || !com) return toast('املأ كل معلومات التوصيل');
+  if (!name || !phone || !w || !com) return toast('يرجى ملء جميع معلومات التوصيل');
   if (!/^0[567]\d{8}$/.test(phone.replace(/[\s.-]/g, ''))) return toast('رقم الهاتف غير صحيح (مثال: 0697783635)');
   const gone = cart.filter(i => !i.custom && !products.some(p => p.id === i.id && !p.sold));
-  if (gone.length) { cart = cart.filter(i => !gone.includes(i)); saveCart(); renderCart(); return toast('بعض القطع بيعت للتو وأُزيلت من السلة'); }
+  if (gone.length) { cart = cart.filter(i => !gone.includes(i)); saveCart(); renderCart(); return toast('بيعت بعض القطع للتو وتمت إزالتها من السلة'); }
   const btn = $('sendBtn'); btn.disabled = true;
   const sub = cart.reduce((a, i) => a + Number(i.price), 0), sh = ship(w, mode), total = sub + sh;
   try {
@@ -436,8 +464,8 @@ async function pickArt(e) {
 }
 function addTee() {
   cart.push({ cartId: 'tee_' + Date.now(), custom: true, title: `Custom Rock Tee (${studio.color[1]})`, price: teePrice, size: studio.size, color: studio.color[1],
-    note: $('teeNote').value.trim() || 'طباعة أساسية في الصدر', file: studio.file || 'الصورة ترسل عبر واتساب' });
-  saveCart(); renderCart(); cartOpen(true); toast('أضيف التيشيرت المخصص ⚡');
+    note: $('teeNote').value.trim() || 'طباعة أساسية في الصدر', file: studio.file || 'سيتم إرسال الصورة عبر واتساب' });
+  saveCart(); renderCart(); cartOpen(true); toast('تمت إضافة التيشيرت المخصص ⚡');
 }
 
 /* ============ ADMIN ============ */
@@ -454,21 +482,21 @@ function tab(t) {
 }
 function renderAdminList() {
   $('aList').innerHTML = `<small style="color:var(--mut)">${products.length} قطعة مسجلة</small>` + products.map(p => `
-    <div class="ar"><img src="${esc(img(p.image))}" alt="" onerror="this.src=PH">
+    <div class="ar"><img src="${esc(img(imgsOf(p)[0]))}" alt="" onerror="this.src=PH">
       <div class="i"><b>${esc(p.title)}</b><span style="color:#fda4af">${esc(p.size)}</span> • ${esc(p.category)} • ${esc(p.gender)}</div>
       <div class="a"><input type="number" inputmode="numeric" value="${p.price}" onchange="upd('${p.id}',{price:Number(this.value)})" aria-label="السعر">
-        <div style="display:flex;gap:4px"><button class="tg ${p.sold ? 'out' : 'in'}" style="flex:1" onclick="upd('${p.id}',{sold:${!p.sold}})">${p.sold ? 'SOLD' : 'متوفر'}</button><button class="tg" style="border-color:var(--line)" onclick="delProd('${p.id}')" aria-label="حذف">🗑</button></div></div></div>`).join('');
+        <div style="display:flex;gap:4px"><button class="tg ${p.sold ? 'out' : 'in'}" style="flex:1" onclick="upd('${p.id}',{sold:${!p.sold}})">${p.sold ? 'SOLD' : 'متوفر'}</button><button class="tg" style="border-color:var(--line)" onclick="rename('${p.id}')" aria-label="تعديل الاسم">✏</button><button class="tg" style="border-color:var(--line)" onclick="delProd('${p.id}')" aria-label="حذف">🗑</button></div></div></div>`).join('');
 }
 const upd = (id, data) => db.collection('products').doc(id).update(data).then(() => toast('تم التحديث ⚡')).catch(e => toast('خطأ: ' + e.code));
 function delProd(id) { if (confirm('حذف هذه القطعة نهائياً؟')) db.collection('products').doc(id).delete().then(() => toast('تم الحذف')).catch(e => toast('خطأ: ' + e.code)); }
 async function addProduct(e) {
-  e.preventDefault(); const btn = $('nBtn'); btn.disabled = true; btn.textContent = '...جارٍ النشر';
+  e.preventDefault(); const btn = $('nBtn'); btn.disabled = true; btn.textContent = 'جارٍ النشر…';
   try {
-    const f = $('nFile').files[0];
-    const image = f ? await compress(f) : $('nUrl').value.trim();
-    if (!image) throw { code: 'أضف صورة أو رابطاً' };
-    await db.collection('products').add({ title: $('nTitle').value.trim(), category: $('nCat').value, gender: $('nGen').value, size: $('nSize').value.trim(), price: Number($('nPrice').value), image, sold: false, createdAt: Date.now() });
-    e.target.reset(); $('nFileName').textContent = ''; toast('نُشرت القطعة ✔');
+    const files = [...$('nFile').files].slice(0, 8), links = $('nUrl').value.split(/[\s,]+/).map(s => s.trim()).filter(Boolean);
+    const images = [...await Promise.all(files.map(f => compress(f))), ...links].slice(0, 8);
+    if (!images.length) throw { code: 'أضف صورة واحدة على الأقل' }; if (JSON.stringify(images).length > 900000) throw { code: 'الصور كبيرة جداً، قلّل عددها' };
+    await db.collection('products').add({ title: $('nTitle').value.trim(), category: $('nCat').value, gender: $('nGen').value, size: $('nSize').value.trim(), price: Number($('nPrice').value), images, image: images[0], sold: false, createdAt: Date.now() });
+    e.target.reset(); $('nFileName').textContent = ''; toast('تم نشر القطعة ✔');
   } catch (x) { toast('خطأ: ' + (x.code || x.message)); }
   btn.disabled = false; btn.textContent = 'نشر القطعة';
 }
@@ -528,14 +556,14 @@ function buildPlayer(src) {
   yt = new YT.Player('yt', { height: '200', width: '200', videoId: src.list ? undefined : src.v, playerVars: pv, events: {
     onReady: () => { ytReady = true; yt.setVolume(40); if (src.list) yt.setLoop(true); if (armed && !userPaused) yt.playVideo(); },
     onStateChange: e => { playing = e.data === 1; $('mp').classList.toggle('play', playing); $('mpPlay').textContent = playing ? '⏸' : '▶'; if (e.data === 0 && !src.list) yt.playVideo(); },
-    onError: () => toast('هذا الفيديو لا يسمح بالتضمين — جرّب رابطاً آخر')
+    onError: () => toast('هذا الفيديو لا يسمح بالتضمين، جرّب رابطاً آخر')
   } });
 }
 /* Browsers block sound until a tap: start on the visitor's first interaction */
 function arm() { if (armed) return; armed = true; if (ytReady && !userPaused) yt.playVideo(); }
 ['pointerdown', 'keydown', 'touchend'].forEach(ev => addEventListener(ev, arm, { once: true, passive: true }));
 function musicToggle() {
-  if (!ytReady) return toast('...المشغل قيد التحميل');
+  if (!ytReady) return toast('المشغّل قيد التحميل…');
   if (playing) { yt.pauseVideo(); userPaused = true; } else { yt.playVideo(); userPaused = false; }
   localStorage.setItem('bt_music_off', userPaused ? '1' : '0');
 }

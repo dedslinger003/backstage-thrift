@@ -444,7 +444,7 @@ async function sendOrder() {
       items: cart.map(i => ({ title: i.title, size: i.size, price: i.price, custom: !!i.custom, note: i.note || '' })) });
     await b.commit();
   } catch (e) { console.warn('order save failed', e); }
-  const lines = cart.map((i, n) => `${n + 1}. *${i.title}*\n   - القياس: ${i.size} | ${fmt(i.price)}` + (i.custom ? `\n   - اللون: ${i.color}\n   - الملف: ${i.file}\n   - ملاحظات: ${i.note}` : '')).join('\n\n');
+  const lines = cart.map((i, n) => `${n + 1}) 🏷 *اسم المنتج: ${i.title}*\n   📏 القياس: ${i.size}\n   💵 السعر: ${fmt(i.price)}` + (i.custom ? `\n   🎨 اللون: ${i.color}\n   🖼 الملف: ${i.file}\n   📝 ملاحظات: ${i.note}` : `\n   🔖 المرجع: ${String(i.id).slice(-5).toUpperCase()}`)).join('\n\n');
   const msg = `⚡ *COMMANDE - BACKSTAGE THRIFT* ⚡\n-------------------\n👤 ${name}\n📞 ${phone}\n📍 ${wname(w)} - ${com}\n🚚 ${mode === 'home' ? 'توصيل للمنزل' : 'Stop-Desk Guepex'}\n\n📦 *الطلبية:*\n${lines}\n\n-------------------\n💰 السلع: ${fmt(sub)}\n🚚 التوصيل: ${fmt(sh)}\n★ *المجموع عند الاستلام: ${fmt(total)}*`;
   cart = []; saveCart(); renderCart(); closeAll(); btn.disabled = false;
   location.href = 'https://wa.me/213697783635?text=' + encodeURIComponent(msg);

@@ -445,9 +445,12 @@ async function sendOrder() {
     await b.commit();
   } catch (e) { console.warn('order save failed', e); }
   const catOf = i => i.custom ? 'Custom Tee' : ((CATS.find(c => c[0] === (i.cat || (products.find(p => p.id === i.id) || {}).category)) || [])[1] || '');
-  const lines = cart.map(i => ['🏷 *اسم المنتج:* ' + i.title, '🗂 *التصنيف:* ' + catOf(i), '📏 *القياس:* ' + i.size, '💵 *السعر:* ' + fmt(i.price)]
+  const clean = t => String(t || '').replace(/[*_~`>\n\r]+/g, ' ').trim();
+  const nm = i => clean(i.title) || catOf(i) || 'منتج';
+  const names = cart.map(i => '▪️ ' + nm(i)).join('\n');
+  const lines = cart.map(i => ['🏷 *اسم المنتج:* ' + nm(i), '🗂 *التصنيف:* ' + catOf(i), '📏 *القياس:* ' + i.size, '💵 *السعر:* ' + fmt(i.price)]
     .concat(i.custom ? ['🎨 *اللون:* ' + i.color, '🖼 *الملف:* ' + i.file, '📝 *ملاحظات:* ' + i.note] : ['🔖 *المرجع:* ' + String(i.id).slice(-5).toUpperCase()]).join('\n')).join('\n\n▫️▫️▫️▫️▫️\n\n');
-  const msg = `⚡ *COMMANDE - BACKSTAGE THRIFT* ⚡\n-------------------\n👤 ${name}\n📞 ${phone}\n📍 ${wname(w)} - ${com}\n🚚 ${mode === 'home' ? 'توصيل للمنزل' : 'Stop-Desk Guepex'}\n\n📦 *الطلبية (${cart.length}):*\n\n${lines}\n\n-------------------\n💰 السلع: ${fmt(sub)}\n🚚 التوصيل: ${fmt(sh)}\n★ *المجموع عند الاستلام: ${fmt(total)}*`;
+  const msg = `⚡ *COMMANDE - BACKSTAGE THRIFT* ⚡\n-------------------\n👤 ${name}\n📞 ${phone}\n📍 ${wname(w)} - ${com}\n🚚 ${mode === 'home' ? 'توصيل للمنزل' : 'Stop-Desk Guepex'}\n\n📦 *الطلبية (${cart.length}):*\n${names}\n\n📋 *التفاصيل:*\n\n${lines}\n\n-------------------\n💰 السلع: ${fmt(sub)}\n🚚 التوصيل: ${fmt(sh)}\n★ *المجموع عند الاستلام: ${fmt(total)}*`;
   cart = []; saveCart(); renderCart(); closeAll(); btn.disabled = false;
   location.href = 'https://wa.me/213697783635?text=' + encodeURIComponent(msg);
 }

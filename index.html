@@ -436,21 +436,22 @@ async function sendOrder() {
   const gone = cart.filter(i => !i.custom && !products.some(p => p.id === i.id && !p.sold));
   if (gone.length) { cart = cart.filter(i => !gone.includes(i)); saveCart(); renderCart(); return toast('بيعت بعض القطع للتو وتمت إزالتها من السلة'); }
   const btn = $('sendBtn'); btn.disabled = true;
-  const sub = cart.reduce((a, i) => a + Number(i.price), 0), sh = ship(w, mode), total = sub + sh;
+  const orderItems = [...cart];
+  const sub = orderItems.reduce((a, i) => a + Number(i.price), 0), sh = ship(w, mode), total = sub + sh;
   try {
     const b = db.batch();
-    cart.filter(i => !i.custom).forEach(i => b.update(db.collection('products').doc(i.id), { sold: true }));
+    orderItems.filter(i => !i.custom).forEach(i => b.update(db.collection('products').doc(i.id), { sold: true }));
     b.set(db.collection('orders').doc(), { name, phone, wilaya: wname(w), commune: com, mode, subtotal: sub, shipping: sh, total, status: 'new', createdAt: Date.now(),
-      items: cart.map(i => ({ title: i.title, size: i.size, price: i.price, custom: !!i.custom, note: i.note || '' })) });
+      items: orderItems.map(i => ({ title: i.title, size: i.size, price: i.price, custom: !!i.custom, note: i.note || '' })) });
     await b.commit();
   } catch (e) { console.warn('order save failed', e); }
   const catOf = i => i.custom ? 'Custom Tee' : ((CATS.find(c => c[0] === (i.cat || (products.find(p => p.id === i.id) || {}).category)) || [])[1] || '');
   const clean = t => String(t || '').replace(/[*_~`>\n\r]+/g, ' ').trim();
   const nm = i => clean(i.title) || catOf(i) || 'منتج';
-  const names = cart.map(i => '▪️ ' + nm(i)).join('\n');
-  const lines = cart.map(i => ['🏷 *اسم المنتج:* ' + nm(i), '🗂 *التصنيف:* ' + catOf(i), '📏 *القياس:* ' + i.size, '💵 *السعر:* ' + fmt(i.price)]
+  const names = orderItems.map(i => '▪️ ' + nm(i)).join('\n');
+  const lines = orderItems.map(i => ['🏷 *اسم المنتج:* ' + nm(i), '🗂 *التصنيف:* ' + catOf(i), '📏 *القياس:* ' + i.size, '💵 *السعر:* ' + fmt(i.price)]
     .concat(i.custom ? ['🎨 *اللون:* ' + i.color, '🖼 *الملف:* ' + i.file, '📝 *ملاحظات:* ' + i.note] : ['🔖 *المرجع:* ' + String(i.id).slice(-5).toUpperCase()]).join('\n')).join('\n\n▫️▫️▫️▫️▫️\n\n');
-  const msg = `⚡ *COMMANDE - BACKSTAGE THRIFT* ⚡\n-------------------\n👤 ${name}\n📞 ${phone}\n📍 ${wname(w)} - ${com}\n🚚 ${mode === 'home' ? 'توصيل للمنزل' : 'Stop-Desk Guepex'}\n\n📦 *الطلبية (${cart.length}):*\n${names}\n\n📋 *التفاصيل:*\n\n${lines}\n\n-------------------\n💰 السلع: ${fmt(sub)}\n🚚 التوصيل: ${fmt(sh)}\n★ *المجموع عند الاستلام: ${fmt(total)}*`;
+  const msg = `⚡ *COMMANDE - BACKSTAGE THRIFT* ⚡\n-------------------\n👤 ${name}\n📞 ${phone}\n📍 ${wname(w)} - ${com}\n🚚 ${mode === 'home' ? 'توصيل للمنزل' : 'Stop-Desk Guepex'}\n\n📦 *الطلبية (${orderItems.length}):*\n${names}\n\n📋 *التفاصيل:*\n\n${lines}\n\n-------------------\n💰 السلع: ${fmt(sub)}\n🚚 التوصيل: ${fmt(sh)}\n★ *المجموع عند الاستلام: ${fmt(total)}*`;
   cart = []; saveCart(); renderCart(); closeAll(); btn.disabled = false;
   location.href = 'https://wa.me/213697783635?text=' + encodeURIComponent(msg);
 }
@@ -459,13 +460,13 @@ async function sendOrder() {
 function renderStudio() {
   $('cols').innerHTML = COLORS.map(([h, n], i) => `<button class="sw ${studio.color[0] === h ? 'on' : ''}" style="background:${h}" onclick="pickColor(${i})" aria-label="${n}"></button>`).join('');
   $('szs').innerHTML = SIZES.map(s => `<button class="sq ${studio.size === s ? 'on' : ''}" onclick="studio.size='${s}';renderStudio()">${s}</button>`).join('');
-  $('tee').style.fill = studio.color[0]; $('colName').textContent = studio.color[1];
+  $('tee').style.fill = studio.color[0];$('colName').textContent = studio.color[1];
 }
 function pickColor(i) { studio.color = COLORS[i]; renderStudio(); }
 async function pickArt(e) {
   const f = e.target.files[0]; if (!f) return;
   studio.file = f.name; $('artName').textContent = f.name;
-  try { $('art').src = await compress(f, 600, .8); $('art').classList.remove('hide'); $('artHint').classList.add('hide'); } catch (x) { toast('تعذّر قراءة الصورة'); }
+  try { $('art').src = await compress(f, 600, .8); $('art').classList.remove('hide');$('artHint').classList.add('hide'); } catch (x) { toast('تعذّر قراءة الصورة'); }
 }
 function addTee() {
   cart.push({ cartId: 'tee_' + Date.now(), custom: true, title: `Custom Rock Tee (${studio.color[1]})`, price: teePrice, size: studio.size, color: studio.color[1],
@@ -474,10 +475,10 @@ function addTee() {
 }
 
 /* ============ ADMIN ============ */
-function openAdmin() { closeAll(); const id = isAdmin ? 'admin' : 'login'; $(id).classList.add('on'); $('ov').classList.add('on'); document.body.style.overflow = 'hidden'; if (isAdmin) renderAdminList(); }
+function openAdmin() { closeAll(); const id = isAdmin ? 'admin' : 'login'; $(id).classList.add('on');$('ov').classList.add('on'); document.body.style.overflow = 'hidden'; if (isAdmin) renderAdminList(); }
 async function doLogin(e) {
   e.preventDefault(); $('lErr').textContent = '';
-  try { await auth.signInWithEmailAndPassword($('lMail').value.trim(), $('lPass').value); $('lPass').value = ''; openAdmin(); }
+  try { await auth.signInWithEmailAndPassword($('lMail').value.trim(), $('lPass').value);$('lPass').value = ''; openAdmin(); }
   catch (x) { $('lErr').textContent = 'بيانات الدخول غير صحيحة'; }
 }
 async function doLogout() { await auth.signOut(); closeAll(); toast('تم تسجيل الخروج'); }
@@ -497,10 +498,10 @@ function delProd(id) { if (confirm('حذف هذه القطعة نهائياً؟'
 async function addProduct(e) {
   e.preventDefault(); const btn = $('nBtn'); btn.disabled = true; btn.textContent = 'جارٍ النشر…';
   try {
-    const files = [...$('nFile').files].slice(0, 8), links = $('nUrl').value.split(/[\s,]+/).map(s => s.trim()).filter(Boolean);
+    const files = [...$('nFile').files].slice(0, 8), links =$('nUrl').value.split(/[\s,]+/).map(s => s.trim()).filter(Boolean);
     const images = [...await Promise.all(files.map(f => compress(f))), ...links].slice(0, 8);
     if (!images.length) throw { code: 'أضف صورة واحدة على الأقل' }; if (JSON.stringify(images).length > 900000) throw { code: 'الصور كبيرة جداً، قلّل عددها' };
-    await db.collection('products').add({ title: $('nTitle').value.trim(), category: $('nCat').value, gender: $('nGen').value, size: $('nSize').value.trim(), price: Number($('nPrice').value), images, image: images[0], sold: false, createdAt: Date.now() });
+    await db.collection('products').add({ title: $('nTitle').value.trim(), category: $('nCat').value, gender:$('nGen').value, size: $('nSize').value.trim(), price: Number($('nPrice').value), images, image: images[0], sold: false, createdAt: Date.now() });
     e.target.reset(); $('nFileName').textContent = ''; toast('تم نشر القطعة ✔');
   } catch (x) { toast('خطأ: ' + (x.code || x.message)); }
   btn.disabled = false; btn.textContent = 'نشر القطعة';
@@ -544,8 +545,7 @@ function parseYT(u) {
 function musicSet(url) {
   const src = url ? parseYT(url) : null, key = src ? JSON.stringify(src) : '';
   if (key === ytSrc) return; ytSrc = key;
-  $('mp').classList.toggle('on', !!src);
-  $('mpNext').classList.toggle('hide', !(src && src.list));
+  $('mp').classList.toggle('on', !!src);$('mpNext').classList.toggle('hide', !(src && src.list));
   if (!src) { if (yt && ytReady) yt.stopVideo(); return; }
   if (!window.YT || !YT.Player) {
     if (!document.getElementById('ytapi')) { const s = document.createElement('script'); s.id = 'ytapi'; s.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(s); }
@@ -560,7 +560,7 @@ function buildPlayer(src) {
   if (src.list) { pv.listType = 'playlist'; pv.list = src.list; } else pv.playlist = src.v;
   yt = new YT.Player('yt', { height: '200', width: '200', videoId: src.list ? undefined : src.v, playerVars: pv, events: {
     onReady: () => { ytReady = true; yt.setVolume(40); if (src.list) yt.setLoop(true); if (armed && !userPaused) yt.playVideo(); },
-    onStateChange: e => { playing = e.data === 1; $('mp').classList.toggle('play', playing); $('mpPlay').textContent = playing ? '⏸' : '▶'; if (e.data === 0 && !src.list) yt.playVideo(); },
+    onStateChange: e => { playing = e.data === 1; $('mp').classList.toggle('play', playing);$('mpPlay').textContent = playing ? '⏸' : '▶'; if (e.data === 0 && !src.list) yt.playVideo(); },
     onError: () => toast('هذا الفيديو لا يسمح بالتضمين، جرّب رابطاً آخر')
   } });
 }

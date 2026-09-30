@@ -339,10 +339,14 @@ function compress(file, max = 900, q = .72) {
 /* ============ REALTIME SYNC ============ */
 db.collection('products').orderBy('createdAt', 'desc').onSnapshot(s => {
   products = s.docs.map(d => ({ id: d.id, ...d.data() }));
+  
+  // لا نحذف القطع إلا إذا كانت البيانات محملة بالفعل مسبقاً لمنع تفريغ السلة وقت بدء التشغيل
+  if (loaded && products.length > 0) {
+    const before = cart.length;
+    cart = cart.filter(i => i.custom || products.some(p => p.id === i.id && !p.sold));
+    if (cart.length !== before) { saveCart(); toast('تمت إزالة القطع المباعة من سلتك'); }
+  }
   loaded = true;
-  const before = cart.length;
-  cart = cart.filter(i => i.custom || products.some(p => p.id === i.id && !p.sold));
-  if (cart.length !== before) { saveCart(); toast('تمت إزالة القطع المباعة من سلتك'); }
   renderCatalog(); renderCart(); if (isAdmin) renderAdminList();
 }, e => { loaded = true; renderCatalog(); toast('تعذّر تحميل المنتجات: ' + e.code); });
 
@@ -433,11 +437,27 @@ async function sendOrder() {
   const name = $('cName').value.trim(), phone = $('cPhone').value.trim(), w = Number($('cWil').value), com = $('cCom').value.trim(), mode = document.querySelector('[name=dm]:checked').value;
   if (!name || !phone || !w || !com) return toast('يرجى ملء جميع معلومات التوصيل');
   if (!/^0[567]\d{8}$/.test(phone.replace(/[\s.-]/g, ''))) return toast('رقم الهاتف غير صحيح (مثال: 0697783635)');
-  const gone = cart.filter(i => !i.custom && !products.some(p => p.id === i.id && !p.sold));
-  if (gone.length) { cart = cart.filter(i => !gone.includes(i)); saveCart(); renderCart(); return toast('بيعت بعض القطع للتو وتمت إزالتها من السلة'); }
-  const btn = $('sendBtn'); btn.disabled = true;
+  
   const orderItems = [...cart];
+  const gone = orderItems.filter(i => !i.custom && products.some(p => p.id === i.id && p.sold));
+  if (gone.length) { 
+    cart = cart.filter(i => !gone.some(g => g.id === i.id)); 
+    saveCart(); renderCart(); 
+    return toast('بيعت بعض القطع للتو وتمت إزالتها من السلة'); 
+  }
+
+  const btn = $('sendBtn'); btn.disabled = true;
   const sub = orderItems.reduce((a, i) => a + Number(i.price), 0), sh = ship(w, mode), total = sub + sh;
+
+  // إعداد نص الرسالة بالكامل قبل أي تعديل على قاعدة البيانات أو السلة
+  const catOf = i => i.custom ? 'Custom Tee' : ((CATS.find(c => c[0] === (i.cat || (products.find(p => p.id === i.id) || {}).category)) || [])[1] || '');
+  const clean = t => String(t || '').replace(/[*_~`>\n\r]+/g, ' ').trim();
+  const nm = i => clean(i.title) || catOf(i) || 'منتج';
+  const names = orderItems.map(i => '▪️️ ' + nm(i)).join('\n');
+  const lines = orderItems.map(i => ['🏷 *اسم المنتج:* ' + nm(i), '🗂 *التصنيف:* ' + catOf(i), '📏 *القياس:* ' + i.size, '💵 *السعر:* ' + fmt(i.price)]
+    .concat(i.custom ? ['🎨 *اللون:* ' + i.color, '🖼 *الملف:* ' + i.file, '📝 *ملاحظات:* ' + i.note] : ['🔖 *المرجع:* ' + String(i.id).slice(-5).toUpperCase()]).join('\n')).join('\n\n▫️▫️▫️▫️▫️\n\n');
+  const msg = `⚡ *COMMANDE - BACKSTAGE THRIFT* ⚡\n-------------------\n👤 ${name}\n📞 ${phone}\n📍 ${wname(w)} - ${com}\n🚚 ${mode === 'home' ? 'توصيل للمنزل' : 'Stop-Desk Guepex'}\n\n📦 *الطلبية (${orderItems.length}):*\n${names}\n\n📋 *التفاصيل:*\n\n${lines}\n\n-------------------\n💰 السلع: ${fmt(sub)}\n🚚 التوصيل: ${fmt(sh)}\n★ *المجموع عند الاستلام: ${fmt(total)}*`;
+
   try {
     const b = db.batch();
     orderItems.filter(i => !i.custom).forEach(i => b.update(db.collection('products').doc(i.id), { sold: true }));
@@ -445,15 +465,9 @@ async function sendOrder() {
       items: orderItems.map(i => ({ title: i.title, size: i.size, price: i.price, custom: !!i.custom, note: i.note || '' })) });
     await b.commit();
   } catch (e) { console.warn('order save failed', e); }
-  const catOf = i => i.custom ? 'Custom Tee' : ((CATS.find(c => c[0] === (i.cat || (products.find(p => p.id === i.id) || {}).category)) || [])[1] || '');
-  const clean = t => String(t || '').replace(/[*_~`>\n\r]+/g, ' ').trim();
-  const nm = i => clean(i.title) || catOf(i) || 'منتج';
-  const names = orderItems.map(i => '▪️ ' + nm(i)).join('\n');
-  const lines = orderItems.map(i => ['🏷 *اسم المنتج:* ' + nm(i), '🗂 *التصنيف:* ' + catOf(i), '📏 *القياس:* ' + i.size, '💵 *السعر:* ' + fmt(i.price)]
-    .concat(i.custom ? ['🎨 *اللون:* ' + i.color, '🖼 *الملف:* ' + i.file, '📝 *ملاحظات:* ' + i.note] : ['🔖 *المرجع:* ' + String(i.id).slice(-5).toUpperCase()]).join('\n')).join('\n\n▫️▫️▫️▫️▫️\n\n');
-  const msg = `⚡ *COMMANDE - BACKSTAGE THRIFT* ⚡\n-------------------\n👤 ${name}\n📞 ${phone}\n📍 ${wname(w)} - ${com}\n🚚 ${mode === 'home' ? 'توصيل للمنزل' : 'Stop-Desk Guepex'}\n\n📦 *الطلبية (${orderItems.length}):*\n${names}\n\n📋 *التفاصيل:*\n\n${lines}\n\n-------------------\n💰 السلع: ${fmt(sub)}\n🚚 التوصيل: ${fmt(sh)}\n★ *المجموع عند الاستلام: ${fmt(total)}*`;
+
   cart = []; saveCart(); renderCart(); closeAll(); btn.disabled = false;
-  location.href = 'https://wa.me/213697783635?text=' + encodeURIComponent(msg);
+  window.open('https://api.whatsapp.com/send?phone=213697783635&text=' + encodeURIComponent(msg), '_blank');
 }
 
 /* ============ CUSTOM TEE ============ */

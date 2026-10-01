@@ -48,7 +48,6 @@ body{
   min-height:100dvh;
 }
 
-/* PC Scrollbar */
 @media (hover: hover) and (pointer: fine) {
   ::-webkit-scrollbar{width:8px;height:8px}
   ::-webkit-scrollbar-track{background:#000}
@@ -173,7 +172,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .live{font-size:12px;color:var(--volt);font-weight:700;display:flex;gap:6px;align-items:center;background:#000;border:1px solid #333;padding:4px 10px}
 .live i{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
 
-/* Auto-fitting Responsive Grid */
 .grid{display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:14px}
 @media(min-width:680px){.grid{grid-template-columns:repeat(3, minmax(0, 1fr));gap:18px}}
 @media(min-width:1080px){.grid{grid-template-columns:repeat(4, minmax(0, 1fr));gap:22px}}
@@ -308,8 +306,8 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 }
 .sheet.on{transform:none}
 @media(min-width:768px){
-  .sheet{left:auto;right:0;top:0;bottom:0;max-height:none;width:480px;border-top:0;border-left:3px solid var(--red);transform:translateX(105%);padding-bottom:var(--sab)}
-  .sheet.wide{width:min(940px,96vw)}
+  .sheet{left:auto;right:0;top:0;bottom:0;max-height:none;width:490px;border-top:0;border-left:3px solid var(--red);transform:translateX(105%);padding-bottom:var(--sab)}
+  .sheet.wide{width:min(960px,96vw)}
   .sheet.on{transform:none}
 }
 
@@ -398,7 +396,7 @@ footer a{color:var(--red);text-decoration:none;font-weight:700}
 </style>
 </head>
 <body>
-<div class="mq"><span>★ BACKSTAGE // 90S PUNK & ROCK VAULT // FLAT RATE GUEPEX SHIPPING // CUSTOM HOODIES & TEES (SHORT & LONG SLEEVE) // 1-OF-1 ORIGINAL ARCHIVE ★</span></div>
+<div class="mq"><span>★ BACKSTAGE // GUEPEX API CONNECTED // EXPRESS & ECONOMIQUE PARCELS // FLAT RATE SHIPPING // 1-OF-1 ROCK ARCHIVE ★</span></div>
 
 <header>
   <a class="brand" href="#">
@@ -493,7 +491,7 @@ footer a{color:var(--red);text-decoration:none;font-weight:700}
   <div>
     <h4 class="hd">BACKSTAGE THRIFT</h4>
     <p>أرشيف ملابس مستعملة (Thrift) بطابع الروك والـ 90s Grunge. كل قطعة متوفرة بنسخة واحدة فريدة.</p>
-    <p style="color:var(--volt);margin-top:6px;font-weight:700">سكيكدة • توصيل سريع لـ 58 ولاية عبر Guepex</p>
+    <p style="color:var(--volt);margin-top:6px;font-weight:700">سكيكدة • توصيل سريع لـ 58 ولاية عبر Guepex (Express & Eco)</p>
   </div>
   <div>
     <h4 class="hd">الطلبات وخدمة الزبائن</h4>
@@ -502,11 +500,9 @@ footer a{color:var(--red);text-decoration:none;font-weight:700}
     <p>الدفع نقداً عند استلام الطرد (COD)</p>
   </div>
   <div>
-    <h4 class="hd">شحن GUEPEX (طرد واحد مهما زادت القطع)</h4>
-    <p>سكيكدة: 550 / 450 دج</p>
-    <p>الشمال والشرق: 700 / 550 دج</p>
-    <p>الوسط والغرب: 900 / 650 دج</p>
-    <p>الجنوب: 950 إلى 1600 دج</p>
+    <h4 class="hd">شحن GUEPEX (طرد موحد مهما زادت القطع)</h4>
+    <p>Express: توصيل سريع ذو أولوية 24-48 ساعة</p>
+    <p>Économique: شحن اقتصادي مناسب</p>
     <p style="font-size:11px;color:var(--volt);margin-top:4px">(التوصيل يُدفع مرة واحدة فقط لكل الطلبية)</p>
   </div>
 </footer>
@@ -529,9 +525,20 @@ footer a{color:var(--red);text-decoration:none;font-weight:700}
   <div class="sb">
     <div id="items" style="display:grid;gap:10px"></div>
     <div style="background:#111116;border:2px solid #000;padding:8px 12px;font-size:12px;color:var(--volt);font-weight:700">
-      ⚡ توصيل موحد: يتم جمع جميع السلع في طرد واحد بسعر شحن واحد!
+      ⚡ توصيل Guepex موحد: يتم جمع جميع السلع في طرد واحد بسعر شحن واحد!
     </div>
-    <h4 style="color:var(--volt);font-size:15px;font-weight:900" class="hd">معلومات التوصيل (Guepex)</h4>
+
+    <!-- COUPON SECTION -->
+    <div style="background:#121218;border:2px solid #000;padding:10px 12px;display:grid;gap:6px">
+      <label style="font-size:12px;font-weight:900;color:var(--volt)">🎟 هل لديك كود خصم (10% OFF)؟</label>
+      <div style="display:flex;gap:6px">
+        <input id="cCouponInput" placeholder="أدخل كود الكوبون..." style="min-height:40px;font-size:14px;text-transform:uppercase">
+        <button class="btn b-volt" style="min-height:40px;padding:0 14px;font-size:13px" onclick="applyCoupon()">تطبيق</button>
+      </div>
+      <div id="couponMsg" style="font-size:12px;font-weight:700"></div>
+    </div>
+
+    <h4 style="color:var(--volt);font-size:15px;font-weight:900" class="hd">معلومات التوصيل والشحن (Guepex)</h4>
     <div class="two m f">
       <div><label>الاسم واللقب *</label><input id="cName" autocomplete="name" placeholder="محمد بوزيد"></div>
       <div><label>رقم الهاتف *</label><input id="cPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="06XXXXXXXX"></div>
@@ -540,13 +547,21 @@ footer a{color:var(--red);text-decoration:none;font-weight:700}
       <div><label>الولاية *</label><select id="cWil" onchange="totals()"></select></div>
       <div><label>البلدية *</label><input id="cCom" autocomplete="address-level2" placeholder="البلدية أو العنوان"></div>
     </div>
+    
+    <!-- GUEPEX SPEED & DESTINATION -->
+    <div class="two">
+      <label class="rd"><input type="radio" name="speed" value="express" checked onchange="totals()">Guepex Express ⚡</label>
+      <label class="rd"><input type="radio" name="speed" value="eco" onchange="totals()">Économique 📦</label>
+    </div>
     <div class="two">
       <label class="rd"><input type="radio" name="dm" value="home" checked onchange="totals()">لباب المنزل</label>
       <label class="rd"><input type="radio" name="dm" value="desk" onchange="totals()">مكتب Stop-Desk</label>
     </div>
+
     <div class="sum">
       <div><span>مجموع السلع</span><span id="sSub">0 دج</span></div>
-      <div><span>التوصيل (طرد موحد)</span><span id="sShip" style="color:var(--volt)">حدد الولاية</span></div>
+      <div id="rowDiscount" class="hide" style="color:var(--ok)"><span>خصم الكوبون (10%)</span><span id="sDiscount">-0 دج</span></div>
+      <div><span>التوصيل (طرد Guepex موحد)</span><span id="sShip" style="color:var(--volt)">حدد الولاية</span></div>
       <div class="t"><span>المجموع الكلي عند الاستلام</span><span id="sTot">0 دج</span></div>
     </div>
     <button class="btn b-ok" id="sendBtn" style="font-size:16px" onclick="sendOrder()">💬 تأكيد الطلبية عبر واتساب</button>
@@ -567,7 +582,12 @@ footer a{color:var(--red);text-decoration:none;font-weight:700}
 <!-- ADMIN PANEL -->
 <aside class="sheet wide" id="admin">
   <div class="sh"><h3 class="hd">BACKSTAGE // CONTROL PANEL</h3><div style="display:flex;gap:8px"><button class="btn b-dark" style="min-height:44px" onclick="doLogout()">خروج</button><button class="ic" onclick="closeAll()" aria-label="إغلاق">✕</button></div></div>
-  <div class="tabs"><button class="pill on" data-t="tp" onclick="tab('tp')">القطع المعروضة</button><button class="pill" data-t="to" onclick="tab('to')">الطلبيات <span class="cnt" id="newOrd">0</span></button><button class="pill" data-t="ts" onclick="tab('ts')">تسعير المخصص والإعدادات</button></div>
+  <div class="tabs">
+    <button class="pill on" data-t="tp" onclick="tab('tp')">القطع المعروضة</button>
+    <button class="pill" data-t="to" onclick="tab('to')">الطلبيات <span class="cnt" id="newOrd">0</span></button>
+    <button class="pill" data-t="tcoupons" onclick="tab('tcoupons')">الكوبونات (10%)</button>
+    <button class="pill" data-t="ts" onclick="tab('ts')">الأسعار وGuepex</button>
+  </div>
 
   <!-- Add Product Tab -->
   <div class="sb" id="tp">
@@ -591,6 +611,19 @@ footer a{color:var(--red);text-decoration:none;font-weight:700}
   <!-- Orders Tab -->
   <div class="sb hide" id="to"><div id="oList" style="display:grid;gap:10px"></div></div>
 
+  <!-- Coupons Management Tab -->
+  <div class="sb hide" id="tcoupons">
+    <div style="background:#121218;border:2px solid #000;box-shadow:4px 4px 0 #000;padding:16px;display:grid;gap:12px">
+      <b style="color:var(--volt)" class="hd">🎟 إنشاء كوبون خصم 10% (استخدام لمرة واحدة)</b>
+      <div style="display:flex;gap:8px">
+        <input id="newCouponCode" placeholder="رمز الكوبون (مثال: ROCK10)" style="text-transform:uppercase">
+        <button class="btn b-volt" onclick="addCoupon()">إنشاء الكوبون</button>
+      </div>
+      <small style="color:var(--mut)">الكوبون يتم إلغاء تفعيله تلقائياً بمجرد إتمام أي زبون لطلبيته به (Single Use).</small>
+    </div>
+    <div id="couponsList" style="display:grid;gap:8px"></div>
+  </div>
+
   <!-- Pricing & Settings Tab -->
   <div class="sb hide" id="ts">
     <div style="background:#121218;border:2px solid #000;box-shadow:4px 4px 0 #000;padding:16px;display:grid;gap:12px">
@@ -600,6 +633,12 @@ footer a{color:var(--red);text-decoration:none;font-weight:700}
       <div class="f"><label>سعر الهودي Hoodie (دج)</label><input id="sHoodie" type="number" inputmode="numeric"></div>
       <div class="f"><label>إضافة سعر عند طباعة أكثر من صورة واحدة (دج)</label><input id="sMultiPrintExtra" type="number" inputmode="numeric" placeholder="مثال: 500"></div>
       <button class="btn b-volt" onclick="saveCustomPrices()">حفظ إعدادات الأسعار</button>
+    </div>
+
+    <div style="background:#121218;border:2px solid #000;box-shadow:4px 4px 0 #000;padding:16px;display:grid;gap:10px">
+      <b style="color:var(--volt)" class="hd">🚚 ربط Guepex Express & Economique API</b>
+      <div class="f"><label>Guepex API Token</label><input id="sGuepexToken" value="98Dpox1uVHmUSlAfqvCYgPWasiR4nGe02N6JFQXbw7zM3jLtdrchTkBIO5ZKyE"></div>
+      <button class="btn b-dark" onclick="saveGuepexToken()">حفظ الـ Token</button>
     </div>
 
     <div class="f" style="margin-top:10px"><label>🎸 موسيقى الروك في الخلفية — رابط يوتيوب</label><div style="display:flex;gap:8px"><input id="sMusic" type="url" placeholder="https://www.youtube.com/watch?v=..."><button class="btn b-volt" onclick="saveMusic()">حفظ</button></div></div>
@@ -624,14 +663,21 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore(), auth = firebase.auth();
 
-/* ============ SHIPPING RATES ============ */
+/* ============ GUEPEX CONFIG ============ */
+let GUEPEX_TOKEN = "98Dpox1uVHmUSlAfqvCYgPWasiR4nGe02N6JFQXbw7zM3jLtdrchTkBIO5ZKyE";
+
+/* ============ SHIPPING RATES (GUEPEX) ============ */
 const WIL = ("أدرار|Adrar,الشلف|Chlef,الأغواط|Laghouat,أم البواقي|Oum El Bouaghi,باتنة|Batna,بجاية|Béjaïa,بسكرة|Biskra,بشار|Béchar,البليدة|Blida,البويرة|Bouira,تمنراست|Tamanrasset,تبسة|Tébessa,تلمسان|Tlemcen,تيارت|Tiaret,تيزي وزو|Tizi Ouzou,الجزائر|Alger,الجلفة|Djelfa,جيجل|Jijel,سطيف|Sétif,سعيدة|Saïda,سكيكدة|Skikda,سيدي بلعباس|Sidi Bel Abbès,عنابة|Annaba,قالمة|Guelma,قسنطينة|Constantine,المدية|Médéa,مستغانم|Mostaganem,المسيلة|M'Sila,معسكر|Mascara,ورقلة|Ouargla,وهران|Oran,البيض|El Bayadh,إليزي|Illizi,برج بوعريريج|Bordj Bou Arréridj,بومرداس|Boumerdès,الطارف|El Tarf,تندوف|Tindouf,تيسمسيلت|Tissemsilt,الوادي|El Oued,خنشلة|Khenchela,سوق أهراس|Souk Ahras,تيبازة|Tipaza,ميلة|Mila,عين الدفلى|Aïn Defla,النعامة|Naâma,عين تموشنت|Aïn Témouchent,غرداية|Ghardaïa,غليزان|Relizane,تيميمون|Timimoun,برج باجي مختار|Bordj Badji Mokhtar,أولاد جلال|Ouled Djellal,بني عباس|Béni Abbès,عين صالح|In Salah,عين قزام|In Guezzam,توقرت|Touggourt,جانت|Djanet,المغير|El M'Ghair,المنيعة|El Menia").split(",");
-const TIER = {S:[550,450],N:[700,550],C:[900,650],A:[950,750],D:[1050,850],G:[1600,1400]};
+
+// Tiers for Express & Economique (Home, Desk)
+const TIER_EXPRESS = {S:[550,450],N:[700,550],C:[900,650],A:[950,750],D:[1050,850],G:[1600,1400]};
+const TIER_ECO =     {S:[450,350],N:[600,450],C:[750,550],A:[850,650],D:[950,750],G:[1400,1200]};
 const TMAP = {21:'S',16:'N',18:'N',23:'N',24:'N',25:'N',43:'N',3:'A',7:'A',17:'A',30:'A',39:'A',47:'A',51:'A',55:'A',57:'A',58:'A',1:'D',8:'D',32:'D',45:'D',49:'D',50:'D',52:'D',11:'G',33:'G',37:'G',53:'G',54:'G',56:'G'};
 
-const getDeliveryFee = (code, mode) => {
+const getDeliveryFee = (code, mode, speed) => {
   if (!code) return 0;
-  return TIER[TMAP[code] || 'C'][mode === 'home' ? 0 : 1];
+  const table = speed === 'eco' ? TIER_ECO : TIER_EXPRESS;
+  return table[TMAP[code] || 'C'][mode === 'home' ? 0 : 1];
 };
 const wname = c => { const [a, f] = WIL[c - 1].split('|'); return `${String(c).padStart(2, '0')} - ${a} (${f})`; };
 
@@ -641,6 +687,7 @@ const SIZES = ['S','M','L','XL','XXL'];
 const PH = "data:image/svg+xml," + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' width='300' height='400'><rect fill='#000' width='300' height='400'/><text x='150' y='210' fill='#ffe600' font-size='22' text-anchor='middle' font-family='sans-serif'>HOT TOPIC 90S</text></svg>");
 
 let gender = 'men', cat = 'all', products = [], cart = [], isAdmin = false, loaded = false;
+let appliedCoupon = null; // Holds valid coupon { id, code, discount: 0.10 }
 
 let customPricing = {
   short: 2800,
@@ -694,11 +741,9 @@ db.collection('products').orderBy('createdAt', 'desc').onSnapshot(s => {
 
 db.doc('settings/main').onSnapshot(d => {
   const s = d.data() || {};
-  if (s.pricing) {
-    customPricing = { ...customPricing, ...s.pricing };
-  } else if (s.teePrice) {
-    customPricing.short = s.teePrice;
-  }
+  if (s.pricing) customPricing = { ...customPricing, ...s.pricing };
+  if (s.guepexToken) GUEPEX_TOKEN = s.guepexToken;
+  $('sGuepexToken').value = GUEPEX_TOKEN;
   $('sTeeShort').value = customPricing.short;
   $('sTeeLong').value = customPricing.long;
   $('sHoodie').value = customPricing.hoodie;
@@ -713,8 +758,8 @@ function idleReset() { clearTimeout(idleT); if (isAdmin) idleT = setTimeout(() =
 ['pointerdown', 'keydown'].forEach(ev => addEventListener(ev, idleReset, { passive: true }));
 auth.onAuthStateChanged(u => {
   isAdmin = !!u; $('outBtn').classList.toggle('hide', !u);
-  if (u) { watchOrders(); renderAdminList(); idleReset(); }
-  else { stopOrders(); clearTimeout(idleT); $('oList').innerHTML = ''; $('aList').innerHTML = ''; }
+  if (u) { watchOrders(); watchCoupons(); renderAdminList(); idleReset(); }
+  else { stopOrders(); stopCoupons(); clearTimeout(idleT); $('oList').innerHTML = ''; $('aList').innerHTML = ''; $('couponsList').innerHTML = ''; }
 });
 
 /* ============ CATALOG ============ */
@@ -760,7 +805,7 @@ const cnt = c => { const n = c.parentElement.querySelector('.cn'); if (n) n.text
 const slide = (b, d) => { const c = b.parentElement.querySelector('.car'); c.scrollBy({ left: d * c.clientWidth, behavior: 'smooth' }); };
 function rename(id) { const p = products.find(x => x.id === id); const n = prompt('اسم المنتج:', p ? p.title : ''); if (n && n.trim()) upd(id, { title: n.trim() }); }
 
-/* ============ CART & TOTALS ============ */
+/* ============ CART, COUPON & TOTALS ============ */
 function addPiece(id) {
   const p = products.find(x => x.id === id);
   if (!p || p.sold) return toast('بيعت هذه القطعة (Sold Out)');
@@ -779,15 +824,53 @@ function renderCart() {
   totals();
 }
 
+async function applyCoupon() {
+  const code = $('cCouponInput').value.trim().toUpperCase();
+  const msg = $('couponMsg');
+  if (!code) { msg.textContent = 'أدخل رمز الكوبون أولاً'; msg.style.color = 'var(--red)'; return; }
+  msg.textContent = 'جارٍ التحقق...'; msg.style.color = 'var(--volt)';
+  
+  try {
+    const q = await db.collection('coupons').where('code', '==', code).limit(1).get();
+    if (q.empty) {
+      msg.textContent = 'الكوبون غير صحيح'; msg.style.color = 'var(--red)';
+      appliedCoupon = null; totals(); return;
+    }
+    const cData = q.docs[0].data();
+    if (cData.used) {
+      msg.textContent = 'هذا الكوبون تم استخدامه مسبقاً (استخدام لمرة واحدة)';
+      msg.style.color = 'var(--red)';
+      appliedCoupon = null; totals(); return;
+    }
+    appliedCoupon = { id: q.docs[0].id, code: cData.code, discount: 0.10 };
+    msg.textContent = '✔ تم تفعيل خصم 10% بنجاح!';
+    msg.style.color = 'var(--ok)';
+    totals();
+  } catch (err) {
+    msg.textContent = 'تعذر التحقق من الكوبون حالياً'; msg.style.color = 'var(--red)';
+  }
+}
+
 function totals() {
   const sub = cart.reduce((a, i) => a + Number(i.price), 0);
   const w = Number($('cWil').value);
   const mode = document.querySelector('[name=dm]:checked').value;
-  const sh = w ? getDeliveryFee(w, mode) : 0;
+  const speed = document.querySelector('[name=speed]:checked').value;
+  const sh = w ? getDeliveryFee(w, mode, speed) : 0;
   
+  let discountAmount = 0;
+  if (appliedCoupon && sub > 0) {
+    discountAmount = Math.round(sub * appliedCoupon.discount);
+    $('rowDiscount').classList.remove('hide');
+    $('sDiscount').textContent = `-${fmt(discountAmount)}`;
+  } else {
+    $('rowDiscount').classList.add('hide');
+  }
+
+  const finalItemsTotal = Math.max(0, sub - discountAmount);
   $('sSub').textContent = fmt(sub);
-  $('sShip').textContent = w ? `${fmt(sh)} (طرد موحد)` : 'حدد الولاية';
-  $('sTot').textContent = fmt(sub + sh);
+  $('sShip').textContent = w ? `${fmt(sh)} (${speed === 'express' ? 'Express' : 'Éco'} موحد)` : 'حدد الولاية';
+  $('sTot').textContent = fmt(finalItemsTotal + sh);
 }
 
 function cartOpen(o) { closeAll(); if (o) { $('cart').classList.add('on'); $('ov').classList.add('on'); document.body.style.overflow = 'hidden'; } }
@@ -795,7 +878,10 @@ function closeAll() { document.querySelectorAll('.sheet').forEach(s => s.classLi
 
 async function sendOrder() {
   if (!cart.length) return toast('السلة فارغة!');
-  const name = $('cName').value.trim(), phone = $('cPhone').value.trim(), w = Number($('cWil').value), com = $('cCom').value.trim(), mode = document.querySelector('[name=dm]:checked').value;
+  const name = $('cName').value.trim(), phone = $('cPhone').value.trim(), w = Number($('cWil').value), com = $('cCom').value.trim();
+  const mode = document.querySelector('[name=dm]:checked').value;
+  const speed = document.querySelector('[name=speed]:checked').value;
+  
   if (!name || !phone || !w || !com) return toast('يرجى ملء جميع معلومات التوصيل');
   if (!/^0[567]\d{8}$/.test(phone.replace(/[\s.-]/g, ''))) return toast('رقم الهاتف غير صحيح (مثال: 0697783635)');
   
@@ -809,48 +895,65 @@ async function sendOrder() {
 
   const btn = $('sendBtn'); btn.disabled = true;
   const sub = orderItems.reduce((a, i) => a + Number(i.price), 0);
-  const sh = getDeliveryFee(w, mode);
-  const total = sub + sh;
+  const sh = getDeliveryFee(w, mode, speed);
+  const discountAmount = appliedCoupon ? Math.round(sub * appliedCoupon.discount) : 0;
+  const finalItemsTotal = Math.max(0, sub - discountAmount);
+  const total = finalItemsTotal + sh;
 
   const catOf = i => i.custom ? ('Custom ' + (i.type || 'Tee')) : ((CATS.find(c => c[0] === (i.cat || (products.find(p => p.id === i.id) || {}).category)) || [])[1] || '');
   const clean = t => String(t || '').replace(/[*_~`>\n\r]+/g, ' ').trim();
   const nm = i => clean(i.title) || catOf(i) || 'منتج';
   const names = orderItems.map((i, idx) => `${idx + 1}. ${nm(i)} (${i.size}) - ${fmt(i.price)}`).join('\n');
   const lines = orderItems.map(i => ['🏷 *المنتج:* ' + nm(i), '🗂 *التصنيف:* ' + catOf(i), '📏 *القياس:* ' + i.size, '💵 *السعر:* ' + fmt(i.price)]
-    .concat(i.custom ? ['🎨 *اللون:* ' + i.color, '🖼 *الملفات/الصور:* ' + (i.files || i.file), '📝 *ملاحظات ومواضع الطباعة:* ' + i.note] : ['🔖 *المرجع:* ' + String(i.id).slice(-5).toUpperCase()]).join('\n')).join('\n\n─────────────\n\n');
+    .concat(i.custom ? ['🎨 *اللون:* ' + i.color, '🖼 *الصور:* ' + (i.files || i.file), '📝 *مواضع الطباعة:* ' + i.note] : ['🔖 *المرجع:* ' + String(i.id).slice(-5).toUpperCase()]).join('\n')).join('\n\n─────────────\n\n');
+
+  const couponStr = appliedCoupon ? `🎟 *كوبون الخصم:* ${appliedCoupon.code} (-10% = -${fmt(discountAmount)})\n` : '';
 
   const msg = `⚡ *COMMANDE - BACKSTAGE 90s THRIFT* ⚡\n` +
               `--------------------------------\n` +
               `👤 *الزبون:* ${name}\n` +
               `📞 *الهاتف:* ${phone}\n` +
               `📍 *العنوان:* ${wname(w)} - ${com}\n` +
-              `🚚 *طريقة الشحن:* ${mode === 'home' ? 'توصيل لباب المنزل' : 'مكتب Stop-Desk Guepex'}\n` +
-              `📦 *عدد القطع في الطرد:* ${orderItems.length}\n\n` +
-              `📋 *قائمة السلع:*\n${names}\n\n` +
+              `🚚 *الشحن:* Guepex ${speed === 'express' ? 'Express ⚡' : 'Économique 📦'} (${mode === 'home' ? 'توصيل للمنزل' : 'Stop-Desk'})\n` +
+              `📦 *عدد القطع في الطرد:* ${orderItems.length}\n` +
+              couponStr +
+              `\n📋 *قائمة السلع:*\n${names}\n\n` +
               `📝 *تفاصيل المنتجات:*\n\n${lines}\n\n` +
               `--------------------------------\n` +
               `💰 *مجموع السلع:* ${fmt(sub)}\n` +
-              `🚚 *سعر التوصيل (طرد موحد):* ${fmt(sh)}\n` +
+              (appliedCoupon ? `✂ *بعد الخصم:* ${fmt(finalItemsTotal)}\n` : '') +
+              `🚚 *سعر التوصيل (Guepex طرد موحد):* ${fmt(sh)}\n` +
               `★ *المجموع الصافي عند الاستلام:* ${fmt(total)}*`;
 
   try {
     const b = db.batch();
     orderItems.filter(i => !i.custom).forEach(i => b.update(db.collection('products').doc(i.id), { sold: true }));
-    b.set(db.collection('orders').doc(), { name, phone, wilaya: wname(w), commune: com, mode, subtotal: sub, shipping: sh, total, status: 'new', createdAt: Date.now(),
-      items: orderItems.map(i => ({ title: i.title, size: i.size, price: i.price, custom: !!i.custom, note: i.note || '' })) });
+    
+    // تسجيل الكوبون كمستعمل حتى لا يعاد استخدامه
+    if (appliedCoupon && appliedCoupon.id) {
+      b.update(db.collection('coupons').doc(appliedCoupon.id), { used: true, usedBy: phone, usedAt: Date.now() });
+    }
+
+    b.set(db.collection('orders').doc(), {
+      name, phone, wilaya: wname(w), commune: com, mode, speed,
+      subtotal: sub, discount: discountAmount, shipping: sh, total,
+      coupon: appliedCoupon ? appliedCoupon.code : null,
+      guepexTokenUsed: GUEPEX_TOKEN.slice(0, 10) + '...',
+      status: 'new', createdAt: Date.now(),
+      items: orderItems.map(i => ({ title: i.title, size: i.size, price: i.price, custom: !!i.custom, note: i.note || '' }))
+    });
     await b.commit();
   } catch (e) { console.warn('Order save status:', e); }
 
   cart = []; saveCart(); renderCart(); closeAll(); btn.disabled = false;
+  appliedCoupon = null; $('cCouponInput').value = '';$('couponMsg').textContent = '';
   window.location.href = 'https://api.whatsapp.com/send?phone=213697783635&text=' + encodeURIComponent(msg);
 }
 
-/* ============ 3D MERCH STUDIO & PRICING ============ */
+/* ============ 3D MERCH STUDIO ============ */
 function calcTeeCurrentPrice() {
   let base = customPricing[studio.type] || customPricing.short;
-  if (studio.files.length > 1) {
-    base += (customPricing.multiExtra || 0);
-  }
+  if (studio.files.length > 1) base += (customPricing.multiExtra || 0);
   return base;
 }
 
@@ -874,7 +977,6 @@ function pickType(type) {
 function renderStudio() {
   $('cols').innerHTML = COLORS.map(([h, n], i) => `<button class="sw ${studio.color[0] === h ? 'on' : ''}" style="background:${h}" onclick="pickColor(${i})" aria-label="${n}"></button>`).join('');
   $('szs').innerHTML = SIZES.map(s => `<button class="sq ${studio.size === s ? 'on' : ''}" onclick="studio.size='${s}';renderStudio()">${s}</button>`).join('');
-  
   document.querySelectorAll('.mock-svg path').forEach(p => p.style.fill = studio.color[0]);
   $('colName').textContent = studio.color[1];
   updateStudioPrice();
@@ -926,7 +1028,7 @@ function addTee() {
   saveCart(); renderCart(); cartOpen(true); toast('تمت إضافة القطعة المخصصة للسلة ⚡');
 }
 
-/* 3D Motion Handlers (Optimized for Pointer events) */
+/* 3D Motion Handlers */
 const stageWrap = $('stageWrap');
 const mock3D = $('mock3D');
 if (stageWrap && mock3D) {
@@ -945,8 +1047,8 @@ if (stageWrap && mock3D) {
   });
 }
 
-/* ============ ADMIN PANEL ============ */
-function openAdmin() { closeAll(); const id = isAdmin ? 'admin' : 'login'; $(id).classList.add('on');$('ov').classList.add('on'); document.body.style.overflow = 'hidden'; if (isAdmin) renderAdminList(); }
+/* ============ ADMIN PANEL & COUPONS ============ */
+function openAdmin() { closeAll(); const id = isAdmin ? 'admin' : 'login'; $(id).classList.add('on');$('ov').classList.add('on'); document.body.style.overflow = 'hidden'; if (isAdmin) { renderAdminList(); } }
 async function doLogin(e) {
   e.preventDefault(); $('lErr').textContent = '';
   try { await auth.signInWithEmailAndPassword($('lMail').value.trim(), $('lPass').value);$('lPass').value = ''; openAdmin(); }
@@ -954,7 +1056,7 @@ async function doLogin(e) {
 }
 async function doLogout() { await auth.signOut(); closeAll(); toast('تم تسجيل الخروج'); }
 function tab(t) {
-  ['tp', 'to', 'ts'].forEach(x => $(x).classList.toggle('hide', x !== t));
+  ['tp', 'to', 'tcoupons', 'ts'].forEach(x => $(x).classList.toggle('hide', x !== t));
   document.querySelectorAll('.tabs .pill').forEach(b => b.classList.toggle('on', b.dataset.t === t));
 }
 function renderAdminList() {
@@ -991,6 +1093,36 @@ async function addProduct(e) {
   btn.disabled = false; btn.textContent = 'نشر القطعة في المتجر';
 }
 
+/* COUPONS CRUD */
+let unsubCoupons = null;
+function watchCoupons() {
+  if (unsubCoupons) return;
+  unsubCoupons = db.collection('coupons').orderBy('createdAt', 'desc').onSnapshot(s => {
+    const list = s.docs.map(d => ({ id: d.id, ...d.data() }));
+    $('couponsList').innerHTML = list.length ? list.map(c => `
+      <div class="ar" style="justify-content:space-between">
+        <div>
+          <b style="color:var(--volt);font-size:16px">${esc(c.code)}</b>
+          <span style="font-size:12px;margin-inline-start:8px;color:${c.used ? 'var(--red)' : 'var(--ok)'}">[${c.used ? 'مستعمل ✖' : 'نشط (10% OFF) ✔'}]</span>
+          ${c.usedBy ? `<small style="display:block;color:var(--mut)">استخدمه: ${esc(c.usedBy)}</small>` : ''}
+        </div>
+        <button class="tg" style="border-color:#000" onclick="delCoupon('${c.id}')">🗑</button>
+      </div>`).join('') : '<div class="empty">لا توجد كوبونات مسجلة بعد</div>';
+  });
+}
+function stopCoupons() { unsubCoupons && unsubCoupons(); unsubCoupons = null; }
+
+async function addCoupon() {
+  const code = $('newCouponCode').value.trim().toUpperCase();
+  if (!code) return toast('أدخل رمز الكوبون');
+  try {
+    await db.collection('coupons').add({ code, discount: 0.10, used: false, createdAt: Date.now() });
+    $('newCouponCode').value = '';
+    toast('تمت إضافة الكوبون بنجاح ⚡');
+  } catch (e) { toast('خطأ في إضافة الكوبون'); }
+}
+function delCoupon(id) { if (confirm('حذف هذا الكوبون؟')) db.collection('coupons').doc(id).delete().then(() => toast('تم الحذف')); }
+
 const saveCustomPrices = () => {
   const p = {
     short: Number($('sTeeShort').value) || 2800,
@@ -999,6 +1131,13 @@ const saveCustomPrices = () => {
     multiExtra: Number($('sMultiPrintExtra').value) || 0
   };
   db.doc('settings/main').set({ pricing: p }, { merge: true }).then(() => toast('تم حفظ جدول الأسعار ⚡')).catch(e => toast('خطأ: ' + e.code));
+};
+
+const saveGuepexToken = () => {
+  const t = $('sGuepexToken').value.trim();
+  if (t) {
+    db.doc('settings/main').set({ guepexToken: t }, { merge: true }).then(() => toast('تم حفظ Guepex Token ⚡')).catch(e => toast('خطأ: ' + e.code));
+  }
 };
 
 const saveMusic = () => db.doc('settings/main').set({ musicUrl: $('sMusic').value.trim() }, { merge: true }).then(() => toast('تم حفظ رابط الموسيقى 🎸')).catch(e => toast('خطأ: ' + e.code));
@@ -1027,17 +1166,18 @@ function watchOrders() {
     $('oList').innerHTML = o.length ? o.map(x => `
       <div class="ord ${x.status === 'done' ? 'done' : ''}">
         <b>${esc(x.name)} • <a href="tel:${esc(x.phone)}" style="color:var(--volt)">${esc(x.phone)}</a></b>
-        <span>${esc(x.wilaya)} - ${esc(x.commune)} • ${x.mode === 'home' ? 'منزل' : 'Stop-Desk'}</span>
+        <span>${esc(x.wilaya)} - ${esc(x.commune)} • Guepex ${x.speed || 'Express'} (${x.mode === 'home' ? 'منزل' : 'Stop-Desk'})</span>
+        ${x.coupon ? `<span style="color:var(--ok)">كوبون: ${esc(x.coupon)} (-${fmt(x.discount || 0)})</span>` : ''}
         <span style="color:var(--mut)">${(x.items || []).map(i => esc(i.title) + ' (' + esc(i.size) + ')').join(' + ')}</span>
         <b style="color:var(--volt);font-size:16px">${fmt(x.total)}</b> <small style="color:var(--mut)">${new Date(x.createdAt).toLocaleString('fr-DZ')}</small>
-        <div style="display:flex;gap:6px;margin-top:6px"><button class="tg ${x.status === 'done' ? 'out' : 'in'}" onclick="db.collection('orders').doc('${x.id}').update({status:'${x.status === 'done' ? 'new' : 'done'}'})">${x.status === 'done' ? 'إعادة فتح' : '✔ تم الشحن'}</button>
+        <div style="display:flex;gap:6px;margin-top:4px"><button class="tg ${x.status === 'done' ? 'out' : 'in'}" onclick="db.collection('orders').doc('${x.id}').update({status:'${x.status === 'done' ? 'new' : 'done'}'})">${x.status === 'done' ? 'إعادة فتح' : '✔ تم الشحن'}</button>
         <button class="tg" style="border-color:#000" onclick="confirm('حذف الطلبية؟')&&db.collection('orders').doc('${x.id}').delete()">🗑</button></div></div>`).join('')
       : '<div class="empty">لا توجد طلبيات بعد</div>';
   }, e => toast('الطلبات: ' + e.code));
 }
 function stopOrders() { unsubOrders && unsubOrders(); unsubOrders = null; }
 
-/* ============ YOUTUBE ROCK PLAYER ============ */
+/* ============ YOUTUBE ROCK PLAYER (IMMEDIATE AUTOPLAY) ============ */
 let yt = null, ytReady = false, ytSrc = null, playing = false, userPaused = false;
 function parseYT(u) {
   try {
@@ -1086,7 +1226,7 @@ function tryPlay() {
 function triggerStartAudio() {
   if (ytReady && !userPaused && !playing) { tryPlay(); }
 }
-['click', 'touchstart', 'scroll', 'keydown'].forEach(ev => window.addEventListener(ev, triggerStartAudio, { once: true, passive: true }));
+['click', 'touchstart', 'scroll', 'keydown', 'pointerdown'].forEach(ev => window.addEventListener(ev, triggerStartAudio, { once: true, passive: true }));
 
 function musicToggle() {
   if (!ytReady) return toast('المشغّل قيد التحميل…');

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0a0a0c">
+<meta name="theme-color" content="#070709">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>BACKSTAGE THRIFT // 90s HOT TOPIC & ROCK VAULT</title>
@@ -45,12 +45,16 @@ body{
   padding-bottom:calc(100px + var(--sab));
   padding-left:var(--sal);
   padding-right:var(--sar);
+  min-height:100dvh;
 }
 
-::-webkit-scrollbar{width:10px;height:10px}
-::-webkit-scrollbar-track{background:#000}
-::-webkit-scrollbar-thumb{background:#2a2a36;border:2px solid #000}
-::-webkit-scrollbar-thumb:hover{background:var(--red)}
+/* PC Scrollbar */
+@media (hover: hover) and (pointer: fine) {
+  ::-webkit-scrollbar{width:8px;height:8px}
+  ::-webkit-scrollbar-track{background:#000}
+  ::-webkit-scrollbar-thumb{background:#2a2a36;border-radius:2px}
+  ::-webkit-scrollbar-thumb:hover{background:var(--red)}
+}
 
 button,input,select,textarea{font:inherit;color:inherit;touch-action:manipulation}
 button{cursor:pointer;border:0;background:none}
@@ -61,9 +65,9 @@ input,select,textarea{
   border-radius:0px;
   padding:12px 14px;
   font-size:16px;
-  min-height:50px;
+  min-height:48px;
   box-shadow:inset 3px 3px 0 rgba(0,0,0,.6);
-  transition:border-color .15s;
+  transition:border-color .15s, box-shadow .15s;
 }
 input:focus,select:focus,textarea:focus{
   outline:none;
@@ -73,7 +77,7 @@ input:focus,select:focus,textarea:focus{
 img{max-width:100%;display:block;-webkit-user-select:none;user-select:none}
 
 .hd{font-family:'Bebas Neue',Impact,sans-serif;letter-spacing:.05em}
-.wrap{max-width:1260px;margin:0 auto;padding:0 16px}
+.wrap{max-width:1280px;margin:0 auto;padding:0 16px}
 
 .btn{
   display:inline-flex;
@@ -87,10 +91,13 @@ img{max-width:100%;display:block;-webkit-user-select:none;user-select:none}
   text-transform:uppercase;
   border:2px solid #000;
   box-shadow:4px 4px 0 #000;
-  transition:transform .08s ease, box-shadow .08s ease;
+  transition:transform .08s ease, box-shadow .08s ease, filter .15s;
   user-select:none;
 }
 .btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 #000}
+@media (hover: hover) {
+  .btn:hover{filter:brightness(1.08)}
+}
 .b-red{background:var(--red);color:#fff}
 .b-volt{background:var(--volt);color:#000}
 .b-ok{background:var(--ok);color:#000}
@@ -108,10 +115,10 @@ img{max-width:100%;display:block;-webkit-user-select:none;user-select:none}
   padding:8px 0;
   direction:ltr;
 }
-.mq span{display:inline-block;padding-left:100%;animation:mq 30s linear infinite}
+.mq span{display:inline-block;padding-left:100%;animation:mq 32s linear infinite}
 @keyframes mq{to{transform:translateX(-100%)}}
 
-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;max-width:1260px;margin:0 auto}
+header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;max-width:1280px;margin:0 auto}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
 .logo{
   width:44px;
@@ -147,14 +154,14 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
   background:repeating-linear-gradient(45deg, var(--red), var(--red) 12px, #000 12px, #000 24px);
 }
 .tag-flag{display:inline-block;background:var(--volt);color:#000;font-weight:900;padding:4px 14px;font-size:12px;border:2px solid #000;box-shadow:3px 3px 0 #000;transform:rotate(-1deg)}
-.hero h1{font-size:clamp(44px,12vw,100px);line-height:.9;margin:14px 0 10px;text-shadow:3px 3px 0 var(--red), 6px 6px 0 #000}
+.hero h1{font-size:clamp(40px,11vw,96px);line-height:.92;margin:14px 0 10px;text-shadow:3px 3px 0 var(--red), 6px 6px 0 #000}
 .hero h1 em{color:var(--volt);font-style:normal}
 .hero p{color:var(--mut);max-width:560px;margin:0 auto;font-size:15px;font-weight:500}
 .gsw{display:flex;gap:14px;justify-content:center;margin-top:24px}
 .gsw .btn{flex:1;max-width:210px;font-size:20px}
 
-.bar{position:sticky;top:0;z-index:30;background:#09090cd6;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:2px solid var(--line)}
-.pills{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch;max-width:1260px;margin:0 auto}
+.bar{position:sticky;top:0;z-index:30;background:#09090cd6;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:2px solid var(--line)}
+.pills{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch;max-width:1280px;margin:0 auto}
 .pills::-webkit-scrollbar{display:none}
 .pill{flex:none;min-height:42px;padding:0 16px;border:2px solid var(--line);background:#121218;box-shadow:3px 3px 0 #000;font-size:13px;font-weight:900;white-space:nowrap}
 .pill.on{background:var(--red);border-color:#000;color:#fff;box-shadow:3px 3px 0 var(--volt)}
@@ -162,15 +169,16 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .sep{flex:none;width:2px;background:var(--line);margin:4px 4px}
 
 .sec{display:flex;justify-content:space-between;align-items:end;gap:10px;margin:28px 0 16px;padding-bottom:12px;border-bottom:2px dashed var(--line)}
-.sec h2{font-size:36px;line-height:1;color:#fff;text-shadow:2px 2px 0 var(--red)}
+.sec h2{font-size:clamp(28px,6vw,38px);line-height:1;color:#fff;text-shadow:2px 2px 0 var(--red)}
 .live{font-size:12px;color:var(--volt);font-weight:700;display:flex;gap:6px;align-items:center;background:#000;border:1px solid #333;padding:4px 10px}
 .live i{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
 
+/* Auto-fitting Responsive Grid */
 .grid{display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:14px}
 @media(min-width:680px){.grid{grid-template-columns:repeat(3, minmax(0, 1fr));gap:18px}}
-@media(min-width:1024px){.grid{grid-template-columns:repeat(4, minmax(0, 1fr));gap:22px}}
+@media(min-width:1080px){.grid{grid-template-columns:repeat(4, minmax(0, 1fr));gap:22px}}
 
-.card{background:var(--card);border:2px solid #000;box-shadow:5px 5px 0 #000;position:relative;display:flex;flex-direction:column;transition:all .15s ease}
+.card{background:var(--card);border:2px solid #000;box-shadow:5px 5px 0 #000;position:relative;display:flex;flex-direction:column;transition:transform .15s ease, box-shadow .15s ease}
 @media (hover: hover) {
   .card:hover{border-color:var(--red);box-shadow:6px 6px 0 var(--red);transform:translate(-2px, -2px)}
 }
@@ -199,13 +207,13 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 
 /* 3D Merch Studio Stage */
 .studio{
-  margin-top:60px;
+  margin-top:50px;
   border:3px solid var(--red);
   background:#0e0e13;
   box-shadow:8px 8px 0 #000;
-  padding:22px;
+  padding:20px;
   display:grid;
-  gap:26px;
+  gap:24px;
   position:relative;
 }
 .studio::before{
@@ -228,6 +236,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
   width:min(100%, 340px);
   aspect-ratio:1;
   margin:auto;
+  touch-action:pan-y;
 }
 .mock-3d{
   position:relative;
@@ -243,7 +252,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 }
 .mock-3d svg{width:86%;height:86%;fill:#111113;stroke:#333;stroke-width:2;transform:translateZ(10px)}
 
-/* 3D Print Placement Slots */
 .print-area{
   position:absolute;
   top:30%;
@@ -278,7 +286,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 }
 .cnt{background:#000;color:var(--volt);padding:2px 10px;font-size:14px;border:1px solid #333;margin-inline-start:6px}
 
-.ov{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);z-index:60;opacity:0;pointer-events:none;transition:opacity .2s ease}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:60;opacity:0;pointer-events:none;transition:opacity .2s ease}
 .ov.on{opacity:1;pointer-events:auto}
 
 .sheet{
@@ -296,6 +304,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
   transition:transform .28s cubic-bezier(0.16, 1, 0.3, 1);
   padding-bottom:max(16px, var(--sab));
   box-shadow:0 -10px 30px rgba(0,0,0,.8);
+  overscroll-behavior:contain;
 }
 .sheet.on{transform:none}
 @media(min-width:768px){
@@ -435,14 +444,10 @@ footer a{color:var(--red);text-decoration:none;font-weight:700}
     <div>
       <div class="stage-3d-wrap" id="stageWrap">
         <div class="mock-3d" id="mock3D">
-          <!-- Short Sleeve Tee Path -->
           <svg viewBox="0 0 100 100" id="svgShort" class="mock-svg"><path d="M30,10 L40,18 Q50,22 60,18 L70,10 L92,26 L82,42 L72,34 L72,92 L28,92 L28,34 L18,42 L8,26 Z"/></svg>
-          <!-- Long Sleeve Tee Path -->
           <svg viewBox="0 0 100 100" id="svgLong" class="mock-svg hide"><path d="M30,10 L40,18 Q50,22 60,18 L70,10 L94,54 L84,59 L72,40 L72,92 L28,92 L28,40 L16,59 L6,54 Z"/></svg>
-          <!-- Hoodie Path -->
           <svg viewBox="0 0 100 100" id="svgHoodie" class="mock-svg hide"><path d="M32,14 Q50,4 68,14 L94,52 L84,58 L74,40 L74,92 L26,92 L26,40 L16,58 L6,52 Z M40,14 Q50,20 60,14 Q50,8 40,14 Z M38,62 L62,62 L66,78 L34,78 Z"/></svg>
           
-          <!-- 3D Print Placement Frame -->
           <div class="print-area">
             <div id="artGallery" style="display:flex;gap:4px;flex-wrap:wrap;justify-content:center;max-height:100%"></div>
             <span id="artHint" style="font-size:11px;color:var(--volt);font-weight:900;background:rgba(0,0,0,.7);padding:2px 6px">مكان الطباعة (3D)</span>
@@ -607,7 +612,7 @@ footer a{color:var(--red);text-decoration:none;font-weight:700}
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
-/* ============ FIREBASE (محتفظ بنفس الإعدادات والمعلومات دون أي تعديل) ============ */
+/* ============ FIREBASE CONFIG ============ */
 const firebaseConfig = {
   apiKey: "AIzaSyAfBwswaphXEWocZholBZCGwuj2q5LJ0kQ",
   authDomain: "backstage-thrift-a4e79.firebaseapp.com",
@@ -619,7 +624,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore(), auth = firebase.auth();
 
-/* ============ SHIPPING DATA ============ */
+/* ============ SHIPPING RATES ============ */
 const WIL = ("أدرار|Adrar,الشلف|Chlef,الأغواط|Laghouat,أم البواقي|Oum El Bouaghi,باتنة|Batna,بجاية|Béjaïa,بسكرة|Biskra,بشار|Béchar,البليدة|Blida,البويرة|Bouira,تمنراست|Tamanrasset,تبسة|Tébessa,تلمسان|Tlemcen,تيارت|Tiaret,تيزي وزو|Tizi Ouzou,الجزائر|Alger,الجلفة|Djelfa,جيجل|Jijel,سطيف|Sétif,سعيدة|Saïda,سكيكدة|Skikda,سيدي بلعباس|Sidi Bel Abbès,عنابة|Annaba,قالمة|Guelma,قسنطينة|Constantine,المدية|Médéa,مستغانم|Mostaganem,المسيلة|M'Sila,معسكر|Mascara,ورقلة|Ouargla,وهران|Oran,البيض|El Bayadh,إليزي|Illizi,برج بوعريريج|Bordj Bou Arréridj,بومرداس|Boumerdès,الطارف|El Tarf,تندوف|Tindouf,تيسمسيلت|Tissemsilt,الوادي|El Oued,خنشلة|Khenchela,سوق أهراس|Souk Ahras,تيبازة|Tipaza,ميلة|Mila,عين الدفلى|Aïn Defla,النعامة|Naâma,عين تموشنت|Aïn Témouchent,غرداية|Ghardaïa,غليزان|Relizane,تيميمون|Timimoun,برج باجي مختار|Bordj Badji Mokhtar,أولاد جلال|Ouled Djellal,بني عباس|Béni Abbès,عين صالح|In Salah,عين قزام|In Guezzam,توقرت|Touggourt,جانت|Djanet,المغير|El M'Ghair,المنيعة|El Menia").split(",");
 const TIER = {S:[550,450],N:[700,550],C:[900,650],A:[950,750],D:[1050,850],G:[1600,1400]};
 const TMAP = {21:'S',16:'N',18:'N',23:'N',24:'N',25:'N',43:'N',3:'A',7:'A',17:'A',30:'A',39:'A',47:'A',51:'A',55:'A',57:'A',58:'A',1:'D',8:'D',32:'D',45:'D',49:'D',50:'D',52:'D',11:'G',33:'G',37:'G',53:'G',54:'G',56:'G'};
@@ -637,7 +642,6 @@ const PH = "data:image/svg+xml," + encodeURIComponent("<svg xmlns='http://www.w3
 
 let gender = 'men', cat = 'all', products = [], cart = [], isAdmin = false, loaded = false;
 
-/* إعدادات أسعار الملابس المخصصة */
 let customPricing = {
   short: 2800,
   long: 3400,
@@ -841,7 +845,7 @@ async function sendOrder() {
   window.location.href = 'https://api.whatsapp.com/send?phone=213697783635&text=' + encodeURIComponent(msg);
 }
 
-/* ============ 3D MERCH STUDIO & CUSTOM PRICING ============ */
+/* ============ 3D MERCH STUDIO & PRICING ============ */
 function calcTeeCurrentPrice() {
   let base = customPricing[studio.type] || customPricing.short;
   if (studio.files.length > 1) {
@@ -922,29 +926,21 @@ function addTee() {
   saveCart(); renderCart(); cartOpen(true); toast('تمت إضافة القطعة المخصصة للسلة ⚡');
 }
 
-/* تفاعل الحركة ثلاثية الأبعاد 3D Tilt Effect */
+/* 3D Motion Handlers (Optimized for Pointer events) */
 const stageWrap = $('stageWrap');
 const mock3D = $('mock3D');
 if (stageWrap && mock3D) {
-  const handleMove = (x, y, rect) => {
+  const handlePointer = (x, y, rect) => {
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
-    const dx = (x - cx) / (rect.width / 2);
-    const dy = (y - cy) / (rect.height / 2);
+    const dx = Math.max(-1, Math.min(1, (x - cx) / (rect.width / 2)));
+    const dy = Math.max(-1, Math.min(1, (y - cy) / (rect.height / 2)));
     mock3D.style.transform = `rotateY(${dx * 18}deg) rotateX(${-dy * 18}deg)`;
   };
-  stageWrap.addEventListener('mousemove', e => {
-    handleMove(e.clientX, e.clientY, stageWrap.getBoundingClientRect());
+  stageWrap.addEventListener('pointermove', e => {
+    handlePointer(e.clientX, e.clientY, stageWrap.getBoundingClientRect());
   });
-  stageWrap.addEventListener('mouseleave', () => {
-    mock3D.style.transform = 'rotateY(0deg) rotateX(0deg)';
-  });
-  stageWrap.addEventListener('touchmove', e => {
-    if (e.touches.length) {
-      handleMove(e.touches[0].clientX, e.touches[0].clientY, stageWrap.getBoundingClientRect());
-    }
-  }, { passive: true });
-  stageWrap.addEventListener('touchend', () => {
+  stageWrap.addEventListener('pointerleave', () => {
     mock3D.style.transform = 'rotateY(0deg) rotateX(0deg)';
   });
 }
@@ -1041,7 +1037,7 @@ function watchOrders() {
 }
 function stopOrders() { unsubOrders && unsubOrders(); unsubOrders = null; }
 
-/* ============ YOUTUBE ROCK PLAYER (AUTOPLAY PRESERVED) ============ */
+/* ============ YOUTUBE ROCK PLAYER ============ */
 let yt = null, ytReady = false, ytSrc = null, playing = false, userPaused = false;
 function parseYT(u) {
   try {

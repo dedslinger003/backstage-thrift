@@ -172,6 +172,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .live{font-size:12px;color:var(--volt);font-weight:700;display:flex;gap:6px;align-items:center;background:#000;border:1px solid #333;padding:4px 10px}
 .live i{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
 
+/* Auto-fitting Responsive Grid */
 .grid{display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:14px}
 @media(min-width:680px){.grid{grid-template-columns:repeat(3, minmax(0, 1fr));gap:18px}}
 @media(min-width:1080px){.grid{grid-template-columns:repeat(4, minmax(0, 1fr));gap:22px}}
@@ -181,16 +182,20 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
   .card:hover{border-color:var(--red);box-shadow:6px 6px 0 var(--red);transform:translate(-2px, -2px)}
 }
 .card.sold{opacity:.65;filter:grayscale(60%)}
-.ph{position:relative;aspect-ratio:3/4;background:#000;overflow:hidden;border-bottom:2px solid #000}
+.ph{position:relative;aspect-ratio:3/4;background:#000;overflow:hidden;border-bottom:2px solid #000;cursor:pointer}
 .ph img{width:100%;height:100%;object-fit:cover}
 .tag{position:absolute;top:8px;right:8px;background:var(--volt);color:#000;border:2px solid #000;font-family:'Bebas Neue',sans-serif;font-size:12px;padding:2px 8px;letter-spacing:1px;box-shadow:2px 2px 0 #000;z-index:2}
 .so{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-family:'Bebas Neue';font-size:36px;color:#fff;letter-spacing:2px;background:rgba(0,0,0,.85);border:4px solid var(--red);transform:rotate(-4deg) scale(0.95);z-index:3;text-shadow:3px 3px 0 var(--red)}
 .cb{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1}
-.cb h3{font-size:15px;line-height:1.3;font-weight:700;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:38px}
+.cb h3{font-size:15px;line-height:1.3;font-weight:700;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:38px;cursor:pointer}
 .desc-txt{font-size:12px;color:var(--mut);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.4}
 .sz{font-size:12px;font-weight:900;color:var(--volt);background:#000;border:1px solid #333;padding:2px 8px;align-self:flex-start;direction:ltr}
 .row{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:auto;padding-top:12px;border-top:2px dashed var(--line)}
+
+.price-wrap{display:flex;flex-direction:column;line-height:1}
 .pr{font-family:'Bebas Neue';font-size:26px;color:var(--volt);letter-spacing:1px;text-shadow:1px 1px 0 #000}
+.old-pr{font-family:'Bebas Neue';font-size:16px;color:var(--red);text-decoration:line-through;margin-bottom:2px}
+
 .add{min-height:40px;padding:0 14px;background:#1a1a24;border:2px solid #000;box-shadow:3px 3px 0 #000;font-size:12px;font-weight:900}
 .add:not(:disabled):active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000;background:var(--red);color:#fff}
 .add:disabled{color:#555;background:#0d0d10;box-shadow:none;border-color:#222;cursor:not-allowed}
@@ -519,6 +524,29 @@ footer a{color:var(--red);text-decoration:none;font-weight:700}
 
 <div class="ov" id="ov" onclick="closeAll()"></div>
 
+<!-- SINGLE PRODUCT VIEW SHEET -->
+<aside class="sheet" id="pViewSheet">
+  <div class="sh"><h3 class="hd" id="pvTitle">تفاصيل القطعة</h3><button class="ic" onclick="closeAll()" aria-label="إغلاق">✕</button></div>
+  <div class="sb" id="pvBody">
+    <div class="ph" id="pvGallery" style="border:2px solid #000;box-shadow:4px 4px 0 #000"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="price-wrap">
+        <span id="pvOldPrice" class="old-pr hide"></span>
+        <b class="pr" id="pvPrice" style="font-size:32px">0 دج</b>
+      </div>
+      <span class="sz" id="pvSize" style="font-size:14px"></span>
+    </div>
+    <div style="background:#15151e;border:2px solid #000;padding:12px;box-shadow:4px 4px 0 #000">
+      <b style="color:var(--volt);font-size:13px;display:block;margin-bottom:4px">وصف وتفاصيل القطعة:</b>
+      <p id="pvDesc" style="font-size:13px;color:var(--tx);line-height:1.6"></p>
+    </div>
+    <div style="display:flex;gap:6px">
+      <button class="btn b-red" id="pvAddBtn" style="flex:1">＋ إضافة للسلة</button>
+      <button class="btn b-dark" onclick="closeAll()">رجوع</button>
+    </div>
+  </div>
+</aside>
+
 <!-- CART -->
 <aside class="sheet" id="cart">
   <div class="sh"><h3 class="hd">سلة المشتريات</h3><button class="ic" onclick="closeAll()" aria-label="إغلاق">✕</button></div>
@@ -530,7 +558,7 @@ footer a{color:var(--red);text-decoration:none;font-weight:700}
 
     <!-- COUPON SECTION -->
     <div style="background:#121218;border:2px solid #000;padding:10px 12px;display:grid;gap:6px">
-      <label style="font-size:12px;font-weight:900;color:var(--volt)">🎟 هل لديك كود خصم (10% OFF)؟</label>
+      <label style="font-size:12px;font-weight:900;color:var(--volt)">🎟 هل لديك كود خصم؟</label>
       <div style="display:flex;gap:6px">
         <input id="cCouponInput" placeholder="أدخل كود الكوبون..." style="min-height:40px;font-size:14px;text-transform:uppercase">
         <button class="btn b-volt" style="min-height:40px;padding:0 14px;font-size:13px" onclick="applyCoupon()">تطبيق</button>
@@ -560,7 +588,7 @@ footer a{color:var(--red);text-decoration:none;font-weight:700}
 
     <div class="sum">
       <div><span>مجموع السلع</span><span id="sSub">0 دج</span></div>
-      <div id="rowDiscount" class="hide" style="color:var(--ok)"><span>خصم الكوبون (10%)</span><span id="sDiscount">-0 دج</span></div>
+      <div id="rowDiscount" class="hide" style="color:var(--ok)"><span>خصم الكوبون (على السلع فقط)</span><span id="sDiscount">-0 دج</span></div>
       <div><span>التوصيل (طرد Guepex موحد)</span><span id="sShip" style="color:var(--volt)">حدد الولاية</span></div>
       <div class="t"><span>المجموع الكلي عند الاستلام</span><span id="sTot">0 دج</span></div>
     </div>
@@ -585,7 +613,7 @@ footer a{color:var(--red);text-decoration:none;font-weight:700}
   <div class="tabs">
     <button class="pill on" data-t="tp" onclick="tab('tp')">القطع المعروضة</button>
     <button class="pill" data-t="to" onclick="tab('to')">الطلبيات <span class="cnt" id="newOrd">0</span></button>
-    <button class="pill" data-t="tcoupons" onclick="tab('tcoupons')">الكوبونات (10%)</button>
+    <button class="pill" data-t="tcoupons" onclick="tab('tcoupons')">إدارة الكوبونات</button>
     <button class="pill" data-t="ts" onclick="tab('ts')">الأسعار وGuepex</button>
   </div>
 
@@ -599,7 +627,14 @@ footer a{color:var(--red);text-decoration:none;font-weight:700}
         <select id="nCat"><option value="tees">Band Tees</option><option value="boots">Boots</option><option value="jackets">Jackets</option><option value="sneakers">Sneakers</option><option value="jeans">Jeans</option><option value="flannels">Flannels</option><option value="accessories">Accessories</option></select>
         <select id="nGen"><option value="men">رجال</option><option value="women">نساء</option><option value="unisex">Unisex</option></select>
       </div>
-      <div class="two"><input id="nSize" placeholder="القياس: XL / EU 43" required><input id="nPrice" type="number" inputmode="numeric" min="100" placeholder="السعر دج" required></div>
+      <div class="two">
+        <input id="nSize" placeholder="القياس: XL / EU 43" required>
+        <input id="nPrice" type="number" inputmode="numeric" min="100" placeholder="السعر الحالي (دج)" required>
+      </div>
+      <div class="f">
+        <label>السعر القديم المشطوب (اختياري - في حال وجود تخفيض)</label>
+        <input id="nOldPrice" type="number" inputmode="numeric" placeholder="مثال: 4500 (سيظهر مشطوباً فوق السعر الحالي)">
+      </div>
       <label class="btn b-dark" style="cursor:pointer">📷 صور القطعة من الهاتف (حتى 8)<input type="file" accept="image/*" multiple id="nFile" class="hide" onchange="document.getElementById('nFileName').textContent=this.files.length?this.files.length+' صور مختارة':''"></label>
       <span id="nFileName" style="font-size:12px;color:var(--volt);font-weight:700"></span>
       <textarea id="nUrl" placeholder="أو روابط الصور مباشرة (رابط في كل سطر) — يدعم Google Drive"></textarea>
@@ -614,12 +649,20 @@ footer a{color:var(--red);text-decoration:none;font-weight:700}
   <!-- Coupons Management Tab -->
   <div class="sb hide" id="tcoupons">
     <div style="background:#121218;border:2px solid #000;box-shadow:4px 4px 0 #000;padding:16px;display:grid;gap:12px">
-      <b style="color:var(--volt)" class="hd">🎟 إنشاء كوبون خصم 10% (استخدام لمرة واحدة)</b>
-      <div style="display:flex;gap:8px">
+      <b style="color:var(--volt)" class="hd">🎟 إنشاء كوبون تخفيض مخصص (استخدام لمرة واحدة)</b>
+      <div class="two">
         <input id="newCouponCode" placeholder="رمز الكوبون (مثال: ROCK10)" style="text-transform:uppercase">
-        <button class="btn b-volt" onclick="addCoupon()">إنشاء الكوبون</button>
+        <select id="newCouponType">
+          <option value="percent">نسبة مئوية (%)</option>
+          <option value="fixed">مبلغ ثابت (دج)</option>
+        </select>
       </div>
-      <small style="color:var(--mut)">الكوبون يتم إلغاء تفعيله تلقائياً بمجرد إتمام أي زبون لطلبيته به (Single Use).</small>
+      <div class="f">
+        <label>قيمة التخفيض (مثال: 10 للنسبة المئوية، أو 500 للمبلغ الثابت):</label>
+        <input id="newCouponVal" type="number" min="1" placeholder="مثال: 10 أو 500" required>
+      </div>
+      <button class="btn b-volt" onclick="addCoupon()">إنشاء الكوبون</button>
+      <small style="color:var(--mut)">الخصم يُحسب فقط على مجموع السلع، ولا يمس سعر التوصيل. الكوبون يُلغى تلقائياً بعد استخدامه.</small>
     </div>
     <div id="couponsList" style="display:grid;gap:8px"></div>
   </div>
@@ -669,7 +712,6 @@ let GUEPEX_TOKEN = "98Dpox1uVHmUSlAfqvCYgPWasiR4nGe02N6JFQXbw7zM3jLtdrchTkBIO5ZK
 /* ============ SHIPPING RATES (GUEPEX) ============ */
 const WIL = ("أدرار|Adrar,الشلف|Chlef,الأغواط|Laghouat,أم البواقي|Oum El Bouaghi,باتنة|Batna,بجاية|Béjaïa,بسكرة|Biskra,بشار|Béchar,البليدة|Blida,البويرة|Bouira,تمنراست|Tamanrasset,تبسة|Tébessa,تلمسان|Tlemcen,تيارت|Tiaret,تيزي وزو|Tizi Ouzou,الجزائر|Alger,الجلفة|Djelfa,جيجل|Jijel,سطيف|Sétif,سعيدة|Saïda,سكيكدة|Skikda,سيدي بلعباس|Sidi Bel Abbès,عنابة|Annaba,قالمة|Guelma,قسنطينة|Constantine,المدية|Médéa,مستغانم|Mostaganem,المسيلة|M'Sila,معسكر|Mascara,ورقلة|Ouargla,وهران|Oran,البيض|El Bayadh,إليزي|Illizi,برج بوعريريج|Bordj Bou Arréridj,بومرداس|Boumerdès,الطارف|El Tarf,تندوف|Tindouf,تيسمسيلت|Tissemsilt,الوادي|El Oued,خنشلة|Khenchela,سوق أهراس|Souk Ahras,تيبازة|Tipaza,ميلة|Mila,عين الدفلى|Aïn Defla,النعامة|Naâma,عين تموشنت|Aïn Témouchent,غرداية|Ghardaïa,غليزان|Relizane,تيميمون|Timimoun,برج باجي مختار|Bordj Badji Mokhtar,أولاد جلال|Ouled Djellal,بني عباس|Béni Abbès,عين صالح|In Salah,عين قزام|In Guezzam,توقرت|Touggourt,جانت|Djanet,المغير|El M'Ghair,المنيعة|El Menia").split(",");
 
-// Tiers for Express & Economique (Home, Desk)
 const TIER_EXPRESS = {S:[550,450],N:[700,550],C:[900,650],A:[950,750],D:[1050,850],G:[1600,1400]};
 const TIER_ECO =     {S:[450,350],N:[600,450],C:[750,550],A:[850,650],D:[950,750],G:[1400,1200]};
 const TMAP = {21:'S',16:'N',18:'N',23:'N',24:'N',25:'N',43:'N',3:'A',7:'A',17:'A',30:'A',39:'A',47:'A',51:'A',55:'A',57:'A',58:'A',1:'D',8:'D',32:'D',45:'D',49:'D',50:'D',52:'D',11:'G',33:'G',37:'G',53:'G',54:'G',56:'G'};
@@ -687,7 +729,7 @@ const SIZES = ['S','M','L','XL','XXL'];
 const PH = "data:image/svg+xml," + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' width='300' height='400'><rect fill='#000' width='300' height='400'/><text x='150' y='210' fill='#ffe600' font-size='22' text-anchor='middle' font-family='sans-serif'>HOT TOPIC 90S</text></svg>");
 
 let gender = 'men', cat = 'all', products = [], cart = [], isAdmin = false, loaded = false;
-let appliedCoupon = null; // Holds valid coupon { id, code, discount: 0.10 }
+let appliedCoupon = null; // { id, code, type, value }
 
 let customPricing = {
   short: 2800,
@@ -782,12 +824,19 @@ function renderCatalog() {
   $('empty').classList.toggle('hide', !loaded || list.length > 0);
   $('grid').innerHTML = list.map(p => `
     <article class="card ${p.sold ? 'sold' : ''}">
-      <div class="ph">${gallery(p)}<span class="tag">1 OF 1</span>${p.sold ? '<div class="so">SOLD OUT</div>' : ''}</div>
+      <div class="ph" onclick="openProductView('${p.id}')">
+        ${gallery(p)}
+        <span class="tag">1 OF 1</span>
+        ${p.sold ? '<div class="so">SOLD OUT</div>' : ''}
+      </div>
       <div class="cb">
-        <h3>${esc(p.title)}</h3>${p.description ? `<p class="desc-txt">${esc(p.description)}</p>` : ''}
+        <h3 onclick="openProductView('${p.id}')">${esc(p.title)}</h3>${p.description ? `<p class="desc-txt">${esc(p.description)}</p>` : ''}
         <span class="sz">${esc(p.size)}</span>
         <div class="row">
-          <b class="pr">${fmt(p.price)}</b>
+          <div class="price-wrap">
+            ${p.oldPrice && p.oldPrice > p.price ? `<span class="old-pr">${fmt(p.oldPrice)}</span>` : ''}
+            <b class="pr">${fmt(p.price)}</b>
+          </div>
           <button class="add" ${p.sold ? 'disabled' : ''} onclick="addPiece('${p.id}')">${p.sold ? 'مباعة' : '＋ للسلة'}</button>
         </div>
       </div>
@@ -803,7 +852,39 @@ function gallery(p) {
 }
 const cnt = c => { const n = c.parentElement.querySelector('.cn'); if (n) n.textContent = (Math.round(c.scrollLeft / c.clientWidth) + 1) + '/' + c.children.length; };
 const slide = (b, d) => { const c = b.parentElement.querySelector('.car'); c.scrollBy({ left: d * c.clientWidth, behavior: 'smooth' }); };
-function rename(id) { const p = products.find(x => x.id === id); const n = prompt('اسم المنتج:', p ? p.title : ''); if (n && n.trim()) upd(id, { title: n.trim() }); }
+
+/* ============ SINGLE PRODUCT VIEW ============ */
+function openProductView(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  closeAll();
+  $('pvTitle').textContent = p.title;
+  $('pvGallery').innerHTML = gallery(p);
+  $('pvSize').textContent = `القياس: ${p.size}`;
+  $('pvDesc').textContent = p.description || 'قطعة أصلية فريدة من أرشيف التسعينات، متوفرة بحبة واحدة فقط 1 of 1.';
+  
+  if (p.oldPrice && p.oldPrice > p.price) {
+    $('pvOldPrice').textContent = fmt(p.oldPrice);
+    $('pvOldPrice').classList.remove('hide');
+  } else {
+    $('pvOldPrice').classList.add('hide');
+  }
+  $('pvPrice').textContent = fmt(p.price);
+
+  const addBtn = $('pvAddBtn');
+  if (p.sold) {
+    addBtn.disabled = true;
+    addBtn.textContent = 'بيعت القطعة (Sold Out)';
+  } else {
+    addBtn.disabled = false;
+    addBtn.textContent = '＋ إضافة القطعة للسلة';
+    addBtn.onclick = () => { addPiece(p.id); closeAll(); };
+  }
+
+  $('pViewSheet').classList.add('on');
+  $('ov').classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
 
 /* ============ CART, COUPON & TOTALS ============ */
 function addPiece(id) {
@@ -842,8 +923,13 @@ async function applyCoupon() {
       msg.style.color = 'var(--red)';
       appliedCoupon = null; totals(); return;
     }
-    appliedCoupon = { id: q.docs[0].id, code: cData.code, discount: 0.10 };
-    msg.textContent = '✔ تم تفعيل خصم 10% بنجاح!';
+    appliedCoupon = { 
+      id: q.docs[0].id, 
+      code: cData.code, 
+      type: cData.type || 'percent', 
+      value: Number(cData.value) || 10 
+    };
+    msg.textContent = `✔ تم تفعيل الخصم (${appliedCoupon.type === 'percent' ? appliedCoupon.value + '%' : fmt(appliedCoupon.value)}) على السلع!`;
     msg.style.color = 'var(--ok)';
     totals();
   } catch (err) {
@@ -860,13 +946,18 @@ function totals() {
   
   let discountAmount = 0;
   if (appliedCoupon && sub > 0) {
-    discountAmount = Math.round(sub * appliedCoupon.discount);
+    if (appliedCoupon.type === 'percent') {
+      discountAmount = Math.round(sub * (appliedCoupon.value / 100));
+    } else {
+      discountAmount = Math.min(sub, appliedCoupon.value);
+    }
     $('rowDiscount').classList.remove('hide');
     $('sDiscount').textContent = `-${fmt(discountAmount)}`;
   } else {
     $('rowDiscount').classList.add('hide');
   }
 
+  // التخفيض ينقص فقط من سعر السلع، والتوصيل يضاف ثابتاً
   const finalItemsTotal = Math.max(0, sub - discountAmount);
   $('sSub').textContent = fmt(sub);
   $('sShip').textContent = w ? `${fmt(sh)} (${speed === 'express' ? 'Express' : 'Éco'} موحد)` : 'حدد الولاية';
@@ -896,7 +987,16 @@ async function sendOrder() {
   const btn = $('sendBtn'); btn.disabled = true;
   const sub = orderItems.reduce((a, i) => a + Number(i.price), 0);
   const sh = getDeliveryFee(w, mode, speed);
-  const discountAmount = appliedCoupon ? Math.round(sub * appliedCoupon.discount) : 0;
+
+  let discountAmount = 0;
+  if (appliedCoupon && sub > 0) {
+    if (appliedCoupon.type === 'percent') {
+      discountAmount = Math.round(sub * (appliedCoupon.value / 100));
+    } else {
+      discountAmount = Math.min(sub, appliedCoupon.value);
+    }
+  }
+
   const finalItemsTotal = Math.max(0, sub - discountAmount);
   const total = finalItemsTotal + sh;
 
@@ -907,7 +1007,7 @@ async function sendOrder() {
   const lines = orderItems.map(i => ['🏷 *المنتج:* ' + nm(i), '🗂 *التصنيف:* ' + catOf(i), '📏 *القياس:* ' + i.size, '💵 *السعر:* ' + fmt(i.price)]
     .concat(i.custom ? ['🎨 *اللون:* ' + i.color, '🖼 *الصور:* ' + (i.files || i.file), '📝 *مواضع الطباعة:* ' + i.note] : ['🔖 *المرجع:* ' + String(i.id).slice(-5).toUpperCase()]).join('\n')).join('\n\n─────────────\n\n');
 
-  const couponStr = appliedCoupon ? `🎟 *كوبون الخصم:* ${appliedCoupon.code} (-10% = -${fmt(discountAmount)})\n` : '';
+  const couponStr = appliedCoupon ? `🎟 *كوبون الخصم:* ${appliedCoupon.code} (${appliedCoupon.type === 'percent' ? appliedCoupon.value + '%' : fmt(appliedCoupon.value)} = -${fmt(discountAmount)})\n` : '';
 
   const msg = `⚡ *COMMANDE - BACKSTAGE 90s THRIFT* ⚡\n` +
               `--------------------------------\n` +
@@ -920,16 +1020,15 @@ async function sendOrder() {
               `\n📋 *قائمة السلع:*\n${names}\n\n` +
               `📝 *تفاصيل المنتجات:*\n\n${lines}\n\n` +
               `--------------------------------\n` +
-              `💰 *مجموع السلع:* ${fmt(sub)}\n` +
-              (appliedCoupon ? `✂ *بعد الخصم:* ${fmt(finalItemsTotal)}\n` : '') +
-              `🚚 *سعر التوصيل (Guepex طرد موحد):* ${fmt(sh)}\n` +
+              `💰 *مجموع السلع الأصلي:* ${fmt(sub)}\n` +
+              (appliedCoupon ? `✂ *مجموع السلع بعد الخصم:* ${fmt(finalItemsTotal)}\n` : '') +
+              `🚚 *سعر التوصيل (طرد موحد):* ${fmt(sh)}\n` +
               `★ *المجموع الصافي عند الاستلام:* ${fmt(total)}*`;
 
   try {
     const b = db.batch();
     orderItems.filter(i => !i.custom).forEach(i => b.update(db.collection('products').doc(i.id), { sold: true }));
     
-    // تسجيل الكوبون كمستعمل حتى لا يعاد استخدامه
     if (appliedCoupon && appliedCoupon.id) {
       b.update(db.collection('coupons').doc(appliedCoupon.id), { used: true, usedBy: phone, usedAt: Date.now() });
     }
@@ -938,7 +1037,6 @@ async function sendOrder() {
       name, phone, wilaya: wname(w), commune: com, mode, speed,
       subtotal: sub, discount: discountAmount, shipping: sh, total,
       coupon: appliedCoupon ? appliedCoupon.code : null,
-      guepexTokenUsed: GUEPEX_TOKEN.slice(0, 10) + '...',
       status: 'new', createdAt: Date.now(),
       items: orderItems.map(i => ({ title: i.title, size: i.size, price: i.price, custom: !!i.custom, note: i.note || '' }))
     });
@@ -1059,13 +1157,41 @@ function tab(t) {
   ['tp', 'to', 'tcoupons', 'ts'].forEach(x => $(x).classList.toggle('hide', x !== t));
   document.querySelectorAll('.tabs .pill').forEach(b => b.classList.toggle('on', b.dataset.t === t));
 }
+
 function renderAdminList() {
   $('aList').innerHTML = `<small style="color:var(--volt);font-weight:700">${products.length} قطعة في الأرشيف</small>` + products.map(p => `
     <div class="ar"><img src="${esc(img(imgsOf(p)[0]))}" alt="" onerror="this.src=PH">
-      <div class="i"><b>${esc(p.title)}</b><span style="color:var(--volt)">${esc(p.size)}</span> • ${esc(p.category)} • ${esc(p.gender)}</div>
-      <div class="a"><input type="number" inputmode="numeric" value="${p.price}" onchange="upd('${p.id}',{price:Number(this.value)})" aria-label="السعر">
-        <div style="display:flex;gap:4px"><button class="tg ${p.sold ? 'out' : 'in'}" style="flex:1" onclick="upd('${p.id}',{sold:${!p.sold}})">${p.sold ? 'SOLD' : 'متوفر'}</button><button class="tg" style="border-color:#000" onclick="rename('${p.id}')" aria-label="تعديل الاسم">✏</button><button class="tg" style="border-color:#000" onclick="delProd('${p.id}')" aria-label="حذف">🗑</button></div></div></div>`).join('');
+      <div class="i">
+        <b>${esc(p.title)}</b>
+        <span style="color:var(--volt)">${esc(p.size)}</span> • ${esc(p.category)}
+        ${p.oldPrice ? `<small style="display:block;color:var(--red);text-decoration:line-through">قديم: ${fmt(p.oldPrice)}</small>` : ''}
+      </div>
+      <div class="a">
+        <input type="number" inputmode="numeric" value="${p.price}" onchange="upd('${p.id}',{price:Number(this.value)})" aria-label="السعر الحالي">
+        <div style="display:flex;gap:4px">
+          <button class="tg ${p.sold ? 'out' : 'in'}" style="flex:1" onclick="upd('${p.id}',{sold:${!p.sold}})">${p.sold ? 'SOLD' : 'متوفر'}</button>
+          <button class="tg" style="border-color:#000" onclick="editProduct('${p.id}')" aria-label="تعديل">✏</button>
+          <button class="tg" style="border-color:#000" onclick="delProd('${p.id}')" aria-label="حذف">🗑</button>
+        </div>
+      </div>
+    </div>`).join('');
 }
+
+function editProduct(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  const n = prompt('تعديل اسم المنتج:', p.title);
+  const pr = prompt('تعديل السعر الجديد الحالي (دج):', p.price);
+  const oldPr = prompt('تعديل السعر القديم المشطوب (اتركه فارغاً لإلغائه):', p.oldPrice || '');
+  
+  if (n !== null && pr !== null) {
+    const updateObj = { title: n.trim(), price: Number(pr) };
+    if (oldPr && Number(oldPr) > 0) updateObj.oldPrice = Number(oldPr);
+    else updateObj.oldPrice = null;
+    upd(id, updateObj);
+  }
+}
+
 const upd = (id, data) => db.collection('products').doc(id).update(data).then(() => toast('تم التحديث ⚡')).catch(e => toast('خطأ: ' + e.code));
 function delProd(id) { if (confirm('حذف هذه القطعة نهائياً من الأرشيف؟')) db.collection('products').doc(id).delete().then(() => toast('تم الحذف')).catch(e => toast('خطأ: ' + e.code)); }
 
@@ -1073,10 +1199,16 @@ async function addProduct(e) {
   e.preventDefault(); const btn = $('nBtn'); btn.disabled = true; btn.textContent = 'جارٍ النشر…';
   try {
     const files = [...$('nFile').files].slice(0, 8), links =$('nUrl').value.split(/[\s,]+/).map(s => s.trim()).filter(Boolean);
-    const images = [...await Promise.all(files.map(f => compress(f))), ...links].slice(0, 8);
-    if (!images.length) throw { code: 'أضف صورة واحدة على الأقل' }; if (JSON.stringify(images).length > 900000) throw { code: 'الصور كبيرة جداً، قلّل عددها' };
+    if (!files.length && !links.length) {
+      toast('أضف صورة واحدة على الأقل');
+      btn.disabled = false; btn.textContent = 'نشر القطعة في المتجر';
+      return;
+    }
+
+    const compressedFiles = await Promise.all(files.map(f => compress(f, 700, 0.65)));
+    const images = [...compressedFiles, ...links].slice(0, 8);
     
-    await db.collection('products').add({
+    const docData = {
       title: $('nTitle').value.trim(),
       description: $('nDesc').value.trim() || '',
       category: $('nCat').value,
@@ -1084,10 +1216,17 @@ async function addProduct(e) {
       size: $('nSize').value.trim(),
       price: Number($('nPrice').value),
       images,
-      image: images[0],
+      image: images[0] || '',
       sold: false,
       createdAt: Date.now()
-    });
+    };
+
+    const oldPriceVal = Number($('nOldPrice').value);
+    if (oldPriceVal && oldPriceVal > docData.price) {
+      docData.oldPrice = oldPriceVal;
+    }
+
+    await db.collection('products').add(docData);
     e.target.reset(); $('nFileName').textContent = ''; toast('تم نشر القطعة بنجاح ⚡');
   } catch (x) { toast('خطأ: ' + (x.code || x.message)); }
   btn.disabled = false; btn.textContent = 'نشر القطعة في المتجر';
@@ -1103,7 +1242,9 @@ function watchCoupons() {
       <div class="ar" style="justify-content:space-between">
         <div>
           <b style="color:var(--volt);font-size:16px">${esc(c.code)}</b>
-          <span style="font-size:12px;margin-inline-start:8px;color:${c.used ? 'var(--red)' : 'var(--ok)'}">[${c.used ? 'مستعمل ✖' : 'نشط (10% OFF) ✔'}]</span>
+          <span style="font-size:12px;margin-inline-start:8px;color:${c.used ? 'var(--red)' : 'var(--ok)'}">
+            [${c.used ? 'مستعمل ✖' : `نشط (${c.type === 'percent' ? c.value + '%' : fmt(c.value)}) ✔`}]
+          </span>
           ${c.usedBy ? `<small style="display:block;color:var(--mut)">استخدمه: ${esc(c.usedBy)}</small>` : ''}
         </div>
         <button class="tg" style="border-color:#000" onclick="delCoupon('${c.id}')">🗑</button>
@@ -1114,11 +1255,13 @@ function stopCoupons() { unsubCoupons && unsubCoupons(); unsubCoupons = null; }
 
 async function addCoupon() {
   const code = $('newCouponCode').value.trim().toUpperCase();
-  if (!code) return toast('أدخل رمز الكوبون');
+  const type = $('newCouponType').value;
+  const val = Number($('newCouponVal').value);
+  if (!code || !val) return toast('أدخل رمز الكوبون وقيمة التخفيض');
   try {
-    await db.collection('coupons').add({ code, discount: 0.10, used: false, createdAt: Date.now() });
-    $('newCouponCode').value = '';
-    toast('تمت إضافة الكوبون بنجاح ⚡');
+    await db.collection('coupons').add({ code, type, value: val, used: false, createdAt: Date.now() });
+    $('newCouponCode').value = '';$('newCouponVal').value = '';
+    toast('تم إنشاء الكوبون بنجاح ⚡');
   } catch (e) { toast('خطأ في إضافة الكوبون'); }
 }
 function delCoupon(id) { if (confirm('حذف هذا الكوبون؟')) db.collection('coupons').doc(id).delete().then(() => toast('تم الحذف')); }
@@ -1145,14 +1288,14 @@ const saveMusic = () => db.doc('settings/main').set({ musicUrl: $('sMusic').valu
 async function seed() {
   const U = 'https://images.unsplash.com/', q = '?w=600&auto=format&fit=crop&q=80', now = Date.now();
   const S = [
-    ['Vintage Santiago Studded Harness Boots','boots','men','EU 42.5',8800,'photo-1542291026-7eec264c27ff','جلد طبيعي أصلي مع قطع معدنية ويسترن، نعل ثقيل'],
-    ['Heavy Double-Rider Biker Leather Jacket','jackets','men','L (P2P 59cm)',13500,'photo-1551028719-00167b16eac5','جاكيت بايكر جلد طبيعي ثقيل بطراز التسعينات مع أزرار كروم وسحابات YKK'],
-    ['Y2K Faded Cropped Denim Jacket','jackets','women','M (52cm)',6800,'photo-1576995853123-5a10305d93c0','جاكيت جينز مغسول طراز Y2K بقصة قصيرة أنيقة'],
-    ['Nirvana 1993 In Utero Washed Band Tee','tees','unisex','L (P2P 56cm)',3600,'photo-1521572267360-ee0c2909d518','تيشيرت فينتاج نيرفانا جولة 1993 قطن مغسول أسود ناعم جداً']
+    ['Vintage Santiago Studded Harness Boots','boots','men','EU 42.5',8800,'photo-1542291026-7eec264c27ff','جلد طبيعي أصلي مع قطع معدنية ويسترن، نعل ثقيل', 10500],
+    ['Heavy Double-Rider Biker Leather Jacket','jackets','men','L (P2P 59cm)',13500,'photo-1551028719-00167b16eac5','جاكيت بايكر جلد طبيعي ثقيل بطراز التسعينات مع أزرار كروم وسحابات YKK', 16000],
+    ['Y2K Faded Cropped Denim Jacket','jackets','women','M (52cm)',6800,'photo-1576995853123-5a10305d93c0','جاكيت جينز مغسول طراز Y2K بقصة قصيرة أنيقة', null],
+    ['Nirvana 1993 In Utero Washed Band Tee','tees','unisex','L (P2P 56cm)',3600,'photo-1521572267360-ee0c2909d518','تيشيرت فينتاج نيرفانا جولة 1993 قطن مغسول أسود ناعم جداً', 4200]
   ];
   try {
     const b = db.batch();
-    S.forEach((s, i) => b.set(db.collection('products').doc(), { title: s[0], category: s[1], gender: s[2], size: s[3], price: s[4], image: U + s[5] + q, description: s[6], sold: false, createdAt: now - i }));
+    S.forEach((s, i) => b.set(db.collection('products').doc(), { title: s[0], category: s[1], gender: s[2], size: s[3], price: s[4], image: U + s[5] + q, description: s[6], oldPrice: s[7], sold: false, createdAt: now - i }));
     await b.commit(); toast('تم استيراد القطع التجريبية');
   } catch (e) { toast('خطأ: ' + e.code); }
 }
@@ -1167,10 +1310,10 @@ function watchOrders() {
       <div class="ord ${x.status === 'done' ? 'done' : ''}">
         <b>${esc(x.name)} • <a href="tel:${esc(x.phone)}" style="color:var(--volt)">${esc(x.phone)}</a></b>
         <span>${esc(x.wilaya)} - ${esc(x.commune)} • Guepex ${x.speed || 'Express'} (${x.mode === 'home' ? 'منزل' : 'Stop-Desk'})</span>
-        ${x.coupon ? `<span style="color:var(--ok)">كوبون: ${esc(x.coupon)} (-${fmt(x.discount || 0)})</span>` : ''}
+        ${x.coupon ? `<span style="color:var(--ok)">كوبون خصم: ${esc(x.coupon)} (-${fmt(x.discount || 0)})</span>` : ''}
         <span style="color:var(--mut)">${(x.items || []).map(i => esc(i.title) + ' (' + esc(i.size) + ')').join(' + ')}</span>
         <b style="color:var(--volt);font-size:16px">${fmt(x.total)}</b> <small style="color:var(--mut)">${new Date(x.createdAt).toLocaleString('fr-DZ')}</small>
-        <div style="display:flex;gap:6px;margin-top:4px"><button class="tg ${x.status === 'done' ? 'out' : 'in'}" onclick="db.collection('orders').doc('${x.id}').update({status:'${x.status === 'done' ? 'new' : 'done'}'})">${x.status === 'done' ? 'إعادة فتح' : '✔ تم الشحن'}</button>
+        <div style="display:flex;gap:6px;margin-top:6px"><button class="tg ${x.status === 'done' ? 'out' : 'in'}" onclick="db.collection('orders').doc('${x.id}').update({status:'${x.status === 'done' ? 'new' : 'done'}'})">${x.status === 'done' ? 'إعادة فتح' : '✔ تم الشحن'}</button>
         <button class="tg" style="border-color:#000" onclick="confirm('حذف الطلبية؟')&&db.collection('orders').doc('${x.id}').delete()">🗑</button></div></div>`).join('')
       : '<div class="empty">لا توجد طلبيات بعد</div>';
   }, e => toast('الطلبات: ' + e.code));

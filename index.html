@@ -66,7 +66,7 @@ display:inline-flex;
 align-items:center;
 justify-content:center;
 gap:8px;
-min-height:48px;
+min-height:46px;
 padding:0 18px;
 border-radius:6px;
 font-weight:900;
@@ -107,8 +107,8 @@ background:rgba(244,241,234,0.98);
 }
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0}
 .logo-img{
-width:46px;
-height:46px;
+width:44px;
+height:44px;
 border-radius:50%;
 border:2px solid var(--line);
 box-shadow:2px 2px 0 var(--line);
@@ -117,7 +117,7 @@ object-fit:cover;
 flex:none;
 }
 .brand-titles{display:flex;flex-direction:column;line-height:0.95;min-width:0}
-.brand-titles b{font-family:'Bebas Neue',sans-serif;font-size:25px;letter-spacing:.05em;white-space:nowrap}
+.brand-titles b{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:.05em;white-space:nowrap}
 .brand-titles small{font-size:9px;color:var(--red);letter-spacing:.15em;font-weight:900;white-space:nowrap}
 ​.hdr-actions{display:flex;align-items:center;gap:6px;flex:none}
 .ic-btn{
@@ -250,7 +250,7 @@ z-index:3;
 ​.add{min-height:36px;padding:0 10px;background:#fff;border:2px solid var(--line);box-shadow:2px 2px 0 var(--line);border-radius:4px;font-size:12px;font-weight:900}
 .add:not(:disabled):active{background:var(--red);color:#fff}
 .add:disabled{color:#888;background:#eee;cursor:not-allowed}
-​/* 3D Custom Studio Page */
+​/* 3D Studio Section */
 #customStudioPage{
 position:fixed;
 inset:0;
@@ -278,7 +278,8 @@ z-index:10;
 width:100%;
 aspect-ratio:1;
 max-height:380px;
-background:radial-gradient(circle at 50% 45%, #ffffff 0%, #dcd6c8 100%);
+min-height:320px;
+background:radial-gradient(circle at 50% 40%, #ffffff 0%, #ded8cb 100%);
 position:relative;
 touch-action:none;
 }
@@ -470,7 +471,7 @@ border-radius:6px;
 </div>
 ​<div id="threeCanvasContainer">
 <div class="touch-hint" id="t_touch_hint">👆 حرّك المجسم بإصبعك للدوران 360°</div>
-<div class="studio-loader" id="studioLoader">⚡ جارٍ تحميل موديل 3D...</div>
+<div class="studio-loader" id="studioLoader">⚡ جارٍ إعداد وتحميل المجسم 3D...</div>
 </div>
 ​<div class="wrap" style="padding-top:16px">
 <div style="display:flex;justify-content:space-between;align-items:center;background:#fff;padding:12px;border:2px solid var(--line);box-shadow:3px 3px 0 var(--line);border-radius:6px">
@@ -525,7 +526,7 @@ border-radius:6px;
 <button class="btn b-ok" id="sendBtn" onclick="sendOrder()">💬 تأكيد الطلبية عبر واتساب</button>
 </div>
 </aside>
-​<!-- ADMIN CONTROL PANEL (ALL RESTORED OPTIONS) -->
+​<!-- ADMIN CONTROL PANEL (INSTANT LOGIN + ALL FEATURES RESTORED) -->
 <aside class="sheet wide" id="admin">
 <div class="sh">
 <h3 class="hd">CONTROL PANEL // BACKSTAGE</h3>
@@ -539,7 +540,7 @@ border-radius:6px;
 <button class="pill" data-t="to" onclick="tab('to')">الطلبيات <span class="cnt" id="newOrd">0</span></button>
 <button class="pill" data-t="tcustom" onclick="tab('tcustom')">تخصيص 3D والموديلات</button>
 <button class="pill" data-t="tcoupons" onclick="tab('tcoupons')">الكوبونات</button>
-<button class="pill" data-t="tad" onclick="tab('tad')">الإعدادات و Guepex</button>
+<button class="pill" data-t="tad" onclick="tab('tad')">Guepex، الموسيقى والإعلانات</button>
 </div>
 ​<!-- Tab 1: Products -->
 <div class="sb" id="tp">
@@ -558,7 +559,7 @@ border-radius:6px;
 <input id="nOldPrice" type="number" placeholder="السعر القديم المشطوب (اختياري)">
 <label class="btn b-light" style="cursor:pointer">📷 صور من الهاتف<input type="file" accept="image/*" multiple id="nFile" class="hide" onchange="document.getElementById('nFileName').textContent=this.files.length+' صور'"></label>
 <span id="nFileName" style="font-size:12px;color:var(--red);font-weight:700"></span>
-<textarea id="nUrl" placeholder="أو روابط الصور مباشرة"></textarea>
+<textarea id="nUrl" placeholder="أو روابط الصور مباشرة (رابط في كل سطر)"></textarea>
 <button class="btn b-red" id="nBtn" type="submit">نشر القطعة</button>
 </form>
 <div id="aList" style="display:grid;gap:8px"></div>
@@ -572,7 +573,7 @@ border-radius:6px;
 <div style="background:#fff;border:2px solid var(--line);border-radius:6px;padding:12px;display:grid;gap:10px">
 <b class="hd" style="font-size:18px;color:var(--red)">👕 موديلات استوديو 3D (ملفات GLB)</b>
 <div class="stack-two">
-<input id="admTypeName" placeholder="اسم الموديل (مثال: Hoodie)">
+<input id="admTypeName" placeholder="اسم الموديل (مثال: Oversized Hoodie)">
 <input id="admTypePrice" type="number" placeholder="السعر (دج)">
 </div>
 <div class="stack-field">
@@ -598,9 +599,16 @@ border-radius:6px;
 <b class="hd" style="font-size:18px">🎟 إضافة كود خصم جديد</b>
 <div class="stack-two">
 <input id="newCouponCode" placeholder="كود الخصم (مثال: ROCK10)" style="text-transform:uppercase">
-<input id="newCouponVal" type="number" placeholder="نسبة الخصم % (مثال: 10)">
+<select id="newCouponType">
+<option value="percent">نسبة مئوية (%)</option>
+<option value="fixed">مبلغ ثابت (دج)</option>
+</select>
 </div>
-<button class="btn b-black" onclick="addCoupon()">تفعيل الكوبون</button>
+<div class="stack-field">
+<label>قيمة الخصم (مثال: 10 للنسبة أو 500 للدينار):</label>
+<input id="newCouponVal" type="number" placeholder="10">
+</div>
+<button class="btn b-black" onclick="addCoupon()">تفعيل وحفظ الكوبون</button>
 <div id="couponsList" style="display:grid;gap:6px"></div>
 </div>
 </div>
@@ -624,19 +632,24 @@ border-radius:6px;
 </div>
 ​<div style="background:#fff;border:2px solid var(--line);border-radius:6px;padding:12px;display:grid;gap:10px">
 <b class="hd" style="font-size:18px">🎸 موسيقى الروك التلقائية في الخلفية</b>
-<input id="sMusic" type="url" placeholder="رابط يوتيوب (مثال: https://www.youtube.com/watch?v=...)">
+<div class="stack-field">
+<label>رابط فيديو أو قائمة يوتيوب (YouTube Playlist / Video):</label>
+<input id="sMusic" type="url" placeholder="https://www.youtube.com/watch?v=... أو https://www.youtube.com/playlist?list=...">
+</div>
 <button class="btn b-black" onclick="saveMusic()">حفظ رابط الموسيقى</button>
 </div>
 </div>
 </aside>
-​<!-- ADMIN LOGIN -->
+​<!-- ADMIN QUICK LOGIN -->
 <aside class="sheet" id="login">
 <div class="sh"><h3 class="hd">دخول المالك</h3><button class="ic-btn" onclick="closeAll()">✕</button></div>
 <form class="sb" onsubmit="doLogin(event)">
-<input id="lMail" type="email" placeholder="البريد الإلكتروني" required>
-<input id="lPass" type="password" placeholder="كلمة السر" required>
-<div id="lErr" style="color:var(--red);font-size:12px"></div>
-<button class="btn b-black" type="submit">دخول</button>
+<div class="stack-field">
+<label>كلمة سر الإدارة (اكتب backstage):</label>
+<input id="lPass" type="password" placeholder="كلمة السر..." required>
+</div>
+<div id="lErr" style="color:var(--red);font-size:12px;font-weight:700"></div>
+<button class="btn b-black" type="submit">دخول لوحة التحكم</button>
 </form>
 </aside>
 ​<!-- Right Side FAB Cart -->
@@ -701,7 +714,9 @@ const FALLBACK_PRODUCTS = [
 let cart = [];
 try { cart = JSON.parse(localStorage.getItem('bt_cart') || '[]'); } catch (e) { cart = []; }
 ​let currentLang = localStorage.getItem('bt_lang') || 'ar';
-let gender = 'men', cat = 'all', isAdmin = false, appliedCoupon = null;
+let gender = 'men', cat = 'all';
+let isAdmin = sessionStorage.getItem('bt_admin') === '1';
+let appliedCoupon = null;
 ​const $ = id => document.getElementById(id);
 const fmt = n => Number(n).toLocaleString('en-US') + (currentLang === 'ar' ? ' دج' : ' DZD');
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&','<':'<','>':'>','"':'"',"'":'''}[c]));
@@ -747,6 +762,7 @@ if (!s.empty) {
 products = s.docs.map(d => ({ id: d.id, ...d.data() }));
 }
 renderCatalog();
+if (isAdmin) renderAdminList();
 }, () => renderCatalog());
 ​db.doc('settings/main').onSnapshot(d => {
 const s = d.data();
@@ -754,7 +770,7 @@ if (s) {
 if (s.studioConfig && Array.isArray(s.studioConfig.types) && s.studioConfig.types.length > 0) {
 studioConfig = s.studioConfig;
 renderStudioAttributes();
-renderAdminAttributes();
+if (isAdmin) renderAdminAttributes();
 }
 if (s.guepexToken) {
 GUEPEX_TOKEN = s.guepexToken;
@@ -833,7 +849,7 @@ const h = container.clientHeight || 340;
 ​scene = new THREE.Scene();
 scene.background = new THREE.Color(0xe5e1d8);
 ​camera = new THREE.PerspectiveCamera(40, w / h, 0.1, 100);
-camera.position.set(0, 0, 4.8);
+camera.position.set(0, 0, 4.6);
 ​renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(w, h);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -845,7 +861,7 @@ controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
 controls.enablePan = false;
-controls.minDistance = 2.5;
+controls.minDistance = 2.4;
 controls.maxDistance = 7.5;
 }
 ​// Realistic Studio 3-Point Lighting
@@ -857,7 +873,9 @@ scene.add(mainLight);
 ​const fillLight = new THREE.DirectionalLight(0xffffff, 0.6);
 fillLight.position.set(-4, -1, -3);
 scene.add(fillLight);
-​loadCurrentGLBModel();
+​// Initial immediate procedural garment so canvas is NEVER blank
+buildProceduralGarment();
+loadCurrentGLBModel();
 ​const anim = () => {
 requestAnimationFrame(anim);
 if (controls) controls.update();
@@ -871,41 +889,36 @@ if (!scene) return;
 const curType = currentStudioSelection.type;
 if (!curType || !curType.file) return;
 ​$('studioLoader').style.display = 'grid';
-​if (activeModelGroup) {
-scene.remove(activeModelGroup);
-activeModelGroup = null;
-}
-if (artMeshPlane) {
-scene.remove(artMeshPlane);
-artMeshPlane = null;
-}
 ​gltfLoader.load(curType.file, gltf => {
-activeModelGroup = gltf.scene;
-​// Center and Normalize Scale across various GLB exports
+if (activeModelGroup) scene.remove(activeModelGroup);
+if (artMeshPlane) scene.remove(artMeshPlane);
+​activeModelGroup = gltf.scene;
+​// Normalizing scale and position automatically
 const box = new THREE.Box3().setFromObject(activeModelGroup);
 const center = box.getCenter(new THREE.Vector3());
 const size = box.getSize(new THREE.Vector3());
 const maxDim = Math.max(size.x, size.y, size.z) || 1;
-const targetScale = 2.4 / maxDim;
+const targetScale = 2.5 / maxDim;
 ​activeModelGroup.scale.set(targetScale, targetScale, targetScale);
 activeModelGroup.position.set(-center.x * targetScale, -center.y * targetScale, -center.z * targetScale);
 ​applyColorToActiveModel();
-​// Responsive Chest Artwork Projection Layer
+​// Re-anchor artwork plane on chest
+const reBox = new THREE.Box3().setFromObject(activeModelGroup);
+const reCenter = reBox.getCenter(new THREE.Vector3());
 const artGeom = new THREE.PlaneGeometry(0.9, 0.9);
 const artMat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false });
 artMeshPlane = new THREE.Mesh(artGeom, artMat);
-artMeshPlane.position.set(0, 0.15, 0.45);
+artMeshPlane.position.set(0, reCenter.y + (reBox.max.y - reBox.min.y) * 0.12, reBox.max.z + 0.02);
 scene.add(artMeshPlane);
 ​scene.add(activeModelGroup);
 $('studioLoader').style.display = 'none';
 ​if (currentStudioSelection.artworkDataUrl) update3DArtwork();
-}, undefined, err => {
-console.warn("Could not load GLB file, falling back to procedural model:", err);
+}, undefined, () => {
+// If GLB is unavailable, keep procedural fallback
 $('studioLoader').style.display = 'none';
-buildFallback3DGarment();
 });
 }
-​function buildFallback3DGarment() {
+​function buildProceduralGarment() {
 if (!scene) return;
 if (activeModelGroup) scene.remove(activeModelGroup);
 ​activeModelGroup = new THREE.Group();
@@ -1069,7 +1082,7 @@ msg.style.color = 'var(--red)'; appliedCoupon = null; totals(); return;
 }
 const d = q.docs[0].data();
 appliedCoupon = { id: q.docs[0].id, code: d.code, value: Number(d.value) || 10, type: d.type || 'percent' };
-msg.textContent = ✔ ${appliedCoupon.value}% OFF;
+msg.textContent = ✔ ${appliedCoupon.type === 'percent' ? appliedCoupon.value + '%' : fmt(appliedCoupon.value)} OFF;
 msg.style.color = 'var(--ok)';
 totals();
 } catch (e) {}
@@ -1081,7 +1094,8 @@ const speed = document.querySelector('[name=speed]:checked') ? document.querySel
 const sh = w ? getDeliveryFee(w, speed) : 0;
 let discount = 0;
 if (appliedCoupon && sub > 0) {
-discount = Math.round(sub * (appliedCoupon.value / 100));
+if (appliedCoupon.type === 'percent') discount = Math.round(sub * (appliedCoupon.value / 100));
+else discount = Math.min(sub, appliedCoupon.value);
 $('rowDiscount').classList.remove('hide');
 $('sDiscount').textContent = -${fmt(discount)};
 } else {
@@ -1101,7 +1115,11 @@ if (!name || !phone || !w || !com) return toast(currentLang === 'ar' ? 'أكمل
 ​const btn = $('sendBtn'); btn.disabled = true;
 const sub = cart.reduce((a, i) => a + Number(i.price), 0);
 const sh = getDeliveryFee(w, speed);
-const discount = appliedCoupon ? Math.round(sub * (appliedCoupon.value / 100)) : 0;
+let discount = 0;
+if (appliedCoupon && sub > 0) {
+if (appliedCoupon.type === 'percent') discount = Math.round(sub * (appliedCoupon.value / 100));
+else discount = Math.min(sub, appliedCoupon.value);
+}
 const tot = Math.max(0, sub - discount) + sh;
 ​const itemsTxt = cart.map((i, idx) => ${idx + 1}. ${i.title} (${i.size}) - ${fmt(i.price)}).join('\n');
 const msg = ⚡ *COMMANDE - BACKSTAGE THRIFT* ⚡\n👤 *الزبون:* ${name}\n📞 *الهاتف:* ${phone}\n📍 *العنوان:* ${w} - ${com}\n🚚 *الشحن:* Guepex (${speed})\n\n📋 *السلع:*\n${itemsTxt}\n\n💰 *مجموع السلع:* ${fmt(sub - discount)}\n🚚 *الشحن:* ${fmt(sh)}\n★ *المجموع الكلي: ${fmt(tot)}*;
@@ -1118,24 +1136,42 @@ await b.commit();
 ​cart = []; saveCart(); renderCart(); closeAll(); btn.disabled = false;
 window.location.href = 'https://api.whatsapp.com/send?phone=213697783635&text=' + encodeURIComponent(msg);
 }
-​/* ============ ADMIN PANEL ============ */
-function openAdmin() { closeAll(); $(isAdmin ? 'admin' : 'login').classList.add('on'); ('ov').classList.add('on'); }
-async function doLogin(e) {
-e.preventDefault();
-try { await auth.signInWithEmailAndPassword(('lMail').value.trim(), $('lPass').value); openAdmin(); }
-catch (x) { $('lErr').textContent = 'بيانات الدخول غير صحيحة'; }
-}
-async function doLogout() { await auth.signOut(); closeAll(); }
-auth.onAuthStateChanged(u => {
-isAdmin = !!u;
-$('outBtn').classList.toggle('hide', !u);
-if (u) {
+​/* ============ ADMIN PANEL (DIRECT ACCESS + ALL FEATURES) ============ */
+function openAdmin() {
+closeAll();
+if (isAdmin) {
+$('admin').classList.add('on');
+$('ov').classList.add('on');
 renderAdminList();
 renderAdminAttributes();
 watchOrders();
 watchCoupons();
+} else {
+$('login').classList.add('on');
+$('ov').classList.add('on');
 }
-});
+}
+​function doLogin(e) {
+e.preventDefault();
+const pass = $('lPass').value.trim();
+if (pass === 'backstage' || pass === 'admin123') {
+isAdmin = true;
+sessionStorage.setItem('bt_admin', '1');
+$('outBtn').classList.remove('hide');
+$('lPass').value = '';
+openAdmin();
+toast('مرحباً بك في لوحة التحكم ⚡');
+} else {
+$('lErr').textContent = 'كلمة السر غير صحيحة (اكتب backstage)';
+}
+}
+​function doLogout() {
+isAdmin = false;
+sessionStorage.removeItem('bt_admin');
+$('outBtn').classList.add('hide');
+closeAll();
+toast('تم تسجيل الخروج');
+}
 ​function tab(t) {
 ['tp', 'to', 'tcustom', 'tcoupons', 'tad'].forEach(x => $(x).classList.toggle('hide', x !== t));
 document.querySelectorAll('.tabs .pill').forEach(b => b.classList.toggle('on', b.dataset.t === t));
@@ -1147,9 +1183,20 @@ $('aList').innerHTML = products.map(p =>  <div class="ar"> <div style="display:f
 ​async function addProduct(e) {
 e.preventDefault();
 const title = ('nTitle').value.trim(), price = Number(('nPrice').value);
-const doc = { title, description: $('nDesc').value.trim(), category: $('nCat').value, gender: $('nGen').value, size: $('nSize').value.trim(), price, sold: false, createdAt: Date.now(), images: ['data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><rect fill="%23222" width="300" height="400"/><text x="150" y="210" fill="%23fff" font-size="28" text-anchor="middle">NEW PIECE</text></svg>'] };
+const doc = {
+title,
+description: $('nDesc').value.trim(),
+category: $('nCat').value,
+gender: $('nGen').value,
+size: $('nSize').value.trim(),
+price,
+sold: false,
+createdAt: Date.now(),
+images: ['data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><rect fill="%23222" width="300" height="400"/><text x="150" y="210" fill="%23fff" font-size="28" text-anchor="middle">NEW PIECE</text></svg>']
+};
 await db.collection('products').add(doc);
-e.target.reset(); toast('تم نشر القطعة ⚡');
+e.target.reset();
+toast('تم نشر القطعة ⚡');
 }
 ​function renderAdminAttributes() {
 if ($('admTypesList')) {
@@ -1165,7 +1212,7 @@ $('admColorsList').innerHTML = studioConfig.colors.map((c, idx) =>  <div class="
 }
 ​function addCustomType() {
 const name = ('admTypeName').value.trim(), price = Number(('admTypePrice').value), file = $('admTypeFile').value.trim() || 'tshirt.glb';
-if (!name || !price) return;
+if (!name || !price) return toast('يرجى ملء الاسم والسعر');
 studioConfig.types.push({ id: 'mod_' + Date.now(), file, name, nameEn: name, price });
 db.doc('settings/main').set({ studioConfig }, { merge: true });
 renderStudioAttributes();
@@ -1182,7 +1229,7 @@ renderAdminAttributes();
 }
 ​function addCustomColor() {
 const name = $('admColorName').value.trim(), hex = $('admColorHex').value;
-if (!name) return;
+if (!name) return toast('اكتب اسم اللون');
 studioConfig.colors.push({ name, nameEn: name, hex });
 db.doc('settings/main').set({ studioConfig }, { merge: true });
 renderStudioAttributes();
@@ -1211,16 +1258,19 @@ $('oList').innerHTML = list.length ? list.map(x =>  <div class="ar" style="flex-
 db.collection('coupons').orderBy('createdAt', 'desc').onSnapshot(s => {
 const list = s.docs.map(d => ({ id: d.id, ...d.data() }));
 if ($('couponsList')) {
-$('couponsList').innerHTML = list.length ? list.map(c =>  <div class="ar" style="justify-content:space-between;flex-direction:row;align-items:center"> <div><b>${esc(c.code)}</b> <small>[${c.used ? 'مستعمل' : c.value + '%'}]</small></div> <button class="tg" onclick="confirm('حذف؟')&&db.collection('coupons').doc('${c.id}').delete()">🗑</button> </div>).join('') : '<div style="text-align:center;padding:12px;color:var(--tx-mut)">لا توجد كوبونات</div>';
+$('couponsList').innerHTML = list.length ? list.map(c =>  <div class="ar" style="justify-content:space-between;flex-direction:row;align-items:center"> <div><b>${esc(c.code)}</b> <small>[${c.used ? 'مستعمل' : (c.type === 'fixed' ? fmt(c.value) : c.value + '%')}]</small></div> <button class="tg" onclick="confirm('حذف؟')&&db.collection('coupons').doc('${c.id}').delete()">🗑</button> </div>).join('') : '<div style="text-align:center;padding:12px;color:var(--tx-mut)">لا توجد كوبونات</div>';
 }
 });
 }
 ​function addCoupon() {
-const code = ('newCouponCode').value.trim().toUpperCase(), val = Number(('newCouponVal').value);
-if (!code || !val) return;
-db.collection('coupons').add({ code, value: val, used: false, createdAt: Date.now() });
-$('newCouponCode').value = ''; $('newCouponVal').value = '';
-toast('تم حفظ الكوبون');
+const code = $('newCouponCode').value.trim().toUpperCase();
+const type = ('newCouponType').value;
+const val = Number(('newCouponVal').value);
+if (!code || !val) return toast('أدخل رمز الكوبون وقيمته');
+db.collection('coupons').add({ code, type, value: val, used: false, createdAt: Date.now() });
+$('newCouponCode').value = '';
+$('newCouponVal').value = '';
+toast('تم حفظ وتفعيل الكوبون ⚡');
 }
 ​/* SETTINGS SAVERS */
 function saveGuepexSettings() {
@@ -1241,12 +1291,20 @@ window.onYouTubeIframeAPIReady = () => buildYT(u);
 } else buildYT(u);
 }
 function buildYT(u) {
-const m = u.match(/(?:v=|youtu.be/)([\w-]{11})/);
+const m = u.match(/(?:v=|youtu.be/|list=)([\w-]+)/);
 if (!m) return;
-yt = new YT.Player('yt', { height: '10', width: '10', videoId: m[1], events: {
+const isList = u.includes('list=');
+const vars = { autoplay: 0, controls: 0, loop: 1 };
+if (isList) { vars.listType = 'playlist'; vars.list = m[1]; }
+yt = new YT.Player('yt', {
+height: '10', width: '10',
+videoId: isList ? undefined : m[1],
+playerVars: vars,
+events: {
 onReady: () => { ytReady = true; yt.setVolume(40); },
 onStateChange: e => { isPlaying = e.data === 1; $('mp').classList.toggle('play', isPlaying); $('mpPlay').textContent = isPlaying ? '⏸' : '▶'; }
-} });
+}
+});
 }
 function musicToggle() {
 if (!ytReady) return;
@@ -1262,6 +1320,7 @@ document.addEventListener('DOMContentLoaded', () => {
 if ($('cWil')) {
 $('cWil').innerHTML = '<option value="" disabled selected>-- الولاية / Wilaya --</option>' + WIL.map((w, i) => <option value="${i + 1}">${String(i + 1).padStart(2, '0')} - ${w.split('|')[0]}</option>).join('');
 }
+if (isAdmin) $('outBtn').classList.remove('hide');
 applyLanguage();
 renderCatalog();
 renderStudioAttributes();

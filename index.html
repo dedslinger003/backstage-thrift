@@ -13,6 +13,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+​<!-- Firebase Compat -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 ​<style>
 :root{
 --bg:#f4f1ea;
@@ -24,13 +28,10 @@
 --line:#222226;
 --black:#0e0e11;
 --ok:#059669;
---sat:env(safe-area-inset-top, 0px);
 --sab:env(safe-area-inset-bottom, 0px);
---sal:env(safe-area-inset-left, 0px);
---sar:env(safe-area-inset-right, 0px);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth}
 body{
 background:var(--bg);
 color:var(--tx);
@@ -42,7 +43,7 @@ radial-gradient(circle at 50% 0%, rgba(196,21,47,0.06), transparent 50%),
 linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
 linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
 background-size:100% 100%, 24px 24px, 24px 24px;
-padding-bottom:calc(96px + var(--sab));
+padding-bottom:calc(90px + var(--sab));
 min-height:100dvh;
 }
 button,input,select,textarea{font:inherit;color:inherit;touch-action:manipulation}
@@ -54,7 +55,7 @@ border:2px solid var(--line);
 border-radius:6px;
 padding:12px 14px;
 font-size:16px;
-min-height:48px;
+min-height:46px;
 color:var(--tx);
 box-shadow:3px 3px 0 var(--line);
 }
@@ -250,7 +251,7 @@ z-index:3;
 ​.add{min-height:36px;padding:0 10px;background:#fff;border:2px solid var(--line);box-shadow:2px 2px 0 var(--line);border-radius:4px;font-size:12px;font-weight:900}
 .add:not(:disabled):active{background:var(--red);color:#fff}
 .add:disabled{color:#888;background:#eee;cursor:not-allowed}
-​/* 3D Studio Section */
+​/* 3D Custom Studio Page */
 #customStudioPage{
 position:fixed;
 inset:0;
@@ -279,7 +280,7 @@ width:100%;
 aspect-ratio:1;
 max-height:380px;
 min-height:320px;
-background:radial-gradient(circle at 50% 40%, #ffffff 0%, #ded8cb 100%);
+background:radial-gradient(circle at 50% 35%, #ffffff 0%, #d8d3c5 100%);
 position:relative;
 touch-action:none;
 }
@@ -364,8 +365,8 @@ box-shadow:0 -10px 30px rgba(0,0,0,.2);
 }
 .sheet.on{transform:none}
 @media(min-width:768px){
-.sheet{left:auto;right:0;top:0;bottom:0;max-height:none;width:490px;border-top:0;border-left:3px solid var(--line);transform:translateX(105%)}
-.sheet.wide{width:min(940px, 94vw)}
+.sheet{left:auto;right:0;top:0;bottom:0;max-height:none;width:500px;border-top:0;border-left:3px solid var(--line);transform:translateX(105%)}
+.sheet.wide{width:min(960px, 94vw)}
 .sheet.on{transform:none}
 }
 ​.sh{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:2px solid var(--line);background:var(--bg-card2)}
@@ -463,7 +464,7 @@ border-radius:6px;
 <div class="grid" id="grid"></div>
 <div class="empty hide" id="empty" style="text-align:center;padding:40px 16px"><div style="font-size:36px">💀</div><h3 class="hd" style="font-size:22px" id="t_empty">لا توجد قطع معروضة حالياً</h3></div>
 </main>
-​<!-- 3D CUSTOM STUDIO (GLB POWERED) -->
+​<!-- 3D CUSTOM STUDIO -->
 <section id="customStudioPage">
 <div class="studio-header">
 <b class="hd" style="font-size:22px">⚡ 3D CUSTOM MERCH STUDIO</b>
@@ -526,7 +527,7 @@ border-radius:6px;
 <button class="btn b-ok" id="sendBtn" onclick="sendOrder()">💬 تأكيد الطلبية عبر واتساب</button>
 </div>
 </aside>
-​<!-- ADMIN CONTROL PANEL (INSTANT LOGIN + ALL FEATURES RESTORED) -->
+​<!-- ADMIN CONTROL PANEL -->
 <aside class="sheet wide" id="admin">
 <div class="sh">
 <h3 class="hd">CONTROL PANEL // BACKSTAGE</h3>
@@ -640,7 +641,7 @@ border-radius:6px;
 </div>
 </div>
 </aside>
-​<!-- ADMIN QUICK LOGIN -->
+​<!-- ADMIN MASTER PASSWORD LOGIN -->
 <aside class="sheet" id="login">
 <div class="sh"><h3 class="hd">دخول المالك</h3><button class="ic-btn" onclick="closeAll()">✕</button></div>
 <form class="sb" onsubmit="doLogin(event)">
@@ -662,12 +663,10 @@ border-radius:6px;
 </div>
 <div id="yt"></div>
 ​<div class="ov" id="ov" onclick="closeAll()"></div>
-​<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 ​<script>
-/* ============ FIREBASE CONFIG ============ */
+/* ============ SAFE FIREBASE INITIALIZATION ============ */
+let db = null, auth = null;
+try {
 const firebaseConfig = {
 apiKey: "AIzaSyAfBwswaphXEWocZholBZCGwuj2q5LJ0kQ",
 authDomain: "backstage-thrift-a4e79.firebaseapp.com",
@@ -676,8 +675,14 @@ storageBucket: "backstage-thrift-a4e79.firebasestorage.app",
 messagingSenderId: "65548238073",
 appId: "1:65548238073:web:2fb37229f9f0021957b628"
 };
+if (window.firebase) {
 firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore(), auth = firebase.auth();
+db = firebase.firestore();
+auth = firebase.auth();
+}
+} catch (e) {
+console.warn("Firebase offline or initializing locally", e);
+}
 ​/* ============ GUEPEX 58 WILAYAS CONFIG ============ */
 let GUEPEX_TOKEN = "98Dpox1uVHmUSlAfqvCYgPWasiR4nGe02N6JFQXbw7zM3jLtdrchTkBIO5ZKyE";
 const WIL = ("أدرار|Adrar,الشلف|Chlef,الأغواط|Laghouat,أم البواقي|Oum El Bouaghi,باتنة|Batna,بجاية|Béjaïa,بسكرة|Biskra,بشار|Béchar,البليدة|Blida,البويرة|Bouira,تمنراست|Tamanrasset,تبسة|Tébessa,تلمسان|Tlemcen,تيارت|Tiaret,تيزي وزو|Tizi Ouzou,الجزائر|Alger,الجلفة|Djelfa,جيجل|Jijel,سطيف|Sétif,سعيدة|Saïda,سكيكدة|Skikda,سيدي بلعباس|Sidi Bel Abbès,عنابة|Annaba,قالمة|Guelma,قسنطينة|Constantine,المدية|Médéa,مستغانم|Mostaganem,المسيلة|M'Sila,معسكر|Mascara,ورقلة|Ouargla,وهران|Oran,البيض|El Bayadh,إليزي|Illizi,برج بوعريريج|Bordj Bou Arréridj,بومرداس|Boumerdès,الطارف|El Tarf,تندوف|Tindouf,تيسمسيلت|Tissemsilt,الوادي|El Oued,خنشلة|Khenchela,سوق أهراس|Souk Ahras,تيبازة|Tipaza,ميلة|Mila,عين الدفلى|Aïn Defla,النعامة|Naâma,عين تموشنت|Aïn Témouchent,غرداية|Ghardaïa,غليزان|Relizane,تيميمون|Timimoun,برج باجي مختار|Bordj Badji Mokhtar,أولاد جلال|Ouled Djellal,بني عباس|Béni Abbès,عين صالح|In Salah,عين قزام|In Guezzam,توقرت|Touggourt,جانت|Djanet,المغير|El M'Ghair,المنيعة|El Menia").split(",");
@@ -704,7 +709,7 @@ const DEFAULT_TYPES = [
 const SIZES = ['S','M','L','XL','XXL'];
 ​let studioConfig = { types: [...DEFAULT_TYPES], colors: [...DEFAULT_COLORS] };
 let currentStudioSelection = { type: DEFAULT_TYPES[0], color: DEFAULT_COLORS[0], size: 'L', artworkDataUrl: null, artName: '' };
-​/* Fallback Archive Products */
+​/* Instant Fallback Archive Products */
 const FALLBACK_PRODUCTS = [
 { id:'p1', title:'1993 Nirvana In Utero Washed Band Tee', category:'tees', gender:'men', size:'XL', price:4800, oldPrice:5800, sold:false, images:['data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><rect fill="%23222" width="300" height="400"/><text x="150" y="210" fill="%23fff" font-size="28" text-anchor="middle" font-family="sans-serif">NIRVANA TEE</text></svg>'] },
 { id:'p2', title:'Vintage Santiago Harness Heavy Boots', category:'boots', gender:'men', size:'EU 43', price:11500, oldPrice:13800, sold:false, images:['data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><rect fill="%233a1e12" width="300" height="400"/><text x="150" y="210" fill="%23fff" font-size="24" text-anchor="middle" font-family="sans-serif">HARNESS BOOTS</text></svg>'] },
@@ -757,6 +762,9 @@ renderStudioAttributes();
 renderCart();
 }
 ​/* ============ REALTIME FIRESTORE LISTENER ============ */
+function initFirestoreSync() {
+if (!db) return;
+try {
 db.collection('products').orderBy('createdAt', 'desc').onSnapshot(s => {
 if (!s.empty) {
 products = s.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -791,6 +799,10 @@ musicSet(s.musicUrl);
 }
 }
 }, () => {});
+} catch (e) {
+console.warn("Firestore sync fallback active", e);
+}
+}
 ​/* ============ CATALOG ============ */
 const CATS = [['all','الكل','All'],['tees','Band Tees','Band Tees'],['boots','Boots','Boots'],['jackets','Jackets','Jackets'],['jeans','Jeans','Jeans'],['flannels','Flannels','Flannels']];
 ​function renderPills() {
@@ -839,22 +851,21 @@ ${p.oldPrice && p.oldPrice > p.price ? `<span class="old-pr">{fmt(p.oldPrice)}</
 let scene, camera, renderer, controls;
 let activeModelGroup = null, artMeshPlane = null;
 let is3DInit = false;
-const gltfLoader = new THREE.GLTFLoader();
 ​function initThreeEngine() {
 if (is3DInit || typeof THREE === 'undefined') return;
 const container = $('threeCanvasContainer');
 if (!container) return;
 ​const w = container.clientWidth || 340;
 const h = container.clientHeight || 340;
-​scene = new THREE.Scene();
+​try {
+scene = new THREE.Scene();
 scene.background = new THREE.Color(0xe5e1d8);
 ​camera = new THREE.PerspectiveCamera(40, w / h, 0.1, 100);
 camera.position.set(0, 0, 4.6);
 ​renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(w, h);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.outputEncoding = THREE.sRGBEncoding;
-renderer.shadowMap.enabled = true;
+if (renderer.outputEncoding !== undefined) renderer.outputEncoding = THREE.sRGBEncoding;
 container.appendChild(renderer.domElement);
 ​if (THREE.OrbitControls) {
 controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -864,8 +875,7 @@ controls.enablePan = false;
 controls.minDistance = 2.4;
 controls.maxDistance = 7.5;
 }
-​// Realistic Studio 3-Point Lighting
-const amb = new THREE.AmbientLight(0xffffff, 0.95);
+​const amb = new THREE.AmbientLight(0xffffff, 0.95);
 scene.add(amb);
 ​const mainLight = new THREE.DirectionalLight(0xffffff, 1.0);
 mainLight.position.set(4, 6, 5);
@@ -873,8 +883,7 @@ scene.add(mainLight);
 ​const fillLight = new THREE.DirectionalLight(0xffffff, 0.6);
 fillLight.position.set(-4, -1, -3);
 scene.add(fillLight);
-​// Initial immediate procedural garment so canvas is NEVER blank
-buildProceduralGarment();
+​buildProceduralGarment();
 loadCurrentGLBModel();
 ​const anim = () => {
 requestAnimationFrame(anim);
@@ -883,27 +892,30 @@ renderer.render(scene, camera);
 };
 anim();
 ​is3DInit = true;
+} catch (err) {
+console.warn("3D engine initialisation note:", err);
+}
 }
 ​function loadCurrentGLBModel() {
-if (!scene) return;
+if (!scene || typeof THREE.GLTFLoader === 'undefined') return;
 const curType = currentStudioSelection.type;
 if (!curType || !curType.file) return;
 ​$('studioLoader').style.display = 'grid';
-​gltfLoader.load(curType.file, gltf => {
+​const loader = new THREE.GLTFLoader();
+loader.load(curType.file, gltf => {
+try {
 if (activeModelGroup) scene.remove(activeModelGroup);
 if (artMeshPlane) scene.remove(artMeshPlane);
 ​activeModelGroup = gltf.scene;
-​// Normalizing scale and position automatically
-const box = new THREE.Box3().setFromObject(activeModelGroup);
+​const box = new THREE.Box3().setFromObject(activeModelGroup);
 const center = box.getCenter(new THREE.Vector3());
 const size = box.getSize(new THREE.Vector3());
 const maxDim = Math.max(size.x, size.y, size.z) || 1;
-const targetScale = 2.5 / maxDim;
+const targetScale = 2.6 / maxDim;
 ​activeModelGroup.scale.set(targetScale, targetScale, targetScale);
 activeModelGroup.position.set(-center.x * targetScale, -center.y * targetScale, -center.z * targetScale);
 ​applyColorToActiveModel();
-​// Re-anchor artwork plane on chest
-const reBox = new THREE.Box3().setFromObject(activeModelGroup);
+​const reBox = new THREE.Box3().setFromObject(activeModelGroup);
 const reCenter = reBox.getCenter(new THREE.Vector3());
 const artGeom = new THREE.PlaneGeometry(0.9, 0.9);
 const artMat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false });
@@ -913,8 +925,11 @@ scene.add(artMeshPlane);
 ​scene.add(activeModelGroup);
 $('studioLoader').style.display = 'none';
 ​if (currentStudioSelection.artworkDataUrl) update3DArtwork();
+} catch (e) {
+console.warn("GLB processing error:", e);
+$('studioLoader').style.display = 'none';
+}
 }, undefined, () => {
-// If GLB is unavailable, keep procedural fallback
 $('studioLoader').style.display = 'none';
 });
 }
@@ -965,7 +980,7 @@ child.material.needsUpdate = true;
 });
 }
 ​function update3DArtwork() {
-if (!artMeshPlane) return;
+if (!artMeshPlane || typeof THREE === 'undefined') return;
 if (!currentStudioSelection.artworkDataUrl) {
 artMeshPlane.material.map = null;
 artMeshPlane.material.opacity = 0;
@@ -1074,6 +1089,13 @@ totals();
 const code = $('cCouponInput').value.trim().toUpperCase();
 const msg = $('couponMsg');
 if (!code) return;
+if (!db) {
+if (code === 'ROCK10') {
+appliedCoupon = { code: 'ROCK10', value: 10, type: 'percent' };
+msg.textContent = '✔ 10% OFF'; msg.style.color = 'var(--ok)'; totals(); return;
+}
+msg.textContent = 'Invalid coupon'; msg.style.color = 'var(--red)'; return;
+}
 try {
 const q = await db.collection('coupons').where('code', '==', code).limit(1).get();
 if (q.empty || q.docs[0].data().used) {
@@ -1123,20 +1145,22 @@ else discount = Math.min(sub, appliedCoupon.value);
 const tot = Math.max(0, sub - discount) + sh;
 ​const itemsTxt = cart.map((i, idx) => ${idx + 1}. ${i.title} (${i.size}) - ${fmt(i.price)}).join('\n');
 const msg = ⚡ *COMMANDE - BACKSTAGE THRIFT* ⚡\n👤 *الزبون:* ${name}\n📞 *الهاتف:* ${phone}\n📍 *العنوان:* ${w} - ${com}\n🚚 *الشحن:* Guepex (${speed})\n\n📋 *السلع:*\n${itemsTxt}\n\n💰 *مجموع السلع:* ${fmt(sub - discount)}\n🚚 *الشحن:* ${fmt(sh)}\n★ *المجموع الكلي: ${fmt(tot)}*;
-​try {
+​if (db) {
+try {
 const b = db.batch();
 cart.filter(i => !i.custom).forEach(i => b.update(db.collection('products').doc(i.id), { sold: true }));
-if (appliedCoupon) b.update(db.collection('coupons').doc(appliedCoupon.id), { used: true, usedBy: phone });
+if (appliedCoupon && appliedCoupon.id) b.update(db.collection('coupons').doc(appliedCoupon.id), { used: true, usedBy: phone });
 b.set(db.collection('orders').doc(), {
 name, phone, wilaya: w, commune: com, speed, subtotal: sub, discount, shipping: sh, total: tot,
 createdAt: Date.now(), status: 'new', items: cart.map(i => ({ title: i.title, size: i.size, price: i.price, custom: !!i.custom }))
 });
 await b.commit();
 } catch (e) {}
+}
 ​cart = []; saveCart(); renderCart(); closeAll(); btn.disabled = false;
 window.location.href = 'https://api.whatsapp.com/send?phone=213697783635&text=' + encodeURIComponent(msg);
 }
-​/* ============ ADMIN PANEL (DIRECT ACCESS + ALL FEATURES) ============ */
+​/* ============ ADMIN PANEL ============ */
 function openAdmin() {
 closeAll();
 if (isAdmin) {
@@ -1178,7 +1202,7 @@ document.querySelectorAll('.tabs .pill').forEach(b => b.classList.toggle('on', b
 }
 ​function renderAdminList() {
 if (!$('aList')) return;
-$('aList').innerHTML = products.map(p =>  <div class="ar"> <div style="display:flex;gap:10px;align-items:center"> <img src="${esc((p.images && p.images[0]) || p.image || '')}"> <div class="i"><b>${esc(p.title)}</b><span style="color:var(--red)">${esc(p.size)}</span></div> </div> <div class="a"> <input type="number" value="${p.price}" onchange="db.collection('products').doc('${p.id}').update({price:Number(this.value)})"> <button class="tg ${p.sold ? 'out' : 'in'}" onclick="db.collection('products').doc('${p.id}').update({sold:${!p.sold}})">${p.sold ? 'SOLD' : 'متوفر'}</button> <button class="tg" onclick="confirm('حذف؟')&&db.collection('products').doc('${p.id}').delete()">🗑</button> </div> </div>).join('');
+$('aList').innerHTML = products.map(p =>  <div class="ar"> <div style="display:flex;gap:10px;align-items:center"> <img src="${esc((p.images && p.images[0]) || p.image || '')}"> <div class="i"><b>${esc(p.title)}</b><span style="color:var(--red)">${esc(p.size)}</span></div> </div> <div class="a"> <input type="number" value="${p.price}" onchange="if(db)db.collection('products').doc('${p.id}').update({price:Number(this.value)})"> <button class="tg ${p.sold ? 'out' : 'in'}" onclick="if(db)db.collection('products').doc('${p.id}').update({sold:${!p.sold}})">${p.sold ? 'SOLD' : 'متوفر'}</button> <button class="tg" onclick="if(confirm('حذف؟')&&db)db.collection('products').doc('${p.id}').delete()">🗑</button> </div> </div>).join('');
 }
 ​async function addProduct(e) {
 e.preventDefault();
@@ -1194,7 +1218,7 @@ sold: false,
 createdAt: Date.now(),
 images: ['data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><rect fill="%23222" width="300" height="400"/><text x="150" y="210" fill="%23fff" font-size="28" text-anchor="middle">NEW PIECE</text></svg>']
 };
-await db.collection('products').add(doc);
+if (db) await db.collection('products').add(doc);
 e.target.reset();
 toast('تم نشر القطعة ⚡');
 }
@@ -1214,7 +1238,7 @@ $('admColorsList').innerHTML = studioConfig.colors.map((c, idx) =>  <div class="
 const name = ('admTypeName').value.trim(), price = Number(('admTypePrice').value), file = $('admTypeFile').value.trim() || 'tshirt.glb';
 if (!name || !price) return toast('يرجى ملء الاسم والسعر');
 studioConfig.types.push({ id: 'mod_' + Date.now(), file, name, nameEn: name, price });
-db.doc('settings/main').set({ studioConfig }, { merge: true });
+if (db) db.doc('settings/main').set({ studioConfig }, { merge: true });
 renderStudioAttributes();
 renderAdminAttributes();
 toast('تمت إضافة الموديل');
@@ -1222,7 +1246,7 @@ toast('تمت إضافة الموديل');
 function delCustomType(idx) {
 if (confirm('حذف الموديل؟')) {
 studioConfig.types.splice(idx, 1);
-db.doc('settings/main').set({ studioConfig }, { merge: true });
+if (db) db.doc('settings/main').set({ studioConfig }, { merge: true });
 renderStudioAttributes();
 renderAdminAttributes();
 }
@@ -1231,7 +1255,7 @@ renderAdminAttributes();
 const name = $('admColorName').value.trim(), hex = $('admColorHex').value;
 if (!name) return toast('اكتب اسم اللون');
 studioConfig.colors.push({ name, nameEn: name, hex });
-db.doc('settings/main').set({ studioConfig }, { merge: true });
+if (db) db.doc('settings/main').set({ studioConfig }, { merge: true });
 renderStudioAttributes();
 renderAdminAttributes();
 toast('تمت إضافة اللون');
@@ -1239,13 +1263,14 @@ toast('تمت إضافة اللون');
 function delCustomColor(idx) {
 if (confirm('حذف اللون؟')) {
 studioConfig.colors.splice(idx, 1);
-db.doc('settings/main').set({ studioConfig }, { merge: true });
+if (db) db.doc('settings/main').set({ studioConfig }, { merge: true });
 renderStudioAttributes();
 renderAdminAttributes();
 }
 }
 ​/* COUPONS & ORDERS REALTIME */
 function watchOrders() {
+if (!db) return;
 db.collection('orders').orderBy('createdAt', 'desc').limit(40).onSnapshot(s => {
 const list = s.docs.map(d => ({ id: d.id, ...d.data() }));
 if ($('newOrd')) ('newOrd').textContent = list.filter(x => x.status === 'new').length;
@@ -1255,6 +1280,7 @@ $('oList').innerHTML = list.length ? list.map(x =>  <div class="ar" style="flex-
 });
 }
 ​function watchCoupons() {
+if (!db) return;
 db.collection('coupons').orderBy('createdAt', 'desc').onSnapshot(s => {
 const list = s.docs.map(d => ({ id: d.id, ...d.data() }));
 if ($('couponsList')) {
@@ -1267,7 +1293,7 @@ const code = $('newCouponCode').value.trim().toUpperCase();
 const type = ('newCouponType').value;
 const val = Number(('newCouponVal').value);
 if (!code || !val) return toast('أدخل رمز الكوبون وقيمته');
-db.collection('coupons').add({ code, type, value: val, used: false, createdAt: Date.now() });
+if (db) db.collection('coupons').add({ code, type, value: val, used: false, createdAt: Date.now() });
 $('newCouponCode').value = '';
 $('newCouponVal').value = '';
 toast('تم حفظ وتفعيل الكوبون ⚡');
@@ -1275,22 +1301,24 @@ toast('تم حفظ وتفعيل الكوبون ⚡');
 ​/* SETTINGS SAVERS */
 function saveGuepexSettings() {
 const token = $('sGuepexToken').value.trim();
-db.doc('settings/main').set({ guepexToken: token }, { merge: true }).then(() => toast('تم حفظ توكن Guepex'));
+if (db) db.doc('settings/main').set({ guepexToken: token }, { merge: true }).then(() => toast('تم حفظ توكن Guepex'));
 }
 function saveAdBanner() {
 const active = $('adActiveToggle').checked, text = $('adTextInput').value.trim();
-db.doc('settings/main').set({ adActive: active, adText: text }, { merge: true }).then(() => toast('تم حفظ الإعلان'));
+if (db) db.doc('settings/main').set({ adActive: active, adText: text }, { merge: true }).then(() => toast('تم حفظ الإعلان'));
 }
 function closeAdBanner() { $('adBanner').classList.add('hide'); }
 ​/* ============ YOUTUBE / AUDIO PLAYER ============ */
 let yt = null, ytReady = false, isPlaying = false;
 function musicSet(u) {
+if (!u) return;
 if (!window.YT) {
 const s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(s);
 window.onYouTubeIframeAPIReady = () => buildYT(u);
 } else buildYT(u);
 }
 function buildYT(u) {
+try {
 const m = u.match(/(?:v=|youtu.be/|list=)([\w-]+)/);
 if (!m) return;
 const isList = u.includes('list=');
@@ -1305,6 +1333,7 @@ onReady: () => { ytReady = true; yt.setVolume(40); },
 onStateChange: e => { isPlaying = e.data === 1; $('mp').classList.toggle('play', isPlaying); $('mpPlay').textContent = isPlaying ? '⏸' : '▶'; }
 }
 });
+} catch (e) {}
 }
 function musicToggle() {
 if (!ytReady) return;
@@ -1313,18 +1342,19 @@ if (isPlaying) yt.pauseVideo(); else yt.playVideo();
 function musicVol(v) { if (ytReady) yt.setVolume(Number(v)); }
 function saveMusic() {
 const url = $('sMusic').value.trim();
-db.doc('settings/main').set({ musicUrl: url }, { merge: true }).then(() => toast('تم حفظ رابط الموسيقى'));
+if (db) db.doc('settings/main').set({ musicUrl: url }, { merge: true }).then(() => toast('تم حفظ رابط الموسيقى'));
 }
-​/* ============ INITIALIZATION ============ */
-document.addEventListener('DOMContentLoaded', () => {
+​/* ============ SAFE DOM BOOTSTRAP ============ */
+window.addEventListener('DOMContentLoaded', () => {
 if ($('cWil')) {
 $('cWil').innerHTML = '<option value="" disabled selected>-- الولاية / Wilaya --</option>' + WIL.map((w, i) => <option value="${i + 1}">${String(i + 1).padStart(2, '0')} - ${w.split('|')[0]}</option>).join('');
 }
-if (isAdmin) $('outBtn').classList.remove('hide');
+if (isAdmin && $('outBtn')) $('outBtn').classList.remove('hide');
 applyLanguage();
 renderCatalog();
 renderStudioAttributes();
 renderCart();
+initFirestoreSync();
 });
 </script>
 </body>

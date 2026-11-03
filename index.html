@@ -3,16 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#f0eee9">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#f4f1ea">
 <title>BACKSTAGE THRIFT // 1-OF-1 VINTAGE & CUSTOM ROCK MERCH</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💀</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
 
-<!-- Three.js للنمذجة ثلاثية الأبعاد 360 درجة -->
+<!-- مكتبات Three.js للـ 3D -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
@@ -24,8 +22,6 @@
   --tx:#141416;
   --tx-mut:#636268;
   --red:#c4152f;
-  --red-dark:#800a1c;
-  --gold:#d49e1a;
   --line:#222226;
   --black:#0e0e11;
   --ok:#059669;
@@ -42,7 +38,6 @@ body{
   font-family:Tajawal,sans-serif;
   line-height:1.5;
   overflow-x:hidden;
-  /* نمط ورق عتيق / Grunge Paper Texture خفيف وراقي */
   background-image: 
     radial-gradient(circle at 50% 0%, rgba(196,21,47,0.06), transparent 50%),
     linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
@@ -53,11 +48,6 @@ body{
   padding-right:var(--sar);
   min-height:100dvh;
 }
-
-::-webkit-scrollbar{width:8px;height:8px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:#cfc9bc;border-radius:2px}
-::-webkit-scrollbar-thumb:hover{background:var(--red)}
 
 button,input,select,textarea{font:inherit;color:inherit;touch-action:manipulation}
 button{cursor:pointer;border:0;background:none}
@@ -71,13 +61,8 @@ input,select,textarea{
   min-height:48px;
   color:var(--tx);
   box-shadow:3px 3px 0 var(--line);
-  transition:border-color .15s, box-shadow .15s;
 }
-input:focus,select:focus,textarea:focus{
-  outline:none;
-  border-color:var(--red);
-  box-shadow:4px 4px 0 var(--red);
-}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--red);box-shadow:4px 4px 0 var(--red)}
 
 .hd{font-family:'Bebas Neue',Impact,sans-serif;letter-spacing:.04em}
 .wrap{max-width:1200px;margin:0 auto;padding:0 16px}
@@ -94,17 +79,15 @@ input:focus,select:focus,textarea:focus{
   text-transform:uppercase;
   border:2px solid var(--line);
   box-shadow:4px 4px 0 var(--line);
-  transition:transform .08s ease, box-shadow .08s ease;
+  transition:transform .08s ease;
   user-select:none;
 }
 .btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--line)}
 .b-red{background:var(--red);color:#fff}
 .b-black{background:var(--black);color:#fff}
-.b-gold{background:var(--gold);color:#000}
 .b-light{background:#fff;color:var(--tx)}
 .b-ok{background:var(--ok);color:#fff}
 
-/* Announcement Banner */
 .ad-banner{
   background:var(--black);
   color:#fff;
@@ -113,13 +96,11 @@ input:focus,select:focus,textarea:focus{
   font-size:13px;
   font-weight:700;
   text-align:center;
-  position:relative;
   display:flex;
   align-items:center;
   justify-content:center;
   gap:10px;
 }
-.ad-banner span{color:var(--volt)}
 
 header{
   display:flex;
@@ -153,9 +134,7 @@ header{
   place-items:center;
   text-decoration:none;
 }
-.ic:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--line)}
 
-/* Hero Section */
 .hero{
   text-align:center;
   padding:28px 16px 36px;
@@ -171,20 +150,12 @@ header{
   font-size:12px;
   border:2px solid var(--line);
   box-shadow:3px 3px 0 var(--line);
-  transform:rotate(-1deg);
   border-radius:4px;
 }
-.hero h1{
-  font-size:clamp(40px,11vw,86px);
-  line-height:.92;
-  margin:14px 0 8px;
-  color:var(--black);
-  text-shadow:3px 3px 0 rgba(0,0,0,0.1);
-}
+.hero h1{font-size:clamp(40px,11vw,86px);line-height:.92;margin:14px 0 8px;color:var(--black)}
 .hero h1 em{color:var(--red);font-style:normal}
 .hero p{color:var(--tx-mut);max-width:540px;margin:0 auto;font-size:15px;font-weight:700}
 
-/* Fast 3D Link Action Card (Mobile First Feature) */
 .custom-studio-hero-cta{
   margin-top:20px;
   background:#fff;
@@ -197,9 +168,7 @@ header{
   justify-content:space-between;
   gap:12px;
   cursor:pointer;
-  transition:transform .15s;
 }
-.custom-studio-hero-cta:active{transform:scale(0.98)}
 
 .bar{
   position:sticky;
@@ -224,14 +193,13 @@ header{
   font-weight:900;
   white-space:nowrap;
 }
-.pill.on{background:var(--red);border-color:var(--line);color:#fff}
-.pill.g{border-color:var(--line)}.pill.g.on{background:var(--black);color:#fff}
+.pill.on{background:var(--red);color:#fff}
+.pill.g.on{background:var(--black);color:#fff}
 .sep{flex:none;width:2px;background:var(--line);margin:4px 4px}
 
 .sec{display:flex;justify-content:space-between;align-items:end;gap:10px;margin:24px 0 16px;padding-bottom:10px;border-bottom:2px dashed var(--line)}
 .sec h2{font-size:clamp(26px,5vw,36px);line-height:1;color:var(--black)}
 
-/* Responsive Products Grid */
 .grid{display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:12px}
 @media(min-width:680px){.grid{grid-template-columns:repeat(3, minmax(0, 1fr));gap:16px}}
 @media(min-width:1080px){.grid{grid-template-columns:repeat(4, minmax(0, 1fr));gap:20px}}
@@ -245,7 +213,6 @@ header{
   display:flex;
   flex-direction:column;
   overflow:hidden;
-  transition:transform .15s ease, box-shadow .15s ease;
 }
 .card.sold{opacity:.6;filter:grayscale(70%)}
 .ph{position:relative;aspect-ratio:3/4;background:#ddd;overflow:hidden;border-bottom:2px solid var(--line);cursor:pointer}
@@ -260,7 +227,6 @@ header{
   font-family:'Bebas Neue',sans-serif;
   font-size:12px;
   padding:2px 8px;
-  letter-spacing:1px;
   border-radius:4px;
   z-index:2;
 }
@@ -279,8 +245,8 @@ header{
   z-index:3;
 }
 .cb{padding:12px;display:flex;flex-direction:column;gap:6px;flex:1}
-.cb h3{font-size:15px;line-height:1.3;font-weight:700;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:38px;cursor:pointer}
-.desc-txt{font-size:12px;color:var(--tx-mut);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.4}
+.cb h3{font-size:15px;line-height:1.3;font-weight:700;min-height:38px;cursor:pointer}
+.desc-txt{font-size:12px;color:var(--tx-mut);line-height:1.4}
 .sz{font-size:11px;font-weight:900;color:#000;background:var(--bg-card2);border:1px solid var(--line);padding:2px 8px;align-self:flex-start;border-radius:4px;direction:ltr}
 .row{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:auto;padding-top:10px;border-top:1px dashed var(--line)}
 
@@ -289,10 +255,16 @@ header{
 .old-pr{font-family:'Bebas Neue';font-size:15px;color:var(--tx-mut);text-decoration:line-through;margin-bottom:2px}
 
 .add{min-height:38px;padding:0 12px;background:#fff;border:2px solid var(--line);box-shadow:2px 2px 0 var(--line);border-radius:4px;font-size:12px;font-weight:900}
-.add:not(:disabled):active{transform:translate(2px,2px);box-shadow:none;background:var(--red);color:#fff}
+.add:not(:disabled):active{background:var(--red);color:#fff}
 .add:disabled{color:#888;background:#eee;cursor:not-allowed}
 
-/* 3D Merch Studio Page / Container */
+.car{direction:ltr;display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.car::-webkit-scrollbar{display:none}
+.car img{flex:none;width:100%;height:100%;object-fit:cover;scroll-snap-align:center}
+.cn{position:absolute;bottom:8px;left:8px;background:#000;border:1px solid #333;color:#fff;font-size:11px;font-weight:900;padding:2px 8px;z-index:2}
+.sl{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;background:#000;border:2px solid var(--line);color:#fff;font-size:22px;z-index:2;display:grid;place-items:center}
+.sl.p{left:6px}.sl.n{right:6px}
+
 #customStudioPage{
   position:fixed;
   inset:0;
@@ -304,38 +276,13 @@ header{
   padding-bottom:calc(30px + var(--sab));
 }
 #customStudioPage.on{display:flex}
-.studio-header{
-  padding:14px 16px;
-  background:#fff;
-  border-bottom:2px solid var(--line);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-#threeCanvasContainer{
-  width:100%;
-  aspect-ratio:1;
-  max-height:380px;
-  background:#e5e1d8;
-  position:relative;
-  touch-action:none;
-}
-.touch-hint{
-  position:absolute;
-  bottom:10px;
-  left:50%;
-  transform:translateX(-50%);
-  background:rgba(0,0,0,0.7);
-  color:#fff;
-  font-size:11px;
-  padding:3px 10px;
-  border-radius:20px;
-  pointer-events:none;
-}
+.studio-header{padding:14px 16px;background:#fff;border-bottom:2px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+#threeCanvasContainer{width:100%;aspect-ratio:1;max-height:380px;background:#e5e1d8;position:relative;touch-action:none}
+.touch-hint{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.7);color:#fff;font-size:11px;padding:3px 10px;border-radius:20px;pointer-events:none}
 
 .lbl{display:block;font-size:13px;color:var(--tx);margin:12px 0 6px;font-weight:900}
 .opts{display:flex;gap:8px;flex-wrap:wrap}
-.sw{width:42px;height:42px;border:2px solid var(--line);border-radius:6px;box-shadow:2px 2px 0 var(--line);transition:transform .1s}
+.sw{width:42px;height:42px;border:2px solid var(--line);border-radius:6px;box-shadow:2px 2px 0 var(--line)}
 .sw.on{border-color:var(--red);box-shadow:3px 3px 0 var(--red);transform:scale(1.06)}
 .sq{min-width:48px;min-height:42px;background:#fff;border:2px solid var(--line);box-shadow:2px 2px 0 var(--line);border-radius:6px;font-weight:900;font-size:13px}
 .sq.on{background:var(--red);color:#fff;border-color:var(--line)}
@@ -381,7 +328,7 @@ header{
 
 .sh{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:2px solid var(--line);background:var(--bg-card2)}
 .sh h3{font-size:26px;line-height:1}
-.sb{overflow-y:auto;padding:18px;flex:1;-webkit-overflow-scrolling:touch;display:grid;gap:12px;align-content:start}
+.sb{overflow-y:auto;padding:18px;flex:1;display:grid;gap:12px;align-content:start}
 
 .ci{display:flex;gap:12px;align-items:center;background:#fff;border:2px solid var(--line);box-shadow:3px 3px 0 var(--line);border-radius:6px;padding:10px}
 .ci img,.ci .th{width:60px;height:60px;object-fit:cover;border:1px solid var(--line);background:#eee;border-radius:4px;flex:none;display:grid;place-items:center;font-size:24px}
@@ -467,7 +414,6 @@ footer h4{color:var(--black);font-size:22px;margin-bottom:6px}
 
 <header>
   <a class="brand" href="#">
-    <!-- استخدام الشعار مباشرة -->
     <img src="1000178346.jpg" alt="Backstage Thrift Logo" class="logo-img" onerror="this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><text y=\'.9em\' font-size=\'90\'>💀</text></svg>'">
     <div>
       <b>BACKSTAGE</b>
@@ -486,7 +432,6 @@ footer h4{color:var(--black);font-size:22px;margin-bottom:6px}
   <h1 class="hd">ROCK 'N' ROLL <em>THRIFT VAULT</em></h1>
   <p>ملابس فريب أصلية فريدة (1 of 1) + استوديو تخصيص ثلاثي الأبعاد تفاعلي 360°</p>
 
-  <!-- CTA للذهاب لصفحة الـ 3D المستقلة -->
   <div class="wrap" style="padding:0">
     <div class="custom-studio-hero-cta" onclick="openCustomStudio()">
       <div style="text-align:right">
@@ -497,7 +442,7 @@ footer h4{color:var(--black);font-size:22px;margin-bottom:6px}
     </div>
   </div>
 
-  <div class="gsw">
+  <div class="gsw" style="display:flex;gap:14px;justify-content:center;margin-top:20px">
     <button class="btn b-black" data-g="men" onclick="setGender('men')"><span class="hd">HOMME • رجال</span></button>
     <button class="btn b-light" data-g="women" onclick="setGender('women')"><span class="hd">FEMME • نساء</span></button>
   </div>
@@ -517,14 +462,13 @@ footer h4{color:var(--black);font-size:22px;margin-bottom:6px}
   <div class="empty hide" id="empty" style="text-align:center;padding:50px 16px"><div style="font-size:40px">💀</div><h3 class="hd" style="font-size:24px">لا توجد قطع معروضة حالياً</h3></div>
 </main>
 
-<!-- PAGE: 3D CUSTOM STUDIO (صفحة مستقلة تفاعلية) -->
+<!-- PAGE: 3D CUSTOM STUDIO -->
 <section id="customStudioPage">
   <div class="studio-header">
     <b class="hd" style="font-size:24px">⚡ 3D CUSTOM MERCH STUDIO</b>
     <button class="btn b-black" style="min-height:38px;padding:0 12px" onclick="closeCustomStudio()">✕ رجوع للمتجر</button>
   </div>
 
-  <!-- 3D Canvas -->
   <div id="threeCanvasContainer">
     <div class="touch-hint">👆 حرّك المجسم بإصبعك للدوران 360°</div>
   </div>
@@ -535,4 +479,25 @@ footer h4{color:var(--black);font-size:22px;margin-bottom:6px}
       <span id="teeTypeDesc" style="font-weight:700;font-size:13px;color:var(--tx-mut)">(تيشيرت نصف كم)</span>
     </div>
 
-    <span class="lbl">1. نوع القطعة:</s
+    <span class="lbl">1. نوع القطعة:</span>
+    <div class="opts" id="studioTypesList"></div>
+
+    <span class="lbl">2. اللون المتوفر: <span id="colName" style="color:var(--red)">Black</span></span>
+    <div class="opts" id="studioColorsList"></div>
+
+    <span class="lbl">3. القياس:</span>
+    <div class="opts" id="szs"></div>
+
+    <span class="lbl">4. ارفع التصميم لإسقاطه مباشرة على الموديل 3D:</span>
+    <label class="btn b-light" style="cursor:pointer;width:100%">⬆ اختيار صورة التصميم<input type="file" accept="image/*" class="hide" onchange="loadArtworkTo3D(event)"></label>
+    <div id="artLoadedName" style="font-size:12px;color:var(--red);margin-top:6px;font-weight:700"></div>
+
+    <span class="lbl">5. ملاحظات على مواضع الطباعة:</span>
+    <input id="teeNote" placeholder="مثال: طباعة كبيرة في الصدر، أو في الظهر...">
+
+    <button class="btn b-red" style="margin-top:20px;width:100%" onclick="addCustomToCart()">＋ إضافة القطعة للسلة</button>
+  </div>
+</section>
+
+<!-- SINGLE PRODUCT VIEW -->
+<aside class="sheet"

@@ -4,437 +4,1333 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f4f1ea">
-<title>BACKSTAGE THRIFT // 1-OF-1 VINTAGE ARCHIVE</title>
+<title>BACKSTAGE THRIFT // 1-OF-1 ROCK ARCHIVE & 3D STUDIO</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💀</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
-<style>
+​<!-- Three.js + OrbitControls for 360 Customizer Studio -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+​<style>
 :root{
-  --bg:#f4f1ea;
-  --bg-card:#ffffff;
-  --bg-card2:#eae6dd;
-  --tx:#141416;
-  --tx-mut:#636268;
-  --red:#c4152f;
-  --line:#222226;
-  --black:#0e0e11;
-  --ok:#059669;
-  --sat:env(safe-area-inset-top, 0px);
-  --sab:env(safe-area-inset-bottom, 0px);
+--bg:#f4f1ea;
+--bg-card:#ffffff;
+--bg-card2:#eae6dd;
+--tx:#141416;
+--tx-mut:#636268;
+--red:#c4152f;
+--line:#222226;
+--black:#0e0e11;
+--ok:#059669;
+--sat:env(safe-area-inset-top, 0px);
+--sab:env(safe-area-inset-bottom, 0px);
+--sal:env(safe-area-inset-left, 0px);
+--sar:env(safe-area-inset-right, 0px);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
-  background:var(--bg);
-  color:var(--tx);
-  font-family:Tajawal,sans-serif;
-  line-height:1.5;
-  overflow-x:hidden;
-  padding-bottom:calc(90px + var(--sab));
-  min-height:100dvh;
+background:var(--bg);
+color:var(--tx);
+font-family:Tajawal,sans-serif;
+line-height:1.5;
+overflow-x:hidden;
+background-image:
+radial-gradient(circle at 50% 0%, rgba(196,21,47,.06), transparent 50%),
+linear-gradient(rgba(0,0,0,.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(0,0,0,.03) 1px, transparent 1px);
+background-size:100% 100%, 24px 24px, 24px 24px;
+padding-bottom:calc(96px + var(--sab));
+padding-left:var(--sal);
+padding-right:var(--sar);
+min-height:100dvh;
 }
-button,input,select,textarea{font:inherit;color:inherit}
+button,input,select,textarea{font:inherit;color:inherit;touch-action:manipulation}
 button{cursor:pointer;border:0;background:none}
 input,select,textarea{
-  width:100%;
-  background:#fff;
-  border:2px solid var(--line);
-  border-radius:6px;
-  padding:12px;
-  font-size:16px;
-  min-height:48px;
-  box-shadow:3px 3px 0 var(--line);
+width:100%;
+background:#fff;
+border:2px solid var(--line);
+border-radius:6px;
+padding:12px 14px;
+font-size:16px;
+min-height:48px;
+color:var(--tx);
+box-shadow:3px 3px 0 var(--line);
 }
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--red)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--red);box-shadow:4px 4px 0 var(--red)}
 .hd{font-family:'Bebas Neue',Impact,sans-serif;letter-spacing:.04em}
-.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 16px}
 .btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  min-height:46px;
-  padding:0 16px;
-  border-radius:6px;
-  font-weight:900;
-  text-transform:uppercase;
-  border:2px solid var(--line);
-  box-shadow:3px 3px 0 var(--line);
-  user-select:none;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+min-height:48px;
+padding:0 20px;
+border-radius:6px;
+font-weight:900;
+text-transform:uppercase;
+border:2px solid var(--line);
+box-shadow:4px 4px 0 var(--line);
+transition:transform .08s ease;
+user-select:none;
 }
-.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--line)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--line)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
 .b-red{background:var(--red);color:#fff}
 .b-black{background:var(--black);color:#fff}
 .b-light{background:#fff;color:var(--tx)}
 .b-ok{background:var(--ok);color:#fff}
-
+​.ad-banner{
+background:var(--black);
+color:#fff;
+border-bottom:2px solid var(--line);
+padding:8px 16px;
+font-size:13px;
+font-weight:700;
+text-align:center;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+}
 header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:14px 16px;
-  max-width:1100px;
-  margin:0 auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:14px 16px;
+max-width:1200px;
+margin:0 auto;
 }
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
-.logo-badge{
-  width:42px;
-  height:42px;
-  background:var(--black);
-  color:#fff;
-  border:2px solid var(--line);
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  font-size:22px;
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+.logo-img{
+width:48px;
+height:48px;
+border-radius:50%;
+border:2px solid var(--line);
+box-shadow:3px 3px 0 var(--line);
+background:var(--black);
+object-fit:cover;
 }
-.brand b{font-family:'Bebas Neue',sans-serif;font-size:26px;line-height:0.9;display:block}
+.brand b{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.06em;line-height:.9;display:block}
 .brand small{font-size:10px;color:var(--red);letter-spacing:.2em;font-weight:900}
 .ic{
-  width:42px;
-  height:42px;
-  background:#fff;
-  border:2px solid var(--line);
-  box-shadow:2px 2px 0 var(--line);
-  border-radius:6px;
-  font-size:18px;
-  display:grid;
-  place-items:center;
+width:44px;
+height:44px;
+background:#fff;
+border:2px solid var(--line);
+box-shadow:3px 3px 0 var(--line);
+border-radius:6px;
+font-size:18px;
+display:grid;
+place-items:center;
+text-decoration:none;
 }
-
 .hero{
-  text-align:center;
-  padding:24px 16px;
-  border-bottom:2px solid var(--line);
-  background:linear-gradient(180deg, #fff 0%, #eae6dd 100%);
+text-align:center;
+padding:28px 16px 36px;
+border-bottom:2px solid var(--line);
+background:linear-gradient(180deg,rgba(255,255,255,.7) 0%,rgba(234,230,221,.4) 100%);
 }
-.hero h1{font-size:clamp(36px,9vw,64px);line-height:.95;margin:10px 0 6px;color:var(--black)}
+.hero-tag{
+display:inline-block;
+background:var(--red);
+color:#fff;
+font-weight:900;
+padding:4px 14px;
+font-size:12px;
+border:2px solid var(--line);
+box-shadow:3px 3px 0 var(--line);
+border-radius:4px;
+}
+.hero h1{font-size:clamp(40px,11vw,86px);line-height:.92;margin:14px 0 8px;color:var(--black)}
 .hero h1 em{color:var(--red);font-style:normal}
-.hero p{color:var(--tx-mut);font-size:14px;font-weight:700}
-.gsw{display:flex;gap:10px;justify-content:center;margin-top:16px}
-
-.bar{
-  position:sticky;
-  top:0;
-  z-index:30;
-  background:rgba(244,241,234,0.95);
-  backdrop-filter:blur(8px);
-  border-bottom:2px solid var(--line);
+.hero p{color:var(--tx-mut);max-width:540px;margin:0 auto;font-size:15px;font-weight:700}
+.custom-studio-hero-cta{
+margin-top:20px;
+background:#fff;
+border:2px solid var(--line);
+box-shadow:5px 5px 0 var(--line);
+padding:16px;
+border-radius:8px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+cursor:pointer;
 }
-.pills{display:flex;gap:8px;overflow-x:auto;padding:10px 16px;scrollbar-width:none}
+.bar{
+position:sticky;
+top:0;
+z-index:30;
+background:rgba(244,241,234,.95);
+backdrop-filter:blur(10px);
+-webkit-backdrop-filter:blur(10px);
+border-bottom:2px solid var(--line);
+}
+.pills{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch;max-width:1200px;margin:0 auto}
 .pills::-webkit-scrollbar{display:none}
 .pill{
-  flex:none;
-  min-height:38px;
-  padding:0 14px;
-  border:2px solid var(--line);
-  background:#fff;
-  border-radius:6px;
-  box-shadow:2px 2px 0 var(--line);
-  font-size:13px;
-  font-weight:900;
-  white-space:nowrap;
+flex:none;
+min-height:42px;
+padding:0 16px;
+border:2px solid var(--line);
+background:#fff;
+border-radius:6px;
+box-shadow:3px 3px 0 var(--line);
+font-size:13px;
+font-weight:900;
+white-space:nowrap;
 }
 .pill.on{background:var(--red);color:#fff}
-.pill.g.on{background:var(--black);color:#fff}
-.sep{flex:none;width:2px;background:var(--line);margin:4px 2px}
-
-.sec{display:flex;justify-content:space-between;align-items:end;margin:20px 0 12px;padding-bottom:8px;border-bottom:2px dashed var(--line)}
-.sec h2{font-size:26px;color:var(--black)}
-
-.grid{display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:12px}
-@media(min-width:680px){.grid{grid-template-columns:repeat(3, minmax(0, 1fr));gap:16px}}
-@media(min-width:1080px){.grid{grid-template-columns:repeat(4, minmax(0, 1fr));gap:20px}}
-
-.card{
-  background:var(--bg-card);
-  border:2px solid var(--line);
-  border-radius:6px;
-  box-shadow:3px 3px 0 var(--line);
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
+.sec{display:flex;justify-content:space-between;align-items:end;gap:10px;margin:24px 0 16px;padding-bottom:10px;border-bottom:2px dashed var(--line)}
+.sec h2{font-size:clamp(26px,5vw,36px);line-height:1;color:var(--black)}
+​.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(min-width:680px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}}
+@media(min-width:1080px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}}
+​.card{
+background:var(--bg-card);
+border:2px solid var(--line);
+border-radius:8px;
+box-shadow:4px 4px 0 var(--line);
+position:relative;
+display:flex;
+flex-direction:column;
+overflow:hidden;
 }
-.card.sold{opacity:.6;filter:grayscale(60%)}
+.card.sold{opacity:.6;filter:grayscale(70%)}
 .ph{position:relative;aspect-ratio:3/4;background:#ddd;overflow:hidden;border-bottom:2px solid var(--line);cursor:pointer}
 .ph img{width:100%;height:100%;object-fit:cover}
-.tag{position:absolute;top:6px;right:6px;background:var(--black);color:#fff;font-family:'Bebas Neue';font-size:11px;padding:2px 6px;border-radius:4px}
-.so{position:absolute;inset:0;display:grid;place-items:center;font-family:'Bebas Neue';font-size:28px;color:#fff;background:rgba(0,0,0,.75);border:3px solid var(--red);transform:rotate(-4deg)}
-.cb{padding:10px;display:flex;flex-direction:column;gap:6px;flex:1}
-.cb h3{font-size:14px;line-height:1.3;font-weight:700;min-height:36px;cursor:pointer}
-.sz{font-size:11px;font-weight:900;background:var(--bg-card2);padding:2px 6px;align-self:flex-start;border-radius:4px;direction:ltr}
-.row{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;border-top:1px dashed var(--line)}
+.tag{position:absolute;top:8px;right:8px;background:var(--black);color:#fff;border:1px solid var(--line);font-family:'Bebas Neue',sans-serif;font-size:12px;padding:2px 8px;border-radius:4px;z-index:2}
+.so{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-family:'Bebas Neue';font-size:32px;color:#fff;background:rgba(0,0,0,.8);border:3px solid var(--red);transform:rotate(-4deg) scale(.9);z-index:3}
+.cb{padding:12px;display:flex;flex-direction:column;gap:6px;flex:1}
+.cb h3{font-size:15px;line-height:1.3;font-weight:700;min-height:38px;cursor:pointer}
+.sz{font-size:11px;font-weight:900;color:#000;background:var(--bg-card2);border:1px solid var(--line);padding:2px 8px;align-self:flex-start;border-radius:4px;direction:ltr}
+.row{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:auto;padding-top:10px;border-top:1px dashed var(--line)}
 .price-wrap{display:flex;flex-direction:column;line-height:1}
-.pr{font-family:'Bebas Neue';font-size:22px;color:var(--red)}
-.old-pr{font-family:'Bebas Neue';font-size:14px;color:var(--tx-mut);text-decoration:line-through}
-
-.add{min-height:36px;padding:0 10px;background:#fff;border:2px solid var(--line);box-shadow:2px 2px 0 var(--line);border-radius:4px;font-size:12px;font-weight:900}
+.pr{font-family:'Bebas Neue';font-size:24px;color:var(--red);letter-spacing:1px}
+.old-pr{font-family:'Bebas Neue';font-size:15px;color:var(--tx-mut);text-decoration:line-through;margin-bottom:2px}
+.add{min-height:38px;padding:0 12px;background:#fff;border:2px solid var(--line);box-shadow:2px 2px 0 var(--line);border-radius:4px;font-size:12px;font-weight:900}
 .add:not(:disabled):active{background:var(--red);color:#fff}
 .add:disabled{color:#888;background:#eee;cursor:not-allowed}
-
-.fab{
-  position:fixed;
-  right:16px;
-  bottom:calc(16px + var(--sab));
-  z-index:45;
-  min-height:50px;
-  padding:0 20px;
-  font-size:15px;
+​.car{direction:ltr;display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.car::-webkit-scrollbar{display:none}
+.car img{flex:none;width:100%;height:100%;object-fit:cover;scroll-snap-align:center}
+.cn{position:absolute;bottom:8px;left:8px;background:#000;border:1px solid #333;color:#fff;font-size:11px;font-weight:900;padding:2px 8px;z-index:2}
+​/* 3D Customizer Page */
+#customStudioPage{
+position:fixed;
+inset:0;
+z-index:70;
+background:var(--bg);
+display:none;
+flex-direction:column;
+overflow-y:auto;
+padding-bottom:calc(30px + var(--sab));
 }
-.cnt{background:#fff;color:var(--red);padding:2px 8px;font-size:12px;border-radius:4px;border:1px solid var(--line);margin-inline-start:6px}
-
-.ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:60;opacity:0;pointer-events:none;transition:opacity .2s ease}
+#customStudioPage.on{display:flex}
+.studio-header{padding:14px 16px;background:#fff;border-bottom:2px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+#threeCanvasContainer{width:100%;aspect-ratio:1;max-height:410px;background:radial-gradient(circle at 50% 50%, #ffffff 0%, #ded7c8 100%);position:relative;touch-action:none}
+.touch-hint{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.75);color:#fff;font-size:11px;padding:4px 12px;border-radius:20px;pointer-events:none}
+.lbl{display:block;font-size:13px;color:var(--tx);margin:14px 0 6px;font-weight:900}
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+.sw{width:44px;height:44px;border:2px solid var(--line);border-radius:6px;box-shadow:2px 2px 0 var(--line);transition:transform .1s}
+.sw.on{border-color:var(--red);box-shadow:3px 3px 0 var(--red);transform:scale(1.08)}
+.sq{min-width:54px;min-height:44px;background:#fff;border:2px solid var(--line);box-shadow:2px 2px 0 var(--line);border-radius:6px;font-weight:900;font-size:13px;padding:0 12px}
+.sq.on{background:var(--red);color:#fff;border-color:var(--line)}
+​.fab{
+position:fixed;
+right:max(16px,var(--sar));
+bottom:calc(16px + var(--sab));
+z-index:45;
+min-height:52px;
+padding:0 22px;
+font-size:16px;
+box-shadow:4px 4px 0 var(--line);
+}
+.cnt{background:#fff;color:var(--red);padding:2px 8px;font-size:13px;border-radius:4px;border:1px solid var(--line);margin-inline-start:6px}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:60;opacity:0;pointer-events:none;transition:opacity .2s ease}
 .ov.on{opacity:1;pointer-events:auto}
 .sheet{
-  position:fixed;
-  z-index:61;
-  left:0;
-  right:0;
-  bottom:0;
-  max-height:92dvh;
-  background:#fff;
-  border-top:3px solid var(--line);
-  display:flex;
-  flex-direction:column;
-  transform:translateY(105%);
-  transition:transform .25s ease;
-  padding-bottom:max(16px, var(--sab));
+position:fixed;
+z-index:61;
+left:0;
+right:0;
+bottom:0;
+max-height:92dvh;
+background:#fff;
+border-top:3px solid var(--line);
+display:flex;
+flex-direction:column;
+transform:translateY(105%);
+transition:transform .28s cubic-bezier(.16,1,.3,1);
+padding-bottom:max(16px,var(--sab));
+box-shadow:0 -10px 30px rgba(0,0,0,.2);
+overscroll-behavior:contain;
 }
 .sheet.on{transform:none}
-.sh{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:2px solid var(--line);background:var(--bg-card2)}
-.sh h3{font-size:22px}
-.sb{overflow-y:auto;padding:16px;flex:1;display:grid;gap:12px}
-
-.ci{display:flex;gap:10px;align-items:center;background:#fff;border:2px solid var(--line);padding:8px;border-radius:4px}
-.ci img{width:50px;height:50px;object-fit:cover;border:1px solid var(--line);border-radius:4px}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.sum{background:#fff;border:2px solid var(--line);padding:12px;display:grid;gap:6px;border-radius:4px}
-.sum div{display:flex;justify-content:space-between;font-size:14px}
-.sum .t{border-top:1px dashed var(--line);padding-top:8px;font-weight:900;color:var(--red);font-size:16px}
-
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:calc(80px + var(--sab));
-  transform:translateX(-50%);
-  z-index:95;
-  background:var(--black);
-  color:#fff;
-  font-weight:900;
-  font-size:13px;
-  padding:10px 20px;
-  border-radius:6px;
-  border:2px solid var(--line);
-  text-align:center;
+@media(min-width:768px){
+.sheet{left:auto;right:0;top:0;bottom:0;max-height:none;width:490px;border-top:0;border-left:3px solid var(--line);transform:translateX(105%);padding-bottom:var(--sab)}
+.sheet.wide{width:min(960px,96vw)}
+.sheet.on{transform:none}
 }
+.sh{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:2px solid var(--line);background:var(--bg-card2)}
+.sh h3{font-size:26px;line-height:1}
+.sb{overflow-y:auto;padding:18px;flex:1;display:grid;gap:12px;align-content:start}
+.ci{display:flex;gap:12px;align-items:center;background:#fff;border:2px solid var(--line);box-shadow:3px 3px 0 var(--line);border-radius:6px;padding:10px}
+.ci img,.ci .th{width:60px;height:60px;object-fit:cover;border:1px solid var(--line);background:#eee;border-radius:4px;flex:none;display:grid;place-items:center;font-size:24px}
+.ci div{flex:1;min-width:0}
+.ci h5{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:440px){.two.m{grid-template-columns:1fr}}
+.f label{display:block;font-size:12px;color:var(--tx-mut);margin-bottom:6px;font-weight:700}
+.sum{background:#fff;border:2px solid var(--line);border-radius:6px;padding:14px;display:grid;gap:8px;box-shadow:3px 3px 0 var(--line)}
+.sum div{display:flex;justify-content:space-between;font-size:14px}
+.sum .t{border-top:2px dashed var(--line);padding-top:10px;font-weight:900;font-size:18px;color:var(--red)}
+.rd{display:flex;gap:8px;align-items:center;background:#fff;border:2px solid var(--line);border-radius:6px;padding:0 12px;min-height:48px;font-size:13px;font-weight:700;cursor:pointer}
+.rd input{width:auto;min-height:0;accent-color:var(--red);box-shadow:none}
+.tabs{display:flex;gap:8px;padding:12px 20px 0;overflow-x:auto}
+.tabs .pill.on{background:var(--black);color:#fff}
+.ar{display:flex;gap:10px;align-items:center;background:#fff;border:2px solid var(--line);box-shadow:2px 2px 0 var(--line);border-radius:6px;padding:10px}
+.ar img{width:54px;height:54px;object-fit:cover;border:1px solid var(--line);flex:none;border-radius:4px}
+.ar .i{flex:1;min-width:0;font-size:12px}
+.ar .i b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ar .a{display:flex;flex-direction:column;gap:6px;align-items:stretch}
+.ar input{min-height:36px;padding:4px 8px;width:100px;font-size:14px}
+.tg{min-height:36px;padding:0 12px;font-size:11px;font-weight:900;border:2px solid var(--line);border-radius:4px;box-shadow:2px 2px 0 var(--line)}
+.tg.in{background:#ecfdf5;color:#059669}.tg.out{background:#fef2f2;color:#dc2626}
+​/* Music Player Badge */
+.mp{
+position:fixed;
+left:max(16px,var(--sal));
+bottom:calc(16px + var(--sab));
+z-index:45;
+display:none;
+align-items:center;
+gap:8px;
+background:#fff;
+border:2px solid var(--line);
+border-radius:50px;
+box-shadow:3px 3px 0 var(--line);
+padding:4px 8px;
+}
+.mp.on{display:flex}
+.mp button{width:38px;height:38px;background:var(--red);border:2px solid var(--line);color:#fff;font-size:14px;border-radius:50%;display:grid;place-items:center}
+.mp .eq{display:flex;gap:3px;align-items:end;height:14px;margin:0 4px}
+.mp .eq i{width:3px;background:var(--red);height:4px}
+.mp.play .eq i{animation:eq .8s ease-in-out infinite alternate}
+.mp.play .eq i:nth-child(2){animation-delay:.2s}
+.mp.play .eq i:nth-child(3){animation-delay:.4s}
+@keyframes eq{to{height:14px}}
+.mp input[type=range]{width:60px;min-height:0;padding:0;accent-color:var(--red);background:none;border:0;box-shadow:none}
+#yt{position:fixed;left:-9999px;width:150px;height:150px;pointer-events:none;opacity:0}
+​.toast{
+position:fixed;
+left:50%;
+bottom:calc(88px + var(--sab));
+transform:translateX(-50%);
+z-index:95;
+background:var(--black);
+color:#fff;
+font-weight:900;
+font-size:14px;
+padding:12px 22px;
+border:2px solid var(--line);
+box-shadow:4px 4px 0 rgba(0,0,0,.3);
+max-width:90vw;
+text-align:center;
+border-radius:6px;
+animation:ti .2s ease-out;
+}
+@keyframes ti{from{opacity:0;transform:translate(-50%,12px)}}
+footer{margin-top:60px;border-top:2px solid var(--line);background:#eae6dd;padding:36px 16px;color:var(--tx-mut);font-size:13px;display:grid;gap:24px}
+@media(min-width:800px){footer{grid-template-columns:repeat(3,1fr)}}
+footer h4{color:var(--black);font-size:22px;margin-bottom:6px}
 .hide{display:none!important}
 </style>
 </head>
 <body>
-
-<header>
-  <a class="brand" href="#">
-    <div class="logo-badge">💀</div>
-    <div>
-      <b>BACKSTAGE</b>
-      <small>VINTAGE ARCHIVE</small>
-    </div>
-  </a>
-  <div style="display:flex;gap:8px">
-    <a class="ic" href="https://www.instagram.com/backstage_thrift.dz" target="_blank" rel="noopener">📷</a>
-    <button class="ic hide" id="outBtn" onclick="doLogout()">⏻</button>
-    <button class="ic" onclick="openAdmin()">🛡</button>
-  </div>
+​<div class="ad-banner hide" id="adBanner">
+<span id="adText">⚡ تخفيضات افتتاح المتجر متوفرة الآن!</span>
+<button onclick="closeAdBanner()" style="color:#fff;font-size:14px" aria-label="إغلاق">✕</button>
+</div>
+​<header>
+<a class="brand" href="#">
+<!-- Embedded Rockstar Skull Cowboy Brand Logo -->
+<img src="1000178346_2.jpg" alt="Backstage Thrift Logo" class="logo-img" onerror="this.onerror=null;this.src='1000178346.jpg'">
+<div><b>BACKSTAGE</b><small>VINTAGE & 3D CUSTOM</small></div>
+</a>
+<div style="display:flex;gap:10px">
+<a class="ic" href="https://www.instagram.com/backstage_thrift.dz" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
+<button class="ic hide" id="outBtn" onclick="doLogout()" aria-label="تسجيل الخروج" style="border-color:var(--red)">⏻</button>
+<button class="ic" onclick="openAdmin()" aria-label="لوحة التحكم">🛡</button>
+</div>
 </header>
-
-<section class="hero">
-  <h1 class="hd">ROCK 'N' ROLL <em>THRIFT VAULT</em></h1>
-  <p>ملابس فريب أصلية فريدة (1 of 1) بنسخة واحدة فقط</p>
-  <div class="gsw">
-    <button class="btn b-black" data-g="men" onclick="setGender('men')"><span class="hd">HOMME • رجال</span></button>
-    <button class="btn b-light" data-g="women" onclick="setGender('women')"><span class="hd">FEMME • نساء</span></button>
-  </div>
+​<section class="hero">
+<span class="hero-tag">★ ARCHIVE VAULT & 3D STUDIO ★</span>
+<h1 class="hd">ROCK 'N' ROLL <em>THRIFT VAULT</em></h1>
+<p>ملابس فريب أصلية فريدة (1 of 1) + استوديو تخصيص ثلاثي الأبعاد تفاعلي 360°</p>
+​<div class="wrap" style="padding:0">
+<div class="custom-studio-hero-cta" onclick="openCustomStudio()">
+<div style="text-align:right">
+<b class="hd" style="font-size:22px;display:block;color:var(--red)">🎸 صمّم تيشيرتك أو هوديك الخاص (3D)</b>
+<small style="color:var(--tx-mut)">معاينة حقيقية 360 درجة، تغيير الألوان والأقمشة، وإسقاط التصاميم</small>
+</div>
+<button class="btn b-red" style="min-height:40px;padding:0 14px">دخول الاستوديو ✦</button>
+</div>
+</div>
+​<div style="display:flex;gap:14px;justify-content:center;margin-top:20px">
+<button class="btn b-black" data-g="men" onclick="setGender('men')"><span class="hd">HOMME • رجال</span></button>
+<button class="btn b-light" data-g="women" onclick="setGender('women')"><span class="hd">FEMME • نساء</span></button>
+</div>
 </section>
-
-<div class="bar"><div class="pills" id="pills"></div></div>
-
-<main class="wrap">
-  <div class="sec">
-    <h2 class="hd">قطع الأرشيف (1 OF 1)</h2>
-    <div style="font-size:12px;font-weight:900;color:var(--red)"><span id="stock">...</span></div>
-  </div>
-  <div class="grid" id="grid"></div>
-  <div class="empty hide" id="empty" style="text-align:center;padding:40px 16px"><div style="font-size:36px">💀</div><h3>لا توجد قطع حالياً</h3></div>
+​<div class="bar"><div class="pills" id="pills"></div></div>
+​<main class="wrap">
+<div class="sec">
+<div><h2 class="hd">قطع الأرشيف (1 OF 1)</h2><p id="sub" style="font-weight:700;color:var(--tx-mut)"></p></div>
+<div style="font-size:12px;font-weight:900;color:var(--red)"><span id="stock">...</span></div>
+</div>
+<div class="grid" id="grid"></div>
+<div class="hide" id="empty" style="text-align:center;padding:50px 16px"><div style="font-size:40px">💀</div><h3 class="hd" style="font-size:24px">لا توجد قطع معروضة حالياً</h3></div>
 </main>
-
-<!-- CART -->
+​<!-- REALISTIC 3D CUSTOM STUDIO (PAGE) -->
+<section id="customStudioPage">
+<div class="studio-header">
+<b class="hd" style="font-size:24px">⚡ 3D CUSTOM MERCH STUDIO (360°)</b>
+<button class="btn b-black" style="min-height:38px;padding:0 12px" onclick="closeCustomStudio()">✕ رجوع للمتجر</button>
+</div>
+​<div id="threeCanvasContainer">
+<div class="touch-hint">👆 حرّك بإصبعك للدوران 360° ودقّق في تفاصيل القماش</div>
+</div>
+​<div class="wrap" style="padding-top:16px">
+<div style="display:flex;justify-content:space-between;align-items:center;background:#fff;padding:12px;border:2px solid var(--line);box-shadow:3px 3px 0 var(--line);border-radius:6px">
+<span class="pr" id="teePriceDisplay" style="font-size:32px">2,800 دج</span>
+<span id="teeTypeDesc" style="font-weight:700;font-size:13px;color:var(--tx-mut)">(تيشيرت نصف كم)</span>
+</div>
+​<span class="lbl">1. نوع وموديل القطعة:</span>
+<div class="opts" id="studioTypesList"></div>
+​<span class="lbl">2. اللون المتوفر: <span id="colName" style="color:var(--red)">Vintage Faded Black</span></span>
+<div class="opts" id="studioColorsList"></div>
+​<span class="lbl">3. القياس:</span>
+<div class="opts" id="szs"></div>
+​<span class="lbl">4. ارفع التصميم لإسقاطه فورياً على الموديل 3D:</span>
+<label class="btn b-light" style="cursor:pointer;width:100%">⬆ اختيار صورة التصميم<input type="file" accept="image/*" class="hide" onchange="loadArtworkTo3D(event)"></label>
+<div id="artLoadedName" style="font-size:12px;color:var(--red);margin-top:6px;font-weight:700"></div>
+​<span class="lbl">5. ملاحظات على مواضع وتفاصيل الطباعة:</span>
+<input id="teeNote" placeholder="مثال: طباعة كبيرة في الصدر، أو على الظهر...">
+​<button class="btn b-red" style="margin-top:20px;width:100%" onclick="addCustomToCart()">＋ إضافة القطعة المخصصة للسلة</button>
+</div>
+</section>
+​<!-- SINGLE PRODUCT VIEW SHEET -->
+<aside class="sheet" id="pViewSheet">
+<div class="sh"><h3 class="hd" id="pvTitle">تفاصيل القطعة</h3><button class="ic" onclick="closeAll()">✕</button></div>
+<div class="sb" id="pvBody">
+<div class="ph" id="pvGallery" style="border:2px solid var(--line);box-shadow:3px 3px 0 var(--line);border-radius:6px"></div>
+<div style="display:flex;justify-content:space-between;align-items:center">
+<div class="price-wrap">
+<span id="pvOldPrice" class="old-pr hide"></span>
+<b class="pr" id="pvPrice" style="font-size:30px">0 دج</b>
+</div>
+<span class="sz" id="pvSize" style="font-size:13px"></span>
+</div>
+<div style="background:#fff;border:2px solid var(--line);padding:12px;box-shadow:3px 3px 0 var(--line);border-radius:6px">
+<b style="color:var(--red);font-size:13px;display:block;margin-bottom:4px">الوصف والتفاصيل:</b>
+<p id="pvDesc" style="font-size:13px;color:var(--tx);line-height:1.6"></p>
+</div>
+<div style="display:flex;gap:6px">
+<button class="btn b-red" id="pvAddBtn" style="flex:1">＋ إضافة للسلة</button>
+<button class="btn b-light" onclick="closeAll()">رجوع</button>
+</div>
+</div>
+</aside>
+​<!-- CART & CHECKOUT SHEET -->
 <aside class="sheet" id="cart">
-  <div class="sh"><h3 class="hd">سلة المشتريات</h3><button class="ic" onclick="closeAll()">✕</button></div>
-  <div class="sb">
-    <div id="items" style="display:grid;gap:8px"></div>
-    
-    <div style="background:#fff;border:2px solid var(--line);border-radius:4px;padding:8px;display:grid;gap:6px">
-      <label style="font-size:12px;font-weight:900">🎟 كود الخصم (يطبق على السلع فقط):</label>
-      <div style="display:flex;gap:6px">
-        <input id="cCouponInput" placeholder="أدخل الكود..." style="min-height:38px;text-transform:uppercase">
-        <button class="btn b-black" style="min-height:38px;padding:0 12px" onclick="applyCoupon()">تطبيق</button>
-      </div>
-      <div id="couponMsg" style="font-size:11px;font-weight:700"></div>
-    </div>
-
-    <div class="two">
-      <input id="cName" placeholder="الاسم واللقب *">
-      <input id="cPhone" type="tel" placeholder="رقم الهاتف *">
-    </div>
-    <div class="two">
-      <select id="cWil" onchange="totals()"></select>
-      <input id="cCom" placeholder="البلدية والعنوان *">
-    </div>
-    
-    <div class="two">
-      <label style="font-size:12px;font-weight:700"><input type="radio" name="speed" value="express" checked onchange="totals()"> Express ⚡</label>
-      <label style="font-size:12px;font-weight:700"><input type="radio" name="speed" value="eco" onchange="totals()"> Éco 📦</label>
-    </div>
-
-    <div class="sum">
-      <div><span>مجموع السلع</span><span id="sSub">0 دج</span></div>
-      <div id="rowDiscount" class="hide" style="color:var(--ok)"><span>خصم الكوبون</span><span id="sDiscount">-0 دج</span></div>
-      <div><span>التوصيل (Guepex)</span><span id="sShip" style="color:var(--red)">حدد الولاية</span></div>
-      <div class="t"><span>المجموع عند الاستلام</span><span id="sTot">0 دج</span></div>
-    </div>
-    <button class="btn b-ok" id="sendBtn" onclick="sendOrder()">💬 تأكيد الطلبية عبر واتساب</button>
-  </div>
+<div class="sh"><h3 class="hd">سلة المشتريات</h3><button class="ic" onclick="closeAll()">✕</button></div>
+<div class="sb">
+<div id="items" style="display:grid;gap:10px"></div>
+<div style="background:#fff;border:2px solid var(--line);border-radius:6px;padding:8px 12px;font-size:12px;color:var(--red);font-weight:700">
+⚡ توصيل Guepex موحد: يتم جمع جميع السلع في طرد واحد بسعر شحن واحد!
+</div>
+​<!-- COUPON SECTION -->
+<div style="background:#fff;border:2px solid var(--line);border-radius:6px;padding:10px 12px;display:grid;gap:6px">
+<label style="font-size:12px;font-weight:900">🎟 هل لديك كود خصم؟</label>
+<div style="display:flex;gap:6px">
+<input id="cCouponInput" placeholder="أدخل كود الكوبون..." style="min-height:40px;font-size:14px;text-transform:uppercase">
+<button class="btn b-black" style="min-height:40px;padding:0 14px;font-size:13px" onclick="applyCoupon()">تطبيق</button>
+</div>
+<div id="couponMsg" style="font-size:12px;font-weight:700"></div>
+</div>
+​<h4 style="font-size:15px;font-weight:900" class="hd">معلومات التوصيل والشحن (Guepex 58 Wilaya)</h4>
+<div class="two m f">
+<div><label>الاسم واللقب *</label><input id="cName" autocomplete="name" placeholder="محمد بوزيد"></div>
+<div><label>رقم الهاتف *</label><input id="cPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="06XXXXXXXX"></div>
+</div>
+<div class="two m f">
+<div><label>الولاية *</label><select id="cWil" onchange="totals()"></select></div>
+<div><label>البلدية أو العنوان *</label><input id="cCom" autocomplete="address-level2" placeholder="البلدية والعنوان الكامل"></div>
+</div>
+​<div class="two">
+<label class="rd"><input type="radio" name="speed" value="express" checked onchange="totals()">Guepex Express ⚡</label>
+<label class="rd"><input type="radio" name="speed" value="eco" onchange="totals()">Économique 📦</label>
+</div>
+<div class="two">
+<label class="rd"><input type="radio" name="dm" value="home" checked onchange="totals()">لباب المنزل</label>
+<label class="rd"><input type="radio" name="dm" value="desk" onchange="totals()">مكتب Stop-Desk</label>
+</div>
+​<div class="sum">
+<div><span>مجموع السلع</span><span id="sSub">0 دج</span></div>
+<div id="rowDiscount" class="hide" style="color:var(--ok)"><span>خصم الكوبون (على السلع فقط)</span><span id="sDiscount">-0 دج</span></div>
+<div><span>التوصيل (طرد موحد)</span><span id="sShip" style="color:var(--red)">حدد الولاية</span></div>
+<div class="t"><span>المجموع الكلي عند الاستلام</span><span id="sTot">0 دج</span></div>
+</div>
+<button class="btn b-ok" id="sendBtn" style="font-size:16px" onclick="sendOrder()">💬 تأكيد الطلبية عبر واتساب</button>
+</div>
 </aside>
-
-<!-- ADMIN LOGIN -->
+​<!-- ADMIN LOGIN -->
 <aside class="sheet" id="login">
-  <div class="sh"><h3 class="hd">دخول الإدارة</h3><button class="ic" onclick="closeAll()">✕</button></div>
-  <form class="sb" onsubmit="doLogin(event)">
-    <input id="lMail" type="email" placeholder="البريد الإلكتروني" required>
-    <input id="lPass" type="password" placeholder="كلمة السر" required>
-    <div id="lErr" style="color:var(--red);font-size:12px"></div>
-    <button class="btn b-black" type="submit">دخول</button>
-  </form>
+<div class="sh"><h3 class="hd">دخول المالك</h3><button class="ic" onclick="closeAll()">✕</button></div>
+<form class="sb" onsubmit="doLogin(event)">
+<div class="f"><label>البريد الإلكتروني</label><input id="lMail" type="email" autocomplete="username" required></div>
+<div class="f"><label>كلمة السر</label><input id="lPass" type="password" autocomplete="current-password" required></div>
+<div class="err" id="lErr" style="color:var(--red);font-size:12px;font-weight:700"></div>
+<button class="btn b-black" type="submit">دخول</button>
+</form>
 </aside>
-
-<!-- ADMIN PANEL -->
-<aside class="sheet" id="admin">
-  <div class="sh"><h3 class="hd">لوحة التحكم</h3><div style="display:flex;gap:6px"><button class="btn b-light" style="min-height:36px" onclick="doLogout()">خروج</button><button class="ic" onclick="closeAll()">✕</button></div></div>
-  <div class="sb">
-    <form onsubmit="addProduct(event)" style="display:grid;gap:8px;background:#fff;border:2px solid var(--line);padding:12px;border-radius:4px">
-      <b style="color:var(--red);font-size:14px">＋ إضافة قطعة جديدة (1 of 1)</b>
-      <input id="nTitle" placeholder="اسم القطعة *" required>
-      <div class="two">
-        <select id="nCat"><option value="tees">Band Tees</option><option value="boots">Boots</option><option value="jackets">Jackets</option><option value="sneakers">Sneakers</option><option value="jeans">Jeans</option><option value="flannels">Flannels</option><option value="accessories">Accessories</option></select>
-        <select id="nGen"><option value="men">رجال</option><option value="women">نساء</option><option value="unisex">Unisex</option></select>
-      </div>
-      <div class="two">
-        <input id="nSize" placeholder="القياس: XL / 43" required>
-        <input id="nPrice" type="number" placeholder="السعر (دج) *" required>
-      </div>
-      <input id="nOldPrice" type="number" placeholder="السعر القديم المشطوب (اختياري)">
-      <label class="btn b-light" style="cursor:pointer">📷 صور من الهاتف<input type="file" accept="image/*" multiple id="nFile" class="hide" onchange="document.getElementById('nFileName').textContent=this.files.length+' صور'"></label>
-      <span id="nFileName" style="font-size:11px;color:var(--red);font-weight:700"></span>
-      <textarea id="nUrl" placeholder="أو روابط الصور مباشرة"></textarea>
-      <button class="btn b-red" id="nBtn" type="submit">نشر القطعة</button>
-    </form>
-    <div id="aList" style="display:grid;gap:8px"></div>
-  </div>
+​<!-- ADMIN CONTROL PANEL -->
+<aside class="sheet wide" id="admin">
+<div class="sh"><h3 class="hd">BACKSTAGE // CONTROL PANEL</h3><div style="display:flex;gap:8px"><button class="btn b-light" style="min-height:40px" onclick="doLogout()">خروج</button><button class="ic" onclick="closeAll()">✕</button></div></div>
+<div class="tabs">
+<button class="pill on" data-t="tp" onclick="tab('tp')">القطع المعروضة</button>
+<button class="pill" data-t="to" onclick="tab('to')">الطلبيات <span class="cnt" id="newOrd">0</span></button>
+<button class="pill" data-t="tcustom" onclick="tab('tcustom')">تخصيص 3D والمستلزمات</button>
+<button class="pill" data-t="tcoupons" onclick="tab('tcoupons')">إدارة الكوبونات</button>
+<button class="pill" data-t="tad" onclick="tab('tad')">الإعلانات والموسيقى</button>
+</div>
+​<!-- Products Tab -->
+<div class="sb" id="tp">
+<form onsubmit="addProduct(event)" style="display:grid;gap:12px;background:#fff;border:2px solid var(--line);box-shadow:3px 3px 0 var(--line);border-radius:6px;padding:14px">
+<b style="color:var(--red)" class="hd">＋ إضافة قطعة جديدة للأرشيف (1 of 1)</b>
+<div class="f"><label>اسم المنتج *</label><input id="nTitle" placeholder="مثال: Vintage 90s Leather Jacket" required></div>
+<div class="f"><label>الوصف والتفاصيل</label><textarea id="nDesc" placeholder="قطن مغسول، حالة ممتازة 10/10..."></textarea></div>
+<div class="two">
+<select id="nCat"><option value="tees">Band Tees</option><option value="boots">Boots</option><option value="jackets">Jackets</option><option value="sneakers">Sneakers</option><option value="jeans">Jeans</option><option value="flannels">Flannels</option><option value="accessories">Accessories</option></select>
+<select id="nGen"><option value="men">رجال</option><option value="women">نساء</option><option value="unisex">Unisex</option></select>
+</div>
+<div class="two">
+<input id="nSize" placeholder="القياس: XL / EU 43" required>
+<input id="nPrice" type="number" inputmode="numeric" min="100" placeholder="السعر الحالي (دج)" required>
+</div>
+<div class="f">
+<label>السعر القديم المشطوب (اختياري)</label>
+<input id="nOldPrice" type="number" inputmode="numeric" placeholder="مثال: 4500 (يظهر مشطوباً فوق السعر الحالي)">
+</div>
+<label class="btn b-light" style="cursor:pointer">📷 صور من الهاتف (حتى 8)<input type="file" accept="image/*" multiple id="nFile" class="hide" onchange="document.getElementById('nFileName').textContent=this.files.length?this.files.length+' صور مختارة':''"></label>
+<span id="nFileName" style="font-size:12px;color:var(--red);font-weight:700"></span>
+<textarea id="nUrl" placeholder="أو روابط الصور مباشرة (رابط في كل سطر)"></textarea>
+<button class="btn b-red" id="nBtn" type="submit">نشر القطعة</button>
+</form>
+<div id="aList" style="display:grid;gap:10px"></div>
+</div>
+​<!-- Orders Tab -->
+<div class="sb hide" id="to"><div id="oList" style="display:grid;gap:10px"></div></div>
+​<!-- 3D Merch Models & Colors CRUD -->
+<div class="sb hide" id="tcustom">
+<div style="background:#fff;border:2px solid var(--line);border-radius:6px;box-shadow:3px 3px 0 var(--line);padding:14px;display:grid;gap:12px">
+<b class="hd" style="font-size:20px;color:var(--red)">👕 موديلات وأنواع الملابس لاستوديو 3D</b>
+<div class="two">
+<input id="admTypeName" placeholder="اسم النوع (مثال: Hoodie)">
+<input id="admTypePrice" type="number" placeholder="السعر (دج)">
+</div>
+<div class="f">
+<label>الشكل الثلاثي الأبعاد (Mesh Style):</label>
+<select id="admTypeStyle">
+<option value="tee">تيشيرت نصف كم (Short Sleeve)</option>
+<option value="long">تيشيرت كم طويل (Long Sleeve)</option>
+<option value="hoodie">هودي مع قبعة (Hoodie)</option>
+</select>
+</div>
+<button class="btn b-black" onclick="addCustomType()">＋ إضافة هذا الموديل</button>
+<div id="admTypesList" style="display:grid;gap:6px"></div>
+</div>
+​<div style="background:#fff;border:2px solid var(--line);border-radius:6px;box-shadow:3px 3px 0 var(--line);padding:14px;display:grid;gap:12px">
+<b class="hd" style="font-size:20px;color:var(--red)">🎨 الألوان المتوفرة في المخزن</b>
+<div class="two">
+<input id="admColorName" placeholder="اسم اللون (مثال: Vintage Red)">
+<input id="admColorHex" type="color" value="#111113" style="min-height:48px;padding:4px">
+</div>
+<button class="btn b-black" onclick="addCustomColor()">＋ إضافة هذا اللون</button>
+<div id="admColorsList" style="display:grid;gap:6px"></div>
+</div>
+</div>
+​<!-- Coupons Management -->
+<div class="sb hide" id="tcoupons">
+<div style="background:#fff;border:2px solid var(--line);border-radius:6px;box-shadow:3px 3px 0 var(--line);padding:14px;display:grid;gap:10px">
+<b class="hd" style="font-size:20px">🎟 إنشاء كوبون خصم جديد</b>
+<div class="two">
+<input id="newCouponCode" placeholder="رمز الكوبون (مثال: ROCK10)" style="text-transform:uppercase">
+<select id="newCouponType">
+<option value="percent">نسبة مئوية (%)</option>
+<option value="fixed">مبلغ ثابت (دج)</option>
+</select>
+</div>
+<input id="newCouponVal" type="number" min="1" placeholder="القيمة (مثال: 10 أو 500)">
+<button class="btn b-black" onclick="addCoupon()">تفعيل الكوبون</button>
+<small style="color:var(--tx-mut)">الخصم يحسب فقط على مجموع السلع، ولا يمس سعر التوصيل. الكوبون يُلغى تلقائياً بعد استخدامه.</small>
+</div>
+<div id="couponsList" style="display:grid;gap:8px"></div>
+</div>
+​<!-- Ads & Music Tab -->
+<div class="sb hide" id="tad">
+<div style="background:#fff;border:2px solid var(--line);border-radius:6px;box-shadow:3px 3px 0 var(--line);padding:14px;display:grid;gap:10px">
+<b class="hd" style="font-size:20px">📢 شريط الإعلانات أعلى الصفحة</b>
+<label class="rd"><input type="checkbox" id="adActiveToggle"> تفعيل شريط الإعلانات في المتجر</label>
+<input id="adTextInput" placeholder="نص الإعلان (مثال: تخفيض 10% بمناسبة الـ 1K...)">
+<button class="btn b-red" onclick="saveAdBanner()">حفظ إعدادات الإعلان</button>
+</div>
+​<div style="background:#fff;border:2px solid var(--line);border-radius:6px;box-shadow:3px 3px 0 var(--line);padding:14px;display:grid;gap:10px">
+<b class="hd" style="font-size:20px">🎸 موسيقى الروك في الخلفية (YouTube URL)</b>
+<input id="sMusic" type="url" placeholder="https://www.youtube.com/watch?v=...">
+<button class="btn b-black" onclick="saveMusic()">حفظ رابط الموسيقى</button>
+</div>
+</div>
 </aside>
-
-<button class="btn b-red fab" onclick="cartOpen(true)">🛒 السلة <span class="cnt" id="cc">0</span></button>
-<div class="ov" id="ov" onclick="closeAll()"></div>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+​<button class="btn b-red fab" onclick="cartOpen(true)">🛒 السلة <span class="cnt" id="cc">0</span></button>
+​<!-- Background Music Player Widget -->
+<div class="mp" id="mp">
+<button id="mpPlay" onclick="musicToggle()" aria-label="تشغيل / إيقاف">▶</button>
+<div class="eq"><i></i><i></i><i></i></div>
+<input type="range" min="0" max="100" value="40" oninput="musicVol(this.value)" aria-label="الصوت">
+</div>
+<div id="yt"></div>
+​<div class="ov" id="ov" onclick="closeAll()"></div>
+​<footer>
+<div class="wrap" style="display:contents">
+<div>
+<h4 class="hd">BACKSTAGE THRIFT</h4>
+<p>أرشيف ملابس الروك الأصلية والغرنج العتيق (1-of-1) مع استوديو مخصص ثلاثي الأبعاد 360°.</p>
+</div>
+<div>
+<h4 class="hd">الطلبات وخدمة الزبائن</h4>
+<p>واتساب: <b>0697783635</b></p>
+<p>الدفع نقداً عند استلام الطرد (COD)</p>
+</div>
+<div>
+<h4 class="hd">شحن GUEPEX (طرد موحد)</h4>
+<p>شحن Express و Economique موحد لجميع الـ 58 ولاية مهما زادت عدد القطع.</p>
+</div>
+</div>
+</footer>
+​<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
+/* ============ ORIGINAL FIREBASE CONFIG ============ */
 const firebaseConfig = {
-  apiKey: "AIzaSyAfBwswaphXEWocZholBZCGwuj2q5LJ0kQ",
-  authDomain: "backstage-thrift-a4e79.firebaseapp.com",
-  projectId: "backstage-thrift-a4e79",
-  storageBucket: "backstage-thrift-a4e79.firebasestorage.app",
-  messagingSenderId: "65548238073",
-  appId: "1:65548238073:web:2fb37229f9f0021957b628"
+apiKey: "AIzaSyAfBwswaphXEWocZholBZCGwuj2q5LJ0kQ",
+authDomain: "backstage-thrift-a4e79.firebaseapp.com",
+projectId: "backstage-thrift-a4e79",
+storageBucket: "backstage-thrift-a4e79.firebasestorage.app",
+messagingSenderId: "65548238073",
+appId: "1:65548238073:web:2fb37229f9f0021957b628"
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore(), auth = firebase.auth();
-
+​/* ============ GUEPEX SHIPPING CONFIG (58 WILAYAS) ============ */
 const WIL = ("أدرار|Adrar,الشلف|Chlef,الأغواط|Laghouat,أم البواقي|Oum El Bouaghi,باتنة|Batna,بجاية|Béjaïa,بسكرة|Biskra,بشار|Béchar,البليدة|Blida,البويرة|Bouira,تمنراست|Tamanrasset,تبسة|Tébessa,تلمسان|Tlemcen,تيارت|Tiaret,تيزي وزو|Tizi Ouzou,الجزائر|Alger,الجلفة|Djelfa,جيجل|Jijel,سطيف|Sétif,سعيدة|Saïda,سكيكدة|Skikda,سيدي بلعباس|Sidi Bel Abbès,عنابة|Annaba,قالمة|Guelma,قسنطينة|Constantine,المدية|Médéa,مستغانم|Mostaganem,المسيلة|M'Sila,معسكر|Mascara,ورقلة|Ouargla,وهران|Oran,البيض|El Bayadh,إليزي|Illizi,برج بوعريريج|Bordj Bou Arréridj,بومرداس|Boumerdès,الطارف|El Tarf,تندوف|Tindouf,تيسمسيلت|Tissemsilt,الوادي|El Oued,خنشلة|Khenchela,سوق أهراس|Souk Ahras,تيبازة|Tipaza,ميلة|Mila,عين الدفلى|Aïn Defla,النعامة|Naâma,عين تموشنت|Aïn Témouchent,غرداية|Ghardaïa,غليزان|Relizane,تيميمون|Timimoun,برج باجي مختار|Bordj Badji Mokhtar,أولاد جلال|Ouled Djellal,بني عباس|Béni Abbès,عين صالح|In Salah,عين قزام|In Guezzam,توقرت|Touggourt,جانت|Djanet,المغير|El M'Ghair,المنيعة|El Menia").split(",");
 const TIER_EXPRESS = {S:[550,450],N:[700,550],C:[900,650],A:[950,750],D:[1050,850],G:[1600,1400]};
 const TIER_ECO =     {S:[450,350],N:[600,450],C:[750,550],A:[850,650],D:[950,750],G:[1400,1200]};
 const TMAP = {21:'S',16:'N',18:'N',23:'N',24:'N',25:'N',43:'N',3:'A',7:'A',17:'A',30:'A',39:'A',47:'A',51:'A',55:'A',57:'A',58:'A',1:'D',8:'D',32:'D',45:'D',49:'D',50:'D',52:'D',11:'G',33:'G',37:'G',53:'G',54:'G',56:'G'};
-
-const getDeliveryFee = (code, speed) => {
-  if (!code) return 0;
-  const table = speed === 'eco' ? TIER_ECO : TIER_EXPRESS;
-  return table[TMAP[code] || 'C'][0];
+​const getDeliveryFee = (code, mode, speed) => {
+if (!code) return 0;
+const table = speed === 'eco' ? TIER_ECO : TIER_EXPRESS;
+return table[TMAP[code] || 'C'][mode === 'home' ? 0 : 1];
 };
-const wname = c => { const [a, f] = WIL[c - 1].split('|'); return `${String(c).padStart(2, '0')} - ${a} (${f})`; };
-
-const CATS = [['all','الكل'],['tees','Band Tees'],['boots','Boots'],['jackets','Jackets'],['sneakers','Sneakers'],['jeans','Jeans'],['flannels','Flannels'],['accessories','Accessories']];
-let gender = 'men', cat = 'all', products = [], cart = [], isAdmin = false, loaded = false;
+const wname = c => { const [a, f] = WIL[c - 1].split('|'); return ${String(c).padStart(2, '0')} - ${a} (${f}); };
+​const CATS = [['all','الكل'],['tees','Band Tees'],['boots','Boots'],['jackets','Jackets'],['sneakers','Sneakers'],['jeans','Jeans'],['flannels','Flannels'],['accessories','Accessories']];
+const SIZES = ['S','M','L','XL','XXL'];
+const PH = "data:image/svg+xml," + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' width='300' height='400'><rect fill='#eae6dd' width='300' height='400'/><text x='150' y='210' fill='#c4152f' font-size='22' text-anchor='middle' font-family='sans-serif'>BACKSTAGE 1-OF-1</text></svg>");
+​let gender = 'men', cat = 'all', products = [], cart = [], isAdmin = false, loaded = false;
 let appliedCoupon = null;
-
-try { cart = JSON.parse(localStorage.getItem('bt_cart') || '[]'); } catch (e) { cart = []; }
-
-const $ = id => document.getElementById(id);
+​/* 3D Studio Config (Dynamic Admin Configurable) */
+let studioConfig = {
+types: [
+{ id: 'tee', name: 'تيشيرت نصف كم', style: 'tee', price: 2800 },
+{ id: 'long', name: 'تيشيرت طويل الأكمام', style: 'long', price: 3400 },
+{ id: 'hoodie', name: 'هودي Oversized', style: 'hoodie', price: 4800 }
+],
+colors: [
+{ hex: '#111113', name: 'Vintage Faded Black' },
+{ hex: '#2b2b32', name: 'Charcoal Wash' },
+{ hex: '#eae6dd', name: 'Off-White Raw' },
+{ hex: '#800a1c', name: 'Grunge Crimson' },
+{ hex: '#1e2838', name: 'Midnight Navy' }
+]
+};
+​let currentStudioSelection = {
+type: null,
+color: null,
+size: 'L',
+artworkDataUrl: null,
+artName: ''
+};
+​try { cart = JSON.parse(localStorage.getItem('bt_cart') || '[]'); } catch (e) { cart = []; }
+​const $ = id => document.getElementById(id);
 const fmt = n => Number(n).toLocaleString('en-US') + ' دج';
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&','<':'<','>':'>','"':'"',"'":'''}[c]));
 const saveCart = () => { try { localStorage.setItem('bt_cart', JSON.stringify(cart)); } catch (e) {} };
-function toast(m) { document.querySelector('.toast')?.remove(); const t = document.createElement('div'); t.className = 'toast'; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 3000); }
-
-function compress(file, max = 800, q = .7) {
-  return new Promise((res, rej) => {
-    const r = new FileReader();
-    r.onerror = rej;
-    r.onload = () => { const im = new Image(); im.onerror = rej; im.onload = () => {
-      const k = Math.min(1, max / Math.max(im.width, im.height)), c = document.createElement('canvas');
-      c.width = im.width * k; c.height = im.height * k; c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
-      res(c.toDataURL('image/jpeg', q)); }; im.src = r.result; };
-    r.readAsDataURL(file);
-  });
+function toast(m) { document.querySelector('.toast')?.remove(); const t = document.createElement('div'); t.className = 'toast'; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 3200); }
+function img(u) {
+if (!u) return PH;
+if (u.includes('drive.google.com')) { const m = u.match(//d/([\w-]+)/) || u.match(/id=([\w-]+)/); if (m) return https://drive.google.com/thumbnail?id=${m[1]}&sz=w800; }
+return u;
 }
-
-// REALTIME FIRESTORE LISTENER
-db.collection('products').orderBy('createdAt', 'desc').onSnapshot(s => {
-  products = s.docs.map(d => ({ id: d.id, ...d.data() }));
-  loaded = true;
-  renderCatalog();
-  renderCart();
-  if (isAdmin) renderAdminList();
-}, () => { loaded = true; renderCatalog(); });
-
-auth.onAuthStateChanged(u => {
-  isAdmin = !!u;
-  if ($('outBtn')) $('outBtn').classList.toggle('hide', !u);
-  if (u) renderAdminList();
+function compress(file, max = 800, q = .7) {
+return new Promise((res, rej) => {
+const r = new FileReader();
+r.onerror = rej;
+r.onload = () => { const im = new Image(); im.onerror = rej; im.onload = () => {
+const k = Math.min(1, max / Math.max(im.width, im.height)), c = document.createElement('canvas');
+c.width = im.width * k; c.height = im.height * k; c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+res(c.toDataURL('image/jpeg', q)); }; im.src = r.result; };
+r.readAsDataURL(file);
 });
-
+}
+​/* ============ FIRESTORE SYNC ============ */
+db.collection('products').orderBy('createdAt', 'desc').onSnapshot(s => {
+products = s.docs.map(d => ({ id: d.id, ...d.data() }));
+if (loaded && products.length > 0) {
+const before = cart.length;
+cart = cart.filter(i => i.custom || products.some(p => p.id === i.id && !p.sold));
+if (cart.length !== before) { saveCart(); toast('تمت إزالة القطع المباعة من سلتك'); }
+}
+loaded = true;
+renderCatalog();
+renderCart();
+if (isAdmin) renderAdminList();
+}, () => { loaded = true; renderCatalog(); });
+​db.doc('settings/main').onSnapshot(d => {
+try {
+const s = d.data() || {};
+if (s.studioConfig && s.studioConfig.types && s.studioConfig.types.length) {
+studioConfig = s.studioConfig;
+}
+if (s.adActive && s.adText && $('adBanner')) {
+$('adBanner').classList.remove('hide');
+('adText').textContent = s.adText;
+if (('adActiveToggle')) ('adActiveToggle').checked = true;
+if (('adTextInput')) ('adTextInput').value = s.adText;
+} else if (('adBanner')) {
+('adBanner').classList.add('hide');
+if (('adActiveToggle')) ('adActiveToggle').checked = false;
+}
+renderStudioAttributes();
+if (isAdmin) renderAdminAttributes();
+if (('sMusic')) $('sMusic').value = s.musicUrl || '';
+musicSet(s.musicUrl || '');
+} catch (err) {
+console.warn('Settings load warning:', err);
+}
+}, () => {});
+​let idleT;
+function idleReset() { clearTimeout(idleT); if (isAdmin) idleT = setTimeout(() => { auth.signOut(); closeAll(); toast('تم تسجيل الخروج لعدم النشاط'); }, 20 * 60 * 1000); }
+['pointerdown', 'keydown'].forEach(ev => addEventListener(ev, idleReset, { passive: true }));
+​auth.onAuthStateChanged(u => {
+isAdmin = !!u;
+if ($('outBtn')) ('outBtn').classList.toggle('hide', !u);
+if (u) { watchOrders(); watchCoupons(); renderAdminList(); renderAdminAttributes(); idleReset(); }
+else { stopOrders(); stopCoupons(); clearTimeout(idleT); if (('oList')) ('oList').innerHTML = ''; if (('aList')) ('aList').innerHTML = ''; if (('couponsList')) $('couponsList').innerHTML = ''; }
+});
+​/* ============ CATALOG ============ */
 function renderPills() {
-  if (!$('pills')) return;
-  $('pills').innerHTML =
-    `<button class="pill g ${gender === 'men' ? 'on' : ''}" onclick="setGender('men')">رجال</button>` +
-    `<button class="pill g ${gender === 'women' ? 'on' : ''}" onclick="setGender('women')">نساء</button><span class="sep"></span>` +
-    CATS.map(([id, n]) => `<button class="pill ${cat === id ? 'on' : ''}" onclick="setCat('${id}')">${n}</button>`).join('');
+if (!$('pills')) return;
+$('pills').innerHTML =
+<button class="pill g ${gender === 'men' ? 'on' : ''}" onclick="setGender('men')">رجال</button> +
+<button class="pill g ${gender === 'women' ? 'on' : ''}" onclick="setGender('women')">نساء</button><span class="sep"></span> +
+CATS.map(([id, n]) => <button class="pill ${cat === id ? 'on' : ''}" onclick="setCat('${id}')">${n}</button>).join('');
 }
 function setGender(g) {
-  gender = g;
-  document.querySelectorAll('.gsw .btn').forEach(b => { const on = b.dataset.g === g; b.classList.toggle('b-black', on); b.classList.toggle('b-light', !on); });
-  renderPills(); renderCatalog();
+gender = g;
+document.querySelectorAll('[data-g]').forEach(b => {
+const on = b.dataset.g === g;
+b.classList.toggle('b-black', on);
+b.classList.toggle('b-light', !on);
+});
+renderPills(); renderCatalog();
 }
 function setCat(c) { cat = c; renderPills(); renderCatalog(); }
-
-function renderCatalog() {
-  if (!$('grid')) return;
-  const list = products.filter(p => (p.gender === 'unisex' || p.gender === gender) && (cat === 'all' || p.category === cat));
-  if ($('stock')) $('stock').textContent = loaded ? `${list.filter(p => !p.sold).length} قطع متوفرة` : '...';
-  if ($('empty')) $('empty').classList.toggle('hide', !loaded || list.length > 0);
-  $('grid').innerHTML = list.map(p => {
-    const im = (p.images && p.images.length) ? p.images[0] : (p.image || '');
-    return `
-    <article class="card ${p.sold ? 'sold' : ''}">
-      <div class="ph">
-        <img src="${esc(im)}" alt="${esc(p.title)}" onerror="this.src='data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 100 100\\'><rect fill=\\'#eee\\' width=\\'100\\' height=\\'100\\'/></svg>'">
-        <span class="tag">1 OF 1</span>
-        ${p.sold ? '<div class="so">SOLD OUT</div>' : '
+​function renderCatalog() {
+if (!('grid')) return;
+const list = products.filter(p => (p.gender === 'unisex' || p.gender === gender) && (cat === 'all' || p.category === cat));
+if (('stock')) ('stock').textContent = loaded ? `${list.filter(p => !p.sold).length} قطع أصلية متوفرة` : '...';
+if (('sub')) ('sub').textContent = `${gender === 'men' ? 'HOMME • رجال' : 'FEMME • نساء'} // ${CATS.find(c => c[0] === cat)[1]}`;
+if (('empty')) $('empty').classList.toggle('hide', !loaded || list.length > 0);
+('grid').innerHTML = list.map(p => `
+<article class="card ${p.sold ? 'sold' : ''}">
+<div class="ph" onclick="openProductView('${p.id}')">
+${gallery(p)}
+<span class="tag">1 OF 1</span>
+${p.sold ? '<div class="so">SOLD OUT</div>' : ''}
+</div>
+<div class="cb">
+<h3 onclick="openProductView('${p.id}')">${esc(p.title)}</h3>
+<span class="sz">${esc(p.size)}</span>
+<div class="row">
+<div class="price-wrap">
+${p.oldPrice && p.oldPrice > p.price ? `<span class="old-pr">{fmt(p.oldPrice)}</span> : ''} <b class="pr">${fmt(p.price)}</b> </div> <button class="add" ${p.sold ? 'disabled' : ''} onclick="addPiece('${p.id}')">${p.sold ? 'مباعة' : '＋ للسلة'}</button> </div> </div> </article>).join('');
+}
+​const imgsOf = p => (p.images && p.images.length) ? p.images : (p.image ? [p.image] : [PH]);
+function gallery(p) {
+const im = imgsOf(p);
+return <div class="car" onscroll="cnt(this)">${im.map(u => <img loading="lazy" decoding="async" src="${esc(img(u))}" alt="${esc(p.title)}" onerror="this.onerror=null;this.src=PH">).join('')}</div> +
+(im.length > 1 ? <span class="cn">1/${im.length}</span><button class="sl p" onclick="slide(this,-1)" aria-label="السابقة">‹</button><button class="sl n" onclick="slide(this,1)" aria-label="التالية">›</button> : '');
+}
+const cnt = c => { const n = c.parentElement.querySelector('.cn'); if (n) n.textContent = (Math.round(c.scrollLeft / c.clientWidth) + 1) + '/' + c.children.length; };
+const slide = (b, d) => { const c = b.parentElement.querySelector('.car'); c.scrollBy({ left: d * c.clientWidth, behavior: 'smooth' }); };
+​/* ============ PRODUCT VIEW ============ */
+function openProductView(id) {
+const p = products.find(x => x.id === id);
+if (!p) return;
+closeAll();
+$('pvTitle').textContent = p.title;
+$('pvGallery').innerHTML = gallery(p);
+$('pvSize').textContent = القياس: ${p.size};
+$('pvDesc').textContent = p.description || 'قطعة أصلية فريدة من أرشيف التسعينات، متوفرة بنسخة واحدة فقط (1 of 1).';
+if (p.oldPrice && p.oldPrice > p.price) {
+$('pvOldPrice').textContent = fmt(p.oldPrice);
+$('pvOldPrice').classList.remove('hide');
+} else {
+$('pvOldPrice').classList.add('hide');
+}
+$('pvPrice').textContent = fmt(p.price);
+const addBtn = $('pvAddBtn');
+if (p.sold) {
+addBtn.disabled = true;
+addBtn.textContent = 'بيعت القطعة (Sold Out)';
+} else {
+addBtn.disabled = false;
+addBtn.textContent = '＋ إضافة القطعة للسلة';
+addBtn.onclick = () => { addPiece(p.id); closeAll(); };
+}
+$('pViewSheet').classList.add('on');
+$('ov').classList.add('on');
+document.body.style.overflow = 'hidden';
+}
+​/* ============ REALISTIC 3D STUDIO (THREE.JS 360°) ============ */
+let scene, camera, renderer, controls, studioGroup = null, shirtMesh = null, artPlane = null, userTexture = null;
+let is3DInit = false;
+​// Procedural Fabric Normal Map generation for realistic cotton / knit texture
+function generateFabricTexture() {
+const c = document.createElement('canvas');
+c.width = 256; c.height = 256;
+const ctx = c.getContext('2d');
+ctx.fillStyle = '#8080ff';
+ctx.fillRect(0, 0, 256, 256);
+const imgData = ctx.getImageData(0, 0, 256, 256);
+for (let i = 0; i < imgData.data.length; i += 4) {
+const noise = (Math.random() - 0.5) * 18;
+imgData.data[i] = Math.min(255, Math.max(0, 128 + noise));
+imgData.data[i+1] = Math.min(255, Math.max(0, 128 + noise));
+imgData.data[i+2] = 255;
+}
+ctx.putImageData(imgData, 0, 0);
+const t = new THREE.CanvasTexture(c);
+t.wrapS = THREE.RepeatWrapping;
+t.wrapT = THREE.RepeatWrapping;
+t.repeat.set(8, 8);
+return t;
+}
+​function initThreeEngine() {
+if (is3DInit || typeof THREE === 'undefined') return;
+const container = $('threeCanvasContainer');
+if (!container) return;
+const width = container.clientWidth || 360;
+const height = container.clientHeight || 360;
+​scene = new THREE.Scene();
+​camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
+camera.position.set(0, 0.2, 5.8);
+​renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+container.appendChild(renderer.domElement);
+​if (THREE.OrbitControls) {
+controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.enablePan = false;
+controls.minDistance = 3.6;
+controls.maxDistance = 8.5;
+}
+​// Realistic Studio 3-Point Lighting
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
+scene.add(ambientLight);
+​const keyLight = new THREE.DirectionalLight(0xfff7ed, 0.9);
+keyLight.position.set(3, 5, 4);
+scene.add(keyLight);
+​const fillLight = new THREE.DirectionalLight(0xe0e7ff, 0.5);
+fillLight.position.set(-3, -1, 3);
+scene.add(fillLight);
+​const backRim = new THREE.DirectionalLight(0xffffff, 0.7);
+backRim.position.set(0, 3, -5);
+scene.add(backRim);
+​buildRealistic3DGarment();
+​const animate = () => {
+requestAnimationFrame(animate);
+if (controls) controls.update();
+renderer.render(scene, camera);
+};
+animate();
+​is3DInit = true;
+}
+​function buildRealistic3DGarment() {
+if (!scene) return;
+if (studioGroup) scene.remove(studioGroup);
+​studioGroup = new THREE.Group();
+const fabricBump = generateFabricTexture();
+​const garmentMat = new THREE.MeshStandardMaterial({
+color: new THREE.Color(currentStudioSelection.color ? currentStudioSelection.color.hex : '#111113'),
+roughness: 0.88,
+metalness: 0.04,
+bumpMap: fabricBump,
+bumpScale: 0.015
+});
+​const style = (currentStudioSelection.type && currentStudioSelection.type.style) || 'tee';
+​// 1. Torso Geometry with organic chest curvature & fabric depth
+const torsoShape = new THREE.Shape();
+torsoShape.moveTo(-1.18, 1.85);
+torsoShape.lineTo(-0.55, 1.95);
+torsoShape.quadraticCurveTo(0, 1.62, 0.55, 1.95); // Ribbed Collar cutout
+torsoShape.lineTo(1.18, 1.85);
+torsoShape.lineTo(1.35, 1.0);
+torsoShape.lineTo(1.22, -1.9);
+torsoShape.quadraticCurveTo(0, -2.0, -1.22, -1.9); // Bottom hem drop
+torsoShape.lineTo(-1.35, 1.0);
+torsoShape.closePath();
+​const extrudeSettings = {
+depth: 0.44,
+bevelEnabled: true,
+bevelSegments: 8,
+steps: 4,
+bevelSize: 0.16,
+bevelThickness: 0.16
+};
+const torsoGeo = new THREE.ExtrudeGeometry(torsoShape, extrudeSettings);
+torsoGeo.center();
+​// Subtle natural fabric ripples
+const pos = torsoGeo.attributes.position;
+for (let i = 0; i < pos.count; i++) {
+const y = pos.getY(i);
+const z = pos.getZ(i);
+if (z > 0.1) {
+const ripple = Math.sin(y * 3.5) * 0.035;
+pos.setZ(i, z + ripple);
+}
+}
+torsoGeo.computeVertexNormals();
+​shirtMesh = new THREE.Mesh(torsoGeo, garmentMat);
+studioGroup.add(shirtMesh);
+​// 2. Realistic Ribbed Crew Collar Ring
+const collarGeo = new THREE.TorusGeometry(0.55, 0.07, 16, 40, Math.PI * 1.05);
+collarGeo.rotateX(Math.PI / 2.3);
+collarGeo.rotateZ(Math.PI * 0.97);
+const collarMesh = new THREE.Mesh(collarGeo, garmentMat);
+collarMesh.position.set(0, 0.94, 0.06);
+studioGroup.add(collarMesh);
+​// 3. Sleeves: Fitted Short / Long Sleeves with seams
+const isLong = style === 'long' || style === 'hoodie';
+const sleeveLen = isLong ? 1.75 : 0.72;
+const sleeveGeo = new THREE.CylinderGeometry(isLong ? 0.32 : 0.38, 0.45, sleeveLen, 24, 6);
+sleeveGeo.rotateZ(Math.PI / 2);
+​[-1, 1].forEach(dir => {
+const sleeve = new THREE.Mesh(sleeveGeo, garmentMat);
+if (isLong) {
+sleeve.position.set(dir * 1.45, 0.25, 0);
+sleeve.rotation.z = dir * -0.52;
+} else {
+sleeve.position.set(dir * 1.25, 0.65, 0);
+sleeve.rotation.z = dir * -0.42;
+}
+studioGroup.add(sleeve);
+});
+​// 4. Oversized Hoodie Hood + Drawstrings
+if (style === 'hoodie') {
+const hoodGeo = new THREE.SphereGeometry(0.68, 28, 24, 0, Math.PI * 2, 0, Math.PI * 0.8);
+hoodGeo.scale(1.15, 1.1, 1.0);
+const hoodMesh = new THREE.Mesh(hoodGeo, garmentMat);
+hoodMesh.position.set(0, 1.35, -0.22);
+hoodMesh.rotation.x = -0.25;
+studioGroup.add(hoodMesh);
+​// Kangaroo Front Pouch Pocket
+const pocketGeo = new THREE.BoxGeometry(1.2, 0.65, 0.12);
+const pocketMesh = new THREE.Mesh(pocketGeo, garmentMat);
+pocketMesh.position.set(0, -0.85, 0.32);
+studioGroup.add(pocketMesh);
+}
+​// 5. Artwork Projection Decal Plane
+const artGeo = new THREE.PlaneGeometry(1.25, 1.25);
+const artMat = new THREE.MeshBasicMaterial({
+transparent: true,
+opacity: userTexture ? 1 : 0,
+map: userTexture || null,
+depthWrite: false
+});
+artPlane = new THREE.Mesh(artGeo, artMat);
+artPlane.position.set(0, 0.18, 0.40);
+studioGroup.add(artPlane);
+​studioGroup.position.y = -0.05;
+scene.add(studioGroup);
+}
+​function openCustomStudio() {
+$('customStudioPage').classList.add('on');
+document.body.style.overflow = 'hidden';
+setTimeout(() => {
+initThreeEngine();
+if (renderer && $('threeCanvasContainer')) {
+const container = $('threeCanvasContainer');
+renderer.setSize(container.clientWidth, container.clientHeight);
+camera.aspect = container.clientWidth / container.clientHeight;
+camera.updateProjectionMatrix();
+}
+}, 100);
+}
+function closeCustomStudio() {
+$('customStudioPage').classList.remove('on');
+document.body.style.overflow = '';
+}
+​function renderStudioAttributes() {
+if (!studioConfig || !studioConfig.types || !studioConfig.types.length) return;
+if (!currentStudioSelection.type) currentStudioSelection.type = studioConfig.types[0];
+if (!currentStudioSelection.color) currentStudioSelection.color = studioConfig.colors[0];
+​if ($('studioTypesList')) {
+$('studioTypesList').innerHTML = studioConfig.types.map(t =>  <button class="sq ${currentStudioSelection.type.id === t.id ? 'on' : ''}" onclick="selectStudioType('${t.id}')">${t.name}</button>).join('');
+}
+​if ($('studioColorsList')) {
+$('studioColorsList').innerHTML = studioConfig.colors.map((c, i) =>  <button class="sw ${currentStudioSelection.color.hex === c.hex ? 'on' : ''}" style="background:${c.hex}" onclick="selectStudioColor(${i})" aria-label="${c.name}"></button>).join('');
+}
+​if ($('szs')) {
+$('szs').innerHTML = SIZES.map(s =>  <button class="sq ${currentStudioSelection.size === s ? 'on' : ''}" onclick="currentStudioSelection.size='${s}';renderStudioAttributes()">${s}</button>).join('');
+}
+​if ($('colName')) ('colName').textContent = currentStudioSelection.color.name;
+if (('teePriceDisplay')) ('teePriceDisplay').textContent = fmt(currentStudioSelection.type.price);
+if (('teeTypeDesc')) $('teeTypeDesc').textContent = (${currentStudioSelection.type.name});
+}
+​function selectStudioType(id) {
+const t = studioConfig.types.find(x => x.id === id);
+if (t) {
+currentStudioSelection.type = t;
+renderStudioAttributes();
+buildRealistic3DGarment();
+}
+}
+​function selectStudioColor(idx) {
+const c = studioConfig.colors[idx];
+if (c) {
+currentStudioSelection.color = c;
+renderStudioAttributes();
+if (studioGroup) {
+studioGroup.traverse(child => {
+if (child.isMesh && child !== artPlane && child.material && child.material.color) {
+child.material.color.set(c.hex);
+}
+});
+}
+}
+}
+​function loadArtworkTo3D(e) {
+const file = e.target.files[0];
+if (!file) return;
+currentStudioSelection.artName = file.name;
+$('artLoadedName').textContent = ✔ تم إسقاط التصميم: ${file.name};
+​const reader = new FileReader();
+reader.onload = ev => {
+new THREE.TextureLoader().load(ev.target.result, tex => {
+tex.encoding = THREE.sRGBEncoding;
+userTexture = tex;
+if (artPlane) {
+artPlane.material.map = tex;
+artPlane.material.opacity = 1;
+artPlane.material.needsUpdate = true;
+}
+toast('تم تطبيق التصميم على الموديل 3D ⚡');
+});
+};
+reader.readAsDataURL(file);
+}
+​function addCustomToCart() {
+const title = Custom 3D ${currentStudioSelection.type.name} (${currentStudioSelection.color.name});
+cart.push({
+cartId: 'cst_' + Date.now(),
+custom: true,
+title,
+price: currentStudioSelection.type.price,
+size: currentStudioSelection.size,
+color: currentStudioSelection.color.name,
+file: currentStudioSelection.artName || 'سيتم إرسال الصورة عبر واتساب',
+note: $('teeNote').value.trim() || 'طباعة أساسية في الصدر'
+});
+saveCart(); renderCart(); closeCustomStudio(); cartOpen(true); toast('تمت إضافة طلبك المخصص للسلة ⚡');
+}
+​/* ============ ADMIN CRUD FOR 3D TYPES & COLORS ============ */
+function renderAdminAttributes() {
+if ($('admTypesList')) {
+$('admTypesList').innerHTML = studioConfig.types.map((t, idx) =>  <div class="ar" style="justify-content:space-between"> <div><b>${t.name}</b> (${t.style}) - <span style="color:var(--red)">${fmt(t.price)}</span></div> <button class="tg" onclick="delCustomType(${idx})">🗑</button> </div>).join('');
+}
+​if ($('admColorsList')) {
+$('admColorsList').innerHTML = studioConfig.colors.map((c, idx) =>  <div class="ar" style="justify-content:space-between"> <div style="display:flex;align-items:center;gap:8px"> <span style="width:22px;height:22px;background:${c.hex};border:1px solid #000;border-radius:4px;display:inline-block"></span> <b>${c.name}</b> </div> <button class="tg" onclick="delCustomColor(${idx})">🗑</button> </div>).join('');
+}
+}
+​function addCustomType() {
+const name = ('admTypeName').value.trim();
+const price = Number(('admTypePrice').value);
+const style = $('admTypeStyle').value;
+if (!name || !price) return toast('يرجى إدخال اسم الموديل والسعر');
+studioConfig.types.push({ id: 't_' + Date.now(), name, style, price });
+saveStudioConfig();
+$('admTypeName').value = ''; $('admTypePrice').value = '';
+}
+function delCustomType(idx) {
+if (confirm('حذف هذا الموديل؟')) { studioConfig.types.splice(idx, 1); saveStudioConfig(); }
+}
+function addCustomColor() {
+const name = $('admColorName').value.trim();
+const hex = $('admColorHex').value;
+if (!name) return toast('اكتب اسم اللون');
+studioConfig.colors.push({ name, hex });
+saveStudioConfig();
+$('admColorName').value = '';
+}
+function delCustomColor(idx) {
+if (confirm('حذف هذا اللون؟')) { studioConfig.colors.splice(idx, 1); saveStudioConfig(); }
+}
+function saveStudioConfig() {
+db.doc('settings/main').set({ studioConfig }, { merge: true }).then(() => {
+toast('تم تحديث المستلزمات بنجاح ⚡');
+renderStudioAttributes();
+renderAdminAttributes();
+});
+}
+​function saveAdBanner() {
+const active = $('adActiveToggle').checked;
+const text = $('adTextInput').value.trim();
+db.doc('settings/main').set({ adActive: active, adText: text }, { merge: true }).then(() => toast('تم حفظ الإعلان'));
+}
+function closeAdBanner() { $('adBanner').classList.add('hide'); }
+​/* ============ CART, CHECKOUT & COUPONS ============ */
+function addPiece(id) {
+const p = products.find(x => x.id === id);
+if (!p || p.sold) return toast('بيعت هذه القطعة (Sold Out)');
+if (cart.some(i => i.id === id)) { toast('هذه القطعة فريدة وهي في سلتك بالفعل'); return cartOpen(true); }
+cart.push({ cartId: 'c_' + id, id, title: p.title, cat: p.category, price: p.price, size: p.size, image: img(imgsOf(p)[0]) });
+saveCart(); renderCart(); toast('تمت الإضافة للسلة ⚡');
+}
+function rmItem(cid) { cart = cart.filter(i => i.cartId !== cid); saveCart(); renderCart(); }
+function renderCart() {
+if ($('cc')) ('cc').textContent = cart.length;
+if (!('items')) return;
+$('items').innerHTML = cart.length ? cart.map(i => <div class="ci">${i.custom ? '<div class="th">👕</div>' :<img src="${esc(i.image)}" alt="" onerror="this.src=PH">} <div><h5>${esc(i.title)}</h5><small>القياس: ${esc(i.size)}</small><br><b style="color:var(--red);font-size:15px">${fmt(i.price)}</b></div> <button class="ic" style="width:36px;height:36px" onclick="rmItem('${i.cartId}')" aria-label="حذف">🗑</button></div>).join('')
+: '<div style="text-align:center;padding:24px;color:var(--tx-mut)"><div style="font-size:32px">💀</div>السلة فارغة</div>';
+totals();
+}
+​async function applyCoupon() {
+const code = $('cCouponInput').value.trim().toUpperCase();
+const msg = $('couponMsg');
+if (!code) { msg.textContent = 'أدخل رمز الكوبون'; msg.style.color = 'var(--red)'; return; }
+msg.textContent = 'جارٍ التحقق...';
+try {
+const q = await db.collection('coupons').where('code', '==', code).limit(1).get();
+if (q.empty) { msg.textContent = 'الكوبون غير صحيح'; msg.style.color = 'var(--red)'; appliedCoupon = null; totals(); return; }
+const cData = q.docs[0].data();
+if (cData.used) { msg.textContent = 'هذا الكوبون تم استخدامه مسبقاً'; msg.style.color = 'var(--red)'; appliedCoupon = null; totals(); return; }
+appliedCoupon = { id: q.docs[0].id, code: cData.code, type: cData.type || 'percent', value: Number(cData.value) || 10 };
+msg.textContent = ✔ تم تطبيق التخفيض (${appliedCoupon.type === 'percent' ? appliedCoupon.value + '%' : fmt(appliedCoupon.value)}) على السلع!;
+msg.style.color = 'var(--ok)';
+totals();
+} catch (err) { msg.textContent = 'تعذر التحقق من الكوبون'; }
+}
+​function totals() {
+const sub = cart.reduce((a, i) => a + Number(i.price), 0);
+const w = Number($('cWil') ? $('cWil').value : 0);
+const mode = document.querySelector('[name=dm]:checked') ? document.querySelector('[name=dm]:checked').value : 'home';
+const speed = document.querySelector('[name=speed]:checked') ? document.querySelector('[name=speed]:checked').value : 'express';
+const sh = w ? getDeliveryFee(w, mode, speed) : 0;
+​let discountAmount = 0;
+if (appliedCoupon && sub > 0) {
+if (appliedCoupon.type === 'percent') discountAmount = Math.round(sub * (appliedCoupon.value / 100));
+else discountAmount = Math.min(sub, appliedCoupon.value);
+if ($('rowDiscount')) ('rowDiscount').classList.remove('hide');
+if (('sDiscount')) ('sDiscount').textContent = `-${fmt(discountAmount)}`;
+} else {
+if (('rowDiscount')) $('rowDiscount').classList.add('hide');
+}
+​const finalItemsTotal = Math.max(0, sub - discountAmount);
+if ($('sSub')) ('sSub').textContent = fmt(sub);
+if (('sShip')) ('sShip').textContent = w ? `${fmt(sh)} (${speed === 'express' ? 'Express' : 'Éco'} موحد)` : 'حدد الولاية';
+if (('sTot')) $('sTot').textContent = fmt(finalItemsTotal + sh);
+}
+​function cartOpen(o) { closeAll(); if (o) { $('cart').classList.add('on'); ('ov').classList.add('on'); document.body.style.overflow = 'hidden'; } }
+function closeAll() { document.querySelectorAll('.sheet').forEach(s => s.classList.remove('on')); if (('ov')) $('ov').classList.remove('on'); document.body.style.overflow = ''; }
+​async function sendOrder() {
+if (!cart.length) return toast('السلة فارغة!');
+const name = $('cName').value.trim(), phone = ('cPhone').value.trim(), w = Number(('cWil').value), com = ('cCom').value.trim();
+const mode = document.querySelector('[name=dm]:checked').value;
+const speed = document.querySelector('[name=speed]:checked').value;
+if (!name || !phone || !w || !com) return toast('يرجى ملء جميع معلومات التوصيل');
+if (!/^0[567]\d{8}/.test(phone.replace(/[\s.-]/g, ''))) return toast('رقم الهاتف غير صحيح');
+​const orderItems = [...cart];
+const gone = orderItems.filter(i => !i.custom && products.some(p => p.id === i.id && p.sold));
+if (gone.length) { cart = cart.filter(i => !gone.some(g => g.id === i.id)); saveCart(); renderCart(); return toast('بيعت بعض القطع للتو'); }
+​const btn = $('sendBtn'); btn.disabled = true;
+const sub = orderItems.reduce((a, i) => a + Number(i.price), 0);
+const sh = getDeliveryFee(w, mode, speed);
+let discountAmount = 0;
+if (appliedCoupon && sub > 0) {
+if (appliedCoupon.type === 'percent') discountAmount = Math.round(sub * (appliedCoupon.value / 100));
+else discountAmount = Math.min(sub, appliedCoupon.value);
+}
+const finalItemsTotal = Math.max(0, sub - discountAmount);
+const total = finalItemsTotal + sh;
+​const names = orderItems.map((i, idx) => ${idx + 1}. ${i.title} (${i.size}) - ${fmt(i.price)}).join('\n');
+const msg = ⚡ *COMMANDE - BACKSTAGE THRIFT* ⚡\n-------------------\n👤 *الزبون:* ${name}\n📞 *الهاتف:* ${phone}\n📍 *العنوان:* ${wname(w)} - ${com}\n🚚 *الشحن:* Guepex ${speed === 'express' ? 'Express ⚡' : 'Éco 📦'} (${mode === 'home' ? 'منزل' : 'Stop-Desk'})\n📦 *عدد القطع في الطرد:* ${orderItems.length}\n${appliedCoupon ? 🎟 كوبون: {appliedCoupon.code} (-{fmt(discountAmount)})\n : ''}\n📋 *السلع:*\n${names}\n-------------------\n💰 *مجموع السلع:* ${fmt(finalItemsTotal)}\n🚚 *توصيل طرد موحد:* ${fmt(sh)}\n★ *المجموع عند الاستلام: ${fmt(total)}*;
+​try {
+const b = db.batch();
+orderItems.filter(i => !i.custom).forEach(i => b.update(db.collection('products').doc(i.id), { sold: true }));
+if (appliedCoupon && appliedCoupon.id) {
+b.update(db.collection('coupons').doc(appliedCoupon.id), { used: true, usedBy: phone, usedAt: Date.now() });
+}
+b.set(db.collection('orders').doc(), {
+name, phone, wilaya: wname(w), commune: com, mode, speed,
+subtotal: sub, discount: discountAmount, shipping: sh, total,
+coupon: appliedCoupon ? appliedCoupon.code : null,
+status: 'new', createdAt: Date.now(),
+items: orderItems.map(i => ({ title: i.title, size: i.size, price: i.price, custom: !!i.custom, note: i.note || '' }))
+});
+await b.commit();
+} catch (e) { console.warn('Order save error:', e); }
+​cart = []; saveCart(); renderCart(); closeAll(); btn.disabled = false;
+appliedCoupon = null; $('cCouponInput').value = '';
+window.location.href = 'https://api.whatsapp.com/send?phone=213697783635&text=' + encodeURIComponent(msg);
+}
+​/* ============ ADMIN PANEL ============ */
+function openAdmin() { closeAll(); const id = isAdmin ? 'admin' : 'login'; $(id).classList.add('on'); $('ov').classList.add('on'); document.body.style.overflow = 'hidden'; if (isAdmin) renderAdminList(); }
+async function doLogin(e) {
+e.preventDefault(); ('lErr').textContent = '';
+try { await auth.signInWithEmailAndPassword(('lMail').value.trim(), $('lPass').value); $('lPass').value = ''; openAdmin(); }
+catch (x) { $('lErr').textContent = 'بيانات الدخول غير صحيحة'; }
+}
+async function doLogout() { await auth.signOut(); closeAll(); toast('تم تسجيل الخروج'); }
+function tab(t) {
+['tp', 'to', 'tcustom', 'tcoupons', 'tad'].forEach(x => (x).classList.toggle('hide', x !== t));
+document.querySelectorAll('.tabs .pill').forEach(b => b.classList.toggle('on', b.dataset.t === t));
+}
+function renderAdminList() {
+if (!('aList')) return;
+$('aList').innerHTML = <small style="color:var(--tx-mut)">${products.length} قطعة مسجلة في الأرشيف</small> + products.map(p => <div class="ar"><img src="${esc(img(imgsOf(p)[0]))}" alt="" onerror="this.src=PH"> <div class="i"> <b>${esc(p.title)}</b><span style="color:var(--red)">${esc(p.size)}</span> • ${esc(p.category)} ${p.oldPrice ?<small style="display:block;color:var(--tx-mut);text-decoration:line-through">قديم: ${fmt(p.oldPrice)}</small> : ''} </div> <div class="a"><input type="number" inputmode="numeric" value="${p.price}" onchange="upd('${p.id}',{price:Number(this.value)})"> <div style="display:flex;gap:4px"> <button class="tg ${p.sold ? 'out' : 'in'}" style="flex:1" onclick="upd('${p.id}',{sold:${!p.sold}})">${p.sold ? 'SOLD' : 'متوفر'}</button> <button class="tg" onclick="delProd('${p.id}')">🗑</button> </div> </div> </div>).join('');
+}
+const upd = (id, data) => db.collection('products').doc(id).update(data).then(() => toast('تم التحديث'));
+function delProd(id) { if (confirm('حذف هذه القطعة؟')) db.collection('products').doc(id).delete().then(() => toast('تم الحذف')); }
+​async function addProduct(e) {
+e.preventDefault(); const btn = ('nBtn'); btn.disabled = true; btn.textContent = 'جارٍ النشر…';
+try {
+const files = [...('nFile').files].slice(0, 8), links = $('nUrl').value.split(/[\s,]+/).map(s => s.trim()).filter(Boolean);
+if (!files.length && !links.length) { toast('أضف صورة واحدة على الأقل'); btn.disabled = false; return; }
+const compressedFiles = await Promise.all(files.map(f => compress(f, 700, 0.65)));
+const images = [...compressedFiles, ...links].slice(0, 8);
+const docData = {
+title: $('nTitle').value.trim(), description: $('nDesc').value.trim(),
+category: $('nCat').value, gender: ('nGen').value, size: $('nSize').value.trim(),
+price: Number($('nPrice').value), images, image: images[0] || '', sold: false, createdAt: Date.now()
+};
+const oldPriceVal = Number(('nOldPrice').value);
+if (oldPriceVal && oldPriceVal > docData.price) docData.oldPrice = oldPriceVal;
+await db.collection('products').add(docData);
+e.target.reset(); $('nFileName').textContent = ''; toast('تم نشر القطعة بنجاح ⚡');
+} catch (x) { toast('خطأ في حفظ القطعة'); }
+btn.disabled = false; btn.textContent = 'نشر القطعة';
+}
+​/* COUPONS CRUD */
+let unsubCoupons = null;
+function watchCoupons() {
+if (unsubCoupons) return;
+unsubCoupons = db.collection('coupons').orderBy('createdAt', 'desc').onSnapshot(s => {
+const list = s.docs.map(d => ({ id: d.id, ...d.data() }));
+if ($('couponsList')) {
+$('couponsList').innerHTML = list.length ? list.map(c =>  <div class="ar" style="justify-content:space-between"> <div><b>${esc(c.code)}</b> <small>[${c.used ? 'مستعمل' : (c.type === 'percent' ? c.value + '%' : fmt(c.value))}]</small></div> <button class="tg" onclick="delCoupon('${c.id}')">🗑</button> </div>).join('') : '<div style="text-align:center;padding:12px;color:var(--tx-mut)">لا توجد كوبونات مسجلة</div>';
+}
+});
+}
+function stopCoupons() { unsubCoupons && unsubCoupons(); unsubCoupons = null; }
+async function addCoupon() {
+const code = $('newCouponCode').value.trim().toUpperCase(), type = ('newCouponType').value, val = Number(('newCouponVal').value);
+if (!code || !val) return toast('يرجى كتابة رمز الكوبون وقيمته');
+await db.collection('coupons').add({ code, type, value: val, used: false, createdAt: Date.now() });
+$('newCouponCode').value = ''; $('newCouponVal').value = ''; toast('تم حفظ الكوبون');
+}
+function delCoupon(id) { if (confirm('حذف الكوبون؟')) db.collection('coupons').doc(id).delete(); }
+​/* ORDERS CRUD */
+let unsubOrders = null;
+function watchOrders() {
+if (unsubOrders) return;
+unsubOrders = db.collection('orders').orderBy('createdAt', 'desc').limit(50).onSnapshot(s => {
+const o = s.docs.map(d => ({ id: d.id, ...d.data() }));
+if ($('newOrd')) ('newOrd').textContent = o.filter(x => x.status === 'new').length;
+if (('oList')) {
+$('oList').innerHTML = o.length ? o.map(x =>  <div class="ar" style="flex-direction:column;align-items:stretch"> <div style="display:flex;justify-content:space-between"><b>${esc(x.name)}</b> <span style="color:var(--red)">${fmt(x.total)}</span></div> <small>${esc(x.phone)} • ${esc(x.wilaya)}</small> <div style="display:flex;gap:4px;margin-top:6px"> <button class="tg ${x.status === 'done' ? 'out' : 'in'}" onclick="db.collection('orders').doc('${x.id}').update({status:'${x.status === 'done' ? 'new' : 'done'}'})">${x.status === 'done' ? 'إعادة فتح' : '✔ تم الشحن'}</button> <button class="tg" onclick="confirm('حذف؟')&&db.collection('orders').doc('${x.id}').delete()">🗑</button> </div> </div>).join('') : '<div style="text-align:center;padding:12px">لا توجد طلبيات بعد</div>';
+}
+});
+}
+function stopOrders() { unsubOrders && unsubOrders(); unsubOrders = null; }
+​/* ============ YOUTUBE ROCK PLAYER ============ */
+let yt = null, ytReady = false, ytSrc = null, playing = false, userPaused = false;
+function parseYT(u) {
+try {
+const x = new URL(u), list = x.searchParams.get('list'); let v = x.searchParams.get('v');
+if (!v) { const m = x.pathname.match(//(?:live|embed|shorts)/([\w-]{11})/); v = m ? m[1] : (x.hostname === 'youtu.be' ? x.pathname.slice(1, 12) : null); }
+return (v || list) ? { v, list } : null;
+} catch (e) { return null; }
+}
+function musicSet(url) {
+const src = url ? parseYT(url) : null, key = src ? JSON.stringify(src) : '';
+if (key === ytSrc) return; ytSrc = key;
+if ($('mp')) $('mp').classList.toggle('on', !!src);
+if (!src) { if (yt && ytReady) yt.stopVideo(); return; }
+if (!window.YT || !YT.Player) {
+if (!document.getElementById('ytapi')) { const s = document.createElement('script'); s.id = 'ytapi'; s.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(s); }
+window.onYouTubeIframeAPIReady = () => buildPlayer(src); return;
+}
+buildPlayer(src);
+}
+function buildPlayer(src) {
+if (yt && yt.destroy) { yt.destroy(); ('mp').insertAdjacentHTML('afterend', '<div id="yt"></div>'); }
+ytReady = false;
+const pv = { controls: 0, playsinline: 1, loop: 1, rel: 0, modestbranding: 1, autoplay: 1 };
+if (src.list) { pv.listType = 'playlist'; pv.list = src.list; } else pv.playlist = src.v;
+yt = new YT.Player('yt', { height: '150', width: '150', videoId: src.list ? undefined : src.v, playerVars: pv, events: {
+onReady: () => { ytReady = true; yt.setVolume(40); if (src.list) yt.setLoop(true); tryPlay(); },
+onStateChange: e => { playing = e.data === 1; if (('mp')) ('mp').classList.toggle('play', playing); if (('mpPlay')) $('mpPlay').textContent = playing ? '⏸' : '▶'; if (e.data === 0 && !src.list) yt.playVideo(); }
+} });
+}
+function tryPlay() { if (ytReady && !userPaused) try { yt.playVideo(); } catch (e) {} }
+['click', 'touchstart', 'scroll', 'keydown'].forEach(ev => window.addEventListener(ev, () => { if (ytReady && !userPaused && !playing) tryPlay(); }, { once: true, passive: true }));
+function musicToggle() {
+if (!ytReady) return;
+if (playing) { yt.pauseVideo(); userPaused = true; } else { yt.playVideo(); userPaused = false; }
+}
+const musicVol = v => ytReady && yt.setVolume(Number(v));
+const saveMusic = () => db.doc('settings/main').set({ musicUrl: $('sMusic').value.trim() }, { merge: true }).then(() => toast('تم حفظ رابط الموسيقى 🎸'));
+​/* ============ INITIALIZATION ============ */
+document.addEventListener('DOMContentLoaded', () => {
+if ($('cWil')) {
+$('cWil').innerHTML = '<option value="" disabled selected>-- اختر الولاية --</option>' + WIL.map((_, i) => <option value="${i + 1}">${wname(i + 1)}</option>).join('');
+}
+renderPills();
+renderCart();
+renderCatalog();
+renderStudioAttributes();
+});
+addEventListener('keydown', e => e.key === 'Escape' && closeAll());
+</script>
+</body>
+</html>

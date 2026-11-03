@@ -4,16 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f4f1ea">
-<title>BACKSTAGE THRIFT // 1-OF-1 VINTAGE & CUSTOM ROCK MERCH</title>
+<title>BACKSTAGE THRIFT // 1-OF-1 VINTAGE ARCHIVE</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💀</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
-
-<!-- مكتبات Three.js للـ 3D -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-
 <style>
 :root{
   --bg:#f4f1ea;
@@ -27,178 +22,125 @@
   --ok:#059669;
   --sat:env(safe-area-inset-top, 0px);
   --sab:env(safe-area-inset-bottom, 0px);
-  --sal:env(safe-area-inset-left, 0px);
-  --sar:env(safe-area-inset-right, 0px);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
   background:var(--bg);
   color:var(--tx);
   font-family:Tajawal,sans-serif;
   line-height:1.5;
   overflow-x:hidden;
-  background-image: 
-    radial-gradient(circle at 50% 0%, rgba(196,21,47,0.06), transparent 50%),
-    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
-  background-size:100% 100%, 24px 24px, 24px 24px;
-  padding-bottom:calc(96px + var(--sab));
-  padding-left:var(--sal);
-  padding-right:var(--sar);
+  padding-bottom:calc(90px + var(--sab));
   min-height:100dvh;
 }
-
-button,input,select,textarea{font:inherit;color:inherit;touch-action:manipulation}
+button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer;border:0;background:none}
 input,select,textarea{
   width:100%;
   background:#fff;
   border:2px solid var(--line);
   border-radius:6px;
-  padding:12px 14px;
+  padding:12px;
   font-size:16px;
   min-height:48px;
-  color:var(--tx);
   box-shadow:3px 3px 0 var(--line);
 }
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--red);box-shadow:4px 4px 0 var(--red)}
-
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--red)}
 .hd{font-family:'Bebas Neue',Impact,sans-serif;letter-spacing:.04em}
-.wrap{max-width:1200px;margin:0 auto;padding:0 16px}
-
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
 .btn{
   display:inline-flex;
   align-items:center;
   justify-content:center;
   gap:8px;
-  min-height:48px;
-  padding:0 20px;
+  min-height:46px;
+  padding:0 16px;
   border-radius:6px;
   font-weight:900;
   text-transform:uppercase;
   border:2px solid var(--line);
-  box-shadow:4px 4px 0 var(--line);
-  transition:transform .08s ease;
+  box-shadow:3px 3px 0 var(--line);
   user-select:none;
 }
-.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--line)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--line)}
 .b-red{background:var(--red);color:#fff}
 .b-black{background:var(--black);color:#fff}
 .b-light{background:#fff;color:var(--tx)}
 .b-ok{background:var(--ok);color:#fff}
-
-.ad-banner{
-  background:var(--black);
-  color:#fff;
-  border-bottom:2px solid var(--line);
-  padding:8px 16px;
-  font-size:13px;
-  font-weight:700;
-  text-align:center;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-}
 
 header{
   display:flex;
   align-items:center;
   justify-content:space-between;
   padding:14px 16px;
-  max-width:1200px;
+  max-width:1100px;
   margin:0 auto;
 }
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
-.logo-img{
-  width:46px;
-  height:46px;
-  border-radius:50%;
-  border:2px solid var(--line);
-  box-shadow:3px 3px 0 var(--line);
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.logo-badge{
+  width:42px;
+  height:42px;
   background:var(--black);
-  object-fit:cover;
+  color:#fff;
+  border:2px solid var(--line);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-size:22px;
 }
-.brand b{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.06em;line-height:0.9;display:block}
+.brand b{font-family:'Bebas Neue',sans-serif;font-size:26px;line-height:0.9;display:block}
 .brand small{font-size:10px;color:var(--red);letter-spacing:.2em;font-weight:900}
 .ic{
-  width:44px;
-  height:44px;
+  width:42px;
+  height:42px;
   background:#fff;
   border:2px solid var(--line);
-  box-shadow:3px 3px 0 var(--line);
+  box-shadow:2px 2px 0 var(--line);
   border-radius:6px;
   font-size:18px;
   display:grid;
   place-items:center;
-  text-decoration:none;
 }
 
 .hero{
   text-align:center;
-  padding:28px 16px 36px;
+  padding:24px 16px;
   border-bottom:2px solid var(--line);
-  background:linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(234,230,221,0.4) 100%);
+  background:linear-gradient(180deg, #fff 0%, #eae6dd 100%);
 }
-.hero-tag{
-  display:inline-block;
-  background:var(--red);
-  color:#fff;
-  font-weight:900;
-  padding:4px 14px;
-  font-size:12px;
-  border:2px solid var(--line);
-  box-shadow:3px 3px 0 var(--line);
-  border-radius:4px;
-}
-.hero h1{font-size:clamp(40px,11vw,86px);line-height:.92;margin:14px 0 8px;color:var(--black)}
+.hero h1{font-size:clamp(36px,9vw,64px);line-height:.95;margin:10px 0 6px;color:var(--black)}
 .hero h1 em{color:var(--red);font-style:normal}
-.hero p{color:var(--tx-mut);max-width:540px;margin:0 auto;font-size:15px;font-weight:700}
-
-.custom-studio-hero-cta{
-  margin-top:20px;
-  background:#fff;
-  border:2px solid var(--line);
-  box-shadow:5px 5px 0 var(--line);
-  padding:16px;
-  border-radius:8px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  cursor:pointer;
-}
+.hero p{color:var(--tx-mut);font-size:14px;font-weight:700}
+.gsw{display:flex;gap:10px;justify-content:center;margin-top:16px}
 
 .bar{
   position:sticky;
   top:0;
   z-index:30;
   background:rgba(244,241,234,0.95);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(8px);
   border-bottom:2px solid var(--line);
 }
-.pills{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch;max-width:1200px;margin:0 auto}
+.pills{display:flex;gap:8px;overflow-x:auto;padding:10px 16px;scrollbar-width:none}
 .pills::-webkit-scrollbar{display:none}
 .pill{
   flex:none;
-  min-height:42px;
-  padding:0 16px;
+  min-height:38px;
+  padding:0 14px;
   border:2px solid var(--line);
   background:#fff;
   border-radius:6px;
-  box-shadow:3px 3px 0 var(--line);
+  box-shadow:2px 2px 0 var(--line);
   font-size:13px;
   font-weight:900;
   white-space:nowrap;
 }
 .pill.on{background:var(--red);color:#fff}
 .pill.g.on{background:var(--black);color:#fff}
-.sep{flex:none;width:2px;background:var(--line);margin:4px 4px}
+.sep{flex:none;width:2px;background:var(--line);margin:4px 2px}
 
-.sec{display:flex;justify-content:space-between;align-items:end;gap:10px;margin:24px 0 16px;padding-bottom:10px;border-bottom:2px dashed var(--line)}
-.sec h2{font-size:clamp(26px,5vw,36px);line-height:1;color:var(--black)}
+.sec{display:flex;justify-content:space-between;align-items:end;margin:20px 0 12px;padding-bottom:8px;border-bottom:2px dashed var(--line)}
+.sec h2{font-size:26px;color:var(--black)}
 
 .grid{display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:12px}
 @media(min-width:680px){.grid{grid-template-columns:repeat(3, minmax(0, 1fr));gap:16px}}
@@ -207,101 +149,42 @@ header{
 .card{
   background:var(--bg-card);
   border:2px solid var(--line);
-  border-radius:8px;
-  box-shadow:4px 4px 0 var(--line);
-  position:relative;
+  border-radius:6px;
+  box-shadow:3px 3px 0 var(--line);
   display:flex;
   flex-direction:column;
   overflow:hidden;
 }
-.card.sold{opacity:.6;filter:grayscale(70%)}
+.card.sold{opacity:.6;filter:grayscale(60%)}
 .ph{position:relative;aspect-ratio:3/4;background:#ddd;overflow:hidden;border-bottom:2px solid var(--line);cursor:pointer}
 .ph img{width:100%;height:100%;object-fit:cover}
-.tag{
-  position:absolute;
-  top:8px;
-  right:8px;
-  background:var(--black);
-  color:#fff;
-  border:1px solid var(--line);
-  font-family:'Bebas Neue',sans-serif;
-  font-size:12px;
-  padding:2px 8px;
-  border-radius:4px;
-  z-index:2;
-}
-.so{
-  position:absolute;
-  inset:0;
-  display:grid;
-  place-items:center;
-  text-align:center;
-  font-family:'Bebas Neue';
-  font-size:32px;
-  color:#fff;
-  background:rgba(0,0,0,.8);
-  border:3px solid var(--red);
-  transform:rotate(-4deg) scale(0.9);
-  z-index:3;
-}
-.cb{padding:12px;display:flex;flex-direction:column;gap:6px;flex:1}
-.cb h3{font-size:15px;line-height:1.3;font-weight:700;min-height:38px;cursor:pointer}
-.desc-txt{font-size:12px;color:var(--tx-mut);line-height:1.4}
-.sz{font-size:11px;font-weight:900;color:#000;background:var(--bg-card2);border:1px solid var(--line);padding:2px 8px;align-self:flex-start;border-radius:4px;direction:ltr}
-.row{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:auto;padding-top:10px;border-top:1px dashed var(--line)}
-
+.tag{position:absolute;top:6px;right:6px;background:var(--black);color:#fff;font-family:'Bebas Neue';font-size:11px;padding:2px 6px;border-radius:4px}
+.so{position:absolute;inset:0;display:grid;place-items:center;font-family:'Bebas Neue';font-size:28px;color:#fff;background:rgba(0,0,0,.75);border:3px solid var(--red);transform:rotate(-4deg)}
+.cb{padding:10px;display:flex;flex-direction:column;gap:6px;flex:1}
+.cb h3{font-size:14px;line-height:1.3;font-weight:700;min-height:36px;cursor:pointer}
+.sz{font-size:11px;font-weight:900;background:var(--bg-card2);padding:2px 6px;align-self:flex-start;border-radius:4px;direction:ltr}
+.row{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;border-top:1px dashed var(--line)}
 .price-wrap{display:flex;flex-direction:column;line-height:1}
-.pr{font-family:'Bebas Neue';font-size:24px;color:var(--red);letter-spacing:1px}
-.old-pr{font-family:'Bebas Neue';font-size:15px;color:var(--tx-mut);text-decoration:line-through;margin-bottom:2px}
+.pr{font-family:'Bebas Neue';font-size:22px;color:var(--red)}
+.old-pr{font-family:'Bebas Neue';font-size:14px;color:var(--tx-mut);text-decoration:line-through}
 
-.add{min-height:38px;padding:0 12px;background:#fff;border:2px solid var(--line);box-shadow:2px 2px 0 var(--line);border-radius:4px;font-size:12px;font-weight:900}
+.add{min-height:36px;padding:0 10px;background:#fff;border:2px solid var(--line);box-shadow:2px 2px 0 var(--line);border-radius:4px;font-size:12px;font-weight:900}
 .add:not(:disabled):active{background:var(--red);color:#fff}
 .add:disabled{color:#888;background:#eee;cursor:not-allowed}
 
-.car{direction:ltr;display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
-.car::-webkit-scrollbar{display:none}
-.car img{flex:none;width:100%;height:100%;object-fit:cover;scroll-snap-align:center}
-.cn{position:absolute;bottom:8px;left:8px;background:#000;border:1px solid #333;color:#fff;font-size:11px;font-weight:900;padding:2px 8px;z-index:2}
-.sl{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;background:#000;border:2px solid var(--line);color:#fff;font-size:22px;z-index:2;display:grid;place-items:center}
-.sl.p{left:6px}.sl.n{right:6px}
-
-#customStudioPage{
-  position:fixed;
-  inset:0;
-  z-index:70;
-  background:var(--bg);
-  display:none;
-  flex-direction:column;
-  overflow-y:auto;
-  padding-bottom:calc(30px + var(--sab));
-}
-#customStudioPage.on{display:flex}
-.studio-header{padding:14px 16px;background:#fff;border-bottom:2px solid var(--line);display:flex;align-items:center;justify-content:space-between}
-#threeCanvasContainer{width:100%;aspect-ratio:1;max-height:380px;background:#e5e1d8;position:relative;touch-action:none}
-.touch-hint{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.7);color:#fff;font-size:11px;padding:3px 10px;border-radius:20px;pointer-events:none}
-
-.lbl{display:block;font-size:13px;color:var(--tx);margin:12px 0 6px;font-weight:900}
-.opts{display:flex;gap:8px;flex-wrap:wrap}
-.sw{width:42px;height:42px;border:2px solid var(--line);border-radius:6px;box-shadow:2px 2px 0 var(--line)}
-.sw.on{border-color:var(--red);box-shadow:3px 3px 0 var(--red);transform:scale(1.06)}
-.sq{min-width:48px;min-height:42px;background:#fff;border:2px solid var(--line);box-shadow:2px 2px 0 var(--line);border-radius:6px;font-weight:900;font-size:13px}
-.sq.on{background:var(--red);color:#fff;border-color:var(--line)}
-
 .fab{
   position:fixed;
-  right:max(16px, var(--sar));
+  right:16px;
   bottom:calc(16px + var(--sab));
   z-index:45;
-  min-height:52px;
-  padding:0 22px;
-  font-size:16px;
-  box-shadow:4px 4px 0 var(--line);
+  min-height:50px;
+  padding:0 20px;
+  font-size:15px;
 }
-.cnt{background:#fff;color:var(--red);padding:2px 8px;font-size:13px;border-radius:4px;border:1px solid var(--line);margin-inline-start:6px}
+.cnt{background:#fff;color:var(--red);padding:2px 8px;font-size:12px;border-radius:4px;border:1px solid var(--line);margin-inline-start:6px}
 
-.ov{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:60;opacity:0;pointer-events:none;transition:opacity .2s ease}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:60;opacity:0;pointer-events:none;transition:opacity .2s ease}
 .ov.on{opacity:1;pointer-events:auto}
-
 .sheet{
   position:fixed;
   z-index:61;
@@ -314,135 +197,60 @@ header{
   display:flex;
   flex-direction:column;
   transform:translateY(105%);
-  transition:transform .28s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:transform .25s ease;
   padding-bottom:max(16px, var(--sab));
-  box-shadow:0 -10px 30px rgba(0,0,0,.2);
-  overscroll-behavior:contain;
 }
 .sheet.on{transform:none}
-@media(min-width:768px){
-  .sheet{left:auto;right:0;top:0;bottom:0;max-height:none;width:480px;border-top:0;border-left:3px solid var(--line);transform:translateX(105%);padding-bottom:var(--sab)}
-  .sheet.wide{width:min(960px,96vw)}
-  .sheet.on{transform:none}
-}
+.sh{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:2px solid var(--line);background:var(--bg-card2)}
+.sh h3{font-size:22px}
+.sb{overflow-y:auto;padding:16px;flex:1;display:grid;gap:12px}
 
-.sh{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:2px solid var(--line);background:var(--bg-card2)}
-.sh h3{font-size:26px;line-height:1}
-.sb{overflow-y:auto;padding:18px;flex:1;display:grid;gap:12px;align-content:start}
-
-.ci{display:flex;gap:12px;align-items:center;background:#fff;border:2px solid var(--line);box-shadow:3px 3px 0 var(--line);border-radius:6px;padding:10px}
-.ci img,.ci .th{width:60px;height:60px;object-fit:cover;border:1px solid var(--line);background:#eee;border-radius:4px;flex:none;display:grid;place-items:center;font-size:24px}
-.ci div{flex:1;min-width:0}.ci h5{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
-.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:440px){.two.m{grid-template-columns:1fr}}
-.f label{display:block;font-size:12px;color:var(--tx-mut);margin-bottom:6px;font-weight:700}
-
-.sum{background:#fff;border:2px solid var(--line);border-radius:6px;padding:14px;display:grid;gap:8px;box-shadow:3px 3px 0 var(--line)}
+.ci{display:flex;gap:10px;align-items:center;background:#fff;border:2px solid var(--line);padding:8px;border-radius:4px}
+.ci img{width:50px;height:50px;object-fit:cover;border:1px solid var(--line);border-radius:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sum{background:#fff;border:2px solid var(--line);padding:12px;display:grid;gap:6px;border-radius:4px}
 .sum div{display:flex;justify-content:space-between;font-size:14px}
-.sum .t{border-top:2px dashed var(--line);padding-top:10px;font-weight:900;font-size:18px;color:var(--red)}
-.rd{display:flex;gap:8px;align-items:center;background:#fff;border:2px solid var(--line);border-radius:6px;padding:0 12px;min-height:48px;font-size:13px;font-weight:700;cursor:pointer}
-.rd input{width:auto;min-height:0;accent-color:var(--red)}
-
-.tabs{display:flex;gap:8px;padding:12px 20px 0;overflow-x:auto}
-.tabs .pill.on{background:var(--black);color:#fff;border-color:var(--line)}
-
-.ar{display:flex;gap:10px;align-items:center;background:#fff;border:2px solid var(--line);box-shadow:2px 2px 0 var(--line);border-radius:6px;padding:10px}
-.ar img{width:54px;height:54px;object-fit:cover;border:1px solid var(--line);flex:none;border-radius:4px}
-.ar .i{flex:1;min-width:0;font-size:12px}.ar .i b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ar .a{display:flex;flex-direction:column;gap:6px;align-items:stretch}
-.ar input{min-height:36px;padding:4px 8px;width:100px;font-size:14px}
-.tg{min-height:36px;padding:0 12px;font-size:11px;font-weight:900;border:2px solid var(--line);border-radius:4px;box-shadow:2px 2px 0 var(--line)}
-.tg.in{background:#ecfdf5;color:#059669}.tg.out{background:#fef2f2;color:#dc2626}
-
-.mp{
-  position:fixed;
-  left:max(16px, var(--sal));
-  bottom:calc(16px + var(--sab));
-  z-index:45;
-  display:none;
-  align-items:center;
-  gap:8px;
-  background:#fff;
-  border:2px solid var(--line);
-  border-radius:50px;
-  box-shadow:3px 3px 0 var(--line);
-  padding:4px 8px;
-}
-.mp.on{display:flex}
-.mp button{width:38px;height:38px;background:var(--red);border:2px solid var(--line);color:#fff;font-size:14px;border-radius:50%;display:grid;place-items:center}
-.mp .eq{display:flex;gap:3px;align-items:end;height:14px;margin:0 4px}
-.mp .eq i{width:3px;background:var(--red);height:4px}
-.mp.play .eq i{animation:eq .8s ease-in-out infinite alternate}
-@keyframes eq{to{height:14px}}
-.mp input[type=range]{width:60px;min-height:0;padding:0;accent-color:var(--red);background:none;border:0}
-#yt{position:fixed;left:-9999px;width:200px;height:200px;pointer-events:none;opacity:0}
+.sum .t{border-top:1px dashed var(--line);padding-top:8px;font-weight:900;color:var(--red);font-size:16px}
 
 .toast{
   position:fixed;
   left:50%;
-  bottom:calc(88px + var(--sab));
+  bottom:calc(80px + var(--sab));
   transform:translateX(-50%);
   z-index:95;
   background:var(--black);
   color:#fff;
   font-weight:900;
-  font-size:14px;
-  padding:12px 22px;
-  border:2px solid var(--line);
-  box-shadow:4px 4px 0 rgba(0,0,0,0.3);
-  max-width:90vw;
-  text-align:center;
+  font-size:13px;
+  padding:10px 20px;
   border-radius:6px;
-  animation:ti .2s ease-out;
+  border:2px solid var(--line);
+  text-align:center;
 }
-@keyframes ti{from{opacity:0;transform:translate(-50%,12px)}}
-
-footer{margin-top:60px;border-top:2px solid var(--line);background:#eae6dd;padding:36px 16px;color:var(--tx-mut);font-size:13px;display:grid;gap:24px}
-@media(min-width:800px){footer{grid-template-columns:repeat(3,1fr)}}
-footer h4{color:var(--black);font-size:22px;margin-bottom:6px}
 .hide{display:none!important}
 </style>
 </head>
 <body>
 
-<!-- Dynamic Announcement Bar -->
-<div class="ad-banner hide" id="adBanner">
-  <span id="adText">⚡ تخفيضات افتتاح المتجر متوفرة الآن!</span>
-  <button onclick="closeAdBanner()" style="color:#fff;font-size:14px">✕</button>
-</div>
-
 <header>
   <a class="brand" href="#">
-    <img src="1000178346.jpg" alt="Backstage Thrift Logo" class="logo-img" onerror="this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><text y=\'.9em\' font-size=\'90\'>💀</text></svg>'">
+    <div class="logo-badge">💀</div>
     <div>
       <b>BACKSTAGE</b>
-      <small>VINTAGE & 3D CUSTOM</small>
+      <small>VINTAGE ARCHIVE</small>
     </div>
   </a>
-  <div style="display:flex;gap:10px">
-    <a class="ic" href="https://www.instagram.com/backstage_thrift.dz" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
-    <button class="ic hide" id="outBtn" onclick="doLogout()" aria-label="تسجيل الخروج" title="تسجيل الخروج" style="border-color:var(--red)">⏻</button>
-    <button class="ic" onclick="openAdmin()" aria-label="لوحة التحكم">🛡</button>
+  <div style="display:flex;gap:8px">
+    <a class="ic" href="https://www.instagram.com/backstage_thrift.dz" target="_blank" rel="noopener">📷</a>
+    <button class="ic hide" id="outBtn" onclick="doLogout()">⏻</button>
+    <button class="ic" onclick="openAdmin()">🛡</button>
   </div>
 </header>
 
 <section class="hero">
-  <span class="hero-tag">★ ARCHIVE VAULT & 3D STUDIO ★</span>
   <h1 class="hd">ROCK 'N' ROLL <em>THRIFT VAULT</em></h1>
-  <p>ملابس فريب أصلية فريدة (1 of 1) + استوديو تخصيص ثلاثي الأبعاد تفاعلي 360°</p>
-
-  <div class="wrap" style="padding:0">
-    <div class="custom-studio-hero-cta" onclick="openCustomStudio()">
-      <div style="text-align:right">
-        <b class="hd" style="font-size:22px;display:block;color:var(--red)">🎸 صمّم تيشيرتك أو هوديك الخاص (3D)</b>
-        <small style="color:var(--tx-mut)">معاينة تفاعلية 360 درجة، تغيير الألوان، واختيار مواضع التصميم</small>
-      </div>
-      <button class="btn b-red" style="min-height:40px;padding:0 14px">دخول الاستوديو ✦</button>
-    </div>
-  </div>
-
-  <div class="gsw" style="display:flex;gap:14px;justify-content:center;margin-top:20px">
+  <p>ملابس فريب أصلية فريدة (1 of 1) بنسخة واحدة فقط</p>
+  <div class="gsw">
     <button class="btn b-black" data-g="men" onclick="setGender('men')"><span class="hd">HOMME • رجال</span></button>
     <button class="btn b-light" data-g="women" onclick="setGender('women')"><span class="hd">FEMME • نساء</span></button>
   </div>
@@ -452,52 +260,181 @@ footer h4{color:var(--black);font-size:22px;margin-bottom:6px}
 
 <main class="wrap">
   <div class="sec">
-    <div>
-      <h2 class="hd">قطع الأرشيف (1 OF 1)</h2>
-      <p id="sub" style="font-weight:700;color:var(--tx-mut)"></p>
-    </div>
+    <h2 class="hd">قطع الأرشيف (1 OF 1)</h2>
     <div style="font-size:12px;font-weight:900;color:var(--red)"><span id="stock">...</span></div>
   </div>
   <div class="grid" id="grid"></div>
-  <div class="empty hide" id="empty" style="text-align:center;padding:50px 16px"><div style="font-size:40px">💀</div><h3 class="hd" style="font-size:24px">لا توجد قطع معروضة حالياً</h3></div>
+  <div class="empty hide" id="empty" style="text-align:center;padding:40px 16px"><div style="font-size:36px">💀</div><h3>لا توجد قطع حالياً</h3></div>
 </main>
 
-<!-- PAGE: 3D CUSTOM STUDIO -->
-<section id="customStudioPage">
-  <div class="studio-header">
-    <b class="hd" style="font-size:24px">⚡ 3D CUSTOM MERCH STUDIO</b>
-    <button class="btn b-black" style="min-height:38px;padding:0 12px" onclick="closeCustomStudio()">✕ رجوع للمتجر</button>
-  </div>
-
-  <div id="threeCanvasContainer">
-    <div class="touch-hint">👆 حرّك المجسم بإصبعك للدوران 360°</div>
-  </div>
-
-  <div class="wrap" style="padding-top:16px">
-    <div style="display:flex;justify-content:space-between;align-items:center;background:#fff;padding:12px;border:2px solid var(--line);box-shadow:3px 3px 0 var(--line);border-radius:6px">
-      <span class="pr" id="teePriceDisplay" style="font-size:32px">2,800 دج</span>
-      <span id="teeTypeDesc" style="font-weight:700;font-size:13px;color:var(--tx-mut)">(تيشيرت نصف كم)</span>
+<!-- CART -->
+<aside class="sheet" id="cart">
+  <div class="sh"><h3 class="hd">سلة المشتريات</h3><button class="ic" onclick="closeAll()">✕</button></div>
+  <div class="sb">
+    <div id="items" style="display:grid;gap:8px"></div>
+    
+    <div style="background:#fff;border:2px solid var(--line);border-radius:4px;padding:8px;display:grid;gap:6px">
+      <label style="font-size:12px;font-weight:900">🎟 كود الخصم (يطبق على السلع فقط):</label>
+      <div style="display:flex;gap:6px">
+        <input id="cCouponInput" placeholder="أدخل الكود..." style="min-height:38px;text-transform:uppercase">
+        <button class="btn b-black" style="min-height:38px;padding:0 12px" onclick="applyCoupon()">تطبيق</button>
+      </div>
+      <div id="couponMsg" style="font-size:11px;font-weight:700"></div>
     </div>
 
-    <span class="lbl">1. نوع القطعة:</span>
-    <div class="opts" id="studioTypesList"></div>
+    <div class="two">
+      <input id="cName" placeholder="الاسم واللقب *">
+      <input id="cPhone" type="tel" placeholder="رقم الهاتف *">
+    </div>
+    <div class="two">
+      <select id="cWil" onchange="totals()"></select>
+      <input id="cCom" placeholder="البلدية والعنوان *">
+    </div>
+    
+    <div class="two">
+      <label style="font-size:12px;font-weight:700"><input type="radio" name="speed" value="express" checked onchange="totals()"> Express ⚡</label>
+      <label style="font-size:12px;font-weight:700"><input type="radio" name="speed" value="eco" onchange="totals()"> Éco 📦</label>
+    </div>
 
-    <span class="lbl">2. اللون المتوفر: <span id="colName" style="color:var(--red)">Black</span></span>
-    <div class="opts" id="studioColorsList"></div>
-
-    <span class="lbl">3. القياس:</span>
-    <div class="opts" id="szs"></div>
-
-    <span class="lbl">4. ارفع التصميم لإسقاطه مباشرة على الموديل 3D:</span>
-    <label class="btn b-light" style="cursor:pointer;width:100%">⬆ اختيار صورة التصميم<input type="file" accept="image/*" class="hide" onchange="loadArtworkTo3D(event)"></label>
-    <div id="artLoadedName" style="font-size:12px;color:var(--red);margin-top:6px;font-weight:700"></div>
-
-    <span class="lbl">5. ملاحظات على مواضع الطباعة:</span>
-    <input id="teeNote" placeholder="مثال: طباعة كبيرة في الصدر، أو في الظهر...">
-
-    <button class="btn b-red" style="margin-top:20px;width:100%" onclick="addCustomToCart()">＋ إضافة القطعة للسلة</button>
+    <div class="sum">
+      <div><span>مجموع السلع</span><span id="sSub">0 دج</span></div>
+      <div id="rowDiscount" class="hide" style="color:var(--ok)"><span>خصم الكوبون</span><span id="sDiscount">-0 دج</span></div>
+      <div><span>التوصيل (Guepex)</span><span id="sShip" style="color:var(--red)">حدد الولاية</span></div>
+      <div class="t"><span>المجموع عند الاستلام</span><span id="sTot">0 دج</span></div>
+    </div>
+    <button class="btn b-ok" id="sendBtn" onclick="sendOrder()">💬 تأكيد الطلبية عبر واتساب</button>
   </div>
-</section>
+</aside>
 
-<!-- SINGLE PRODUCT VIEW -->
-<aside class="sheet"
+<!-- ADMIN LOGIN -->
+<aside class="sheet" id="login">
+  <div class="sh"><h3 class="hd">دخول الإدارة</h3><button class="ic" onclick="closeAll()">✕</button></div>
+  <form class="sb" onsubmit="doLogin(event)">
+    <input id="lMail" type="email" placeholder="البريد الإلكتروني" required>
+    <input id="lPass" type="password" placeholder="كلمة السر" required>
+    <div id="lErr" style="color:var(--red);font-size:12px"></div>
+    <button class="btn b-black" type="submit">دخول</button>
+  </form>
+</aside>
+
+<!-- ADMIN PANEL -->
+<aside class="sheet" id="admin">
+  <div class="sh"><h3 class="hd">لوحة التحكم</h3><div style="display:flex;gap:6px"><button class="btn b-light" style="min-height:36px" onclick="doLogout()">خروج</button><button class="ic" onclick="closeAll()">✕</button></div></div>
+  <div class="sb">
+    <form onsubmit="addProduct(event)" style="display:grid;gap:8px;background:#fff;border:2px solid var(--line);padding:12px;border-radius:4px">
+      <b style="color:var(--red);font-size:14px">＋ إضافة قطعة جديدة (1 of 1)</b>
+      <input id="nTitle" placeholder="اسم القطعة *" required>
+      <div class="two">
+        <select id="nCat"><option value="tees">Band Tees</option><option value="boots">Boots</option><option value="jackets">Jackets</option><option value="sneakers">Sneakers</option><option value="jeans">Jeans</option><option value="flannels">Flannels</option><option value="accessories">Accessories</option></select>
+        <select id="nGen"><option value="men">رجال</option><option value="women">نساء</option><option value="unisex">Unisex</option></select>
+      </div>
+      <div class="two">
+        <input id="nSize" placeholder="القياس: XL / 43" required>
+        <input id="nPrice" type="number" placeholder="السعر (دج) *" required>
+      </div>
+      <input id="nOldPrice" type="number" placeholder="السعر القديم المشطوب (اختياري)">
+      <label class="btn b-light" style="cursor:pointer">📷 صور من الهاتف<input type="file" accept="image/*" multiple id="nFile" class="hide" onchange="document.getElementById('nFileName').textContent=this.files.length+' صور'"></label>
+      <span id="nFileName" style="font-size:11px;color:var(--red);font-weight:700"></span>
+      <textarea id="nUrl" placeholder="أو روابط الصور مباشرة"></textarea>
+      <button class="btn b-red" id="nBtn" type="submit">نشر القطعة</button>
+    </form>
+    <div id="aList" style="display:grid;gap:8px"></div>
+  </div>
+</aside>
+
+<button class="btn b-red fab" onclick="cartOpen(true)">🛒 السلة <span class="cnt" id="cc">0</span></button>
+<div class="ov" id="ov" onclick="closeAll()"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyAfBwswaphXEWocZholBZCGwuj2q5LJ0kQ",
+  authDomain: "backstage-thrift-a4e79.firebaseapp.com",
+  projectId: "backstage-thrift-a4e79",
+  storageBucket: "backstage-thrift-a4e79.firebasestorage.app",
+  messagingSenderId: "65548238073",
+  appId: "1:65548238073:web:2fb37229f9f0021957b628"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore(), auth = firebase.auth();
+
+const WIL = ("أدرار|Adrar,الشلف|Chlef,الأغواط|Laghouat,أم البواقي|Oum El Bouaghi,باتنة|Batna,بجاية|Béjaïa,بسكرة|Biskra,بشار|Béchar,البليدة|Blida,البويرة|Bouira,تمنراست|Tamanrasset,تبسة|Tébessa,تلمسان|Tlemcen,تيارت|Tiaret,تيزي وزو|Tizi Ouzou,الجزائر|Alger,الجلفة|Djelfa,جيجل|Jijel,سطيف|Sétif,سعيدة|Saïda,سكيكدة|Skikda,سيدي بلعباس|Sidi Bel Abbès,عنابة|Annaba,قالمة|Guelma,قسنطينة|Constantine,المدية|Médéa,مستغانم|Mostaganem,المسيلة|M'Sila,معسكر|Mascara,ورقلة|Ouargla,وهران|Oran,البيض|El Bayadh,إليزي|Illizi,برج بوعريريج|Bordj Bou Arréridj,بومرداس|Boumerdès,الطارف|El Tarf,تندوف|Tindouf,تيسمسيلت|Tissemsilt,الوادي|El Oued,خنشلة|Khenchela,سوق أهراس|Souk Ahras,تيبازة|Tipaza,ميلة|Mila,عين الدفلى|Aïn Defla,النعامة|Naâma,عين تموشنت|Aïn Témouchent,غرداية|Ghardaïa,غليزان|Relizane,تيميمون|Timimoun,برج باجي مختار|Bordj Badji Mokhtar,أولاد جلال|Ouled Djellal,بني عباس|Béni Abbès,عين صالح|In Salah,عين قزام|In Guezzam,توقرت|Touggourt,جانت|Djanet,المغير|El M'Ghair,المنيعة|El Menia").split(",");
+const TIER_EXPRESS = {S:[550,450],N:[700,550],C:[900,650],A:[950,750],D:[1050,850],G:[1600,1400]};
+const TIER_ECO =     {S:[450,350],N:[600,450],C:[750,550],A:[850,650],D:[950,750],G:[1400,1200]};
+const TMAP = {21:'S',16:'N',18:'N',23:'N',24:'N',25:'N',43:'N',3:'A',7:'A',17:'A',30:'A',39:'A',47:'A',51:'A',55:'A',57:'A',58:'A',1:'D',8:'D',32:'D',45:'D',49:'D',50:'D',52:'D',11:'G',33:'G',37:'G',53:'G',54:'G',56:'G'};
+
+const getDeliveryFee = (code, speed) => {
+  if (!code) return 0;
+  const table = speed === 'eco' ? TIER_ECO : TIER_EXPRESS;
+  return table[TMAP[code] || 'C'][0];
+};
+const wname = c => { const [a, f] = WIL[c - 1].split('|'); return `${String(c).padStart(2, '0')} - ${a} (${f})`; };
+
+const CATS = [['all','الكل'],['tees','Band Tees'],['boots','Boots'],['jackets','Jackets'],['sneakers','Sneakers'],['jeans','Jeans'],['flannels','Flannels'],['accessories','Accessories']];
+let gender = 'men', cat = 'all', products = [], cart = [], isAdmin = false, loaded = false;
+let appliedCoupon = null;
+
+try { cart = JSON.parse(localStorage.getItem('bt_cart') || '[]'); } catch (e) { cart = []; }
+
+const $ = id => document.getElementById(id);
+const fmt = n => Number(n).toLocaleString('en-US') + ' دج';
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const saveCart = () => { try { localStorage.setItem('bt_cart', JSON.stringify(cart)); } catch (e) {} };
+function toast(m) { document.querySelector('.toast')?.remove(); const t = document.createElement('div'); t.className = 'toast'; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 3000); }
+
+function compress(file, max = 800, q = .7) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onerror = rej;
+    r.onload = () => { const im = new Image(); im.onerror = rej; im.onload = () => {
+      const k = Math.min(1, max / Math.max(im.width, im.height)), c = document.createElement('canvas');
+      c.width = im.width * k; c.height = im.height * k; c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+      res(c.toDataURL('image/jpeg', q)); }; im.src = r.result; };
+    r.readAsDataURL(file);
+  });
+}
+
+// REALTIME FIRESTORE LISTENER
+db.collection('products').orderBy('createdAt', 'desc').onSnapshot(s => {
+  products = s.docs.map(d => ({ id: d.id, ...d.data() }));
+  loaded = true;
+  renderCatalog();
+  renderCart();
+  if (isAdmin) renderAdminList();
+}, () => { loaded = true; renderCatalog(); });
+
+auth.onAuthStateChanged(u => {
+  isAdmin = !!u;
+  if ($('outBtn')) $('outBtn').classList.toggle('hide', !u);
+  if (u) renderAdminList();
+});
+
+function renderPills() {
+  if (!$('pills')) return;
+  $('pills').innerHTML =
+    `<button class="pill g ${gender === 'men' ? 'on' : ''}" onclick="setGender('men')">رجال</button>` +
+    `<button class="pill g ${gender === 'women' ? 'on' : ''}" onclick="setGender('women')">نساء</button><span class="sep"></span>` +
+    CATS.map(([id, n]) => `<button class="pill ${cat === id ? 'on' : ''}" onclick="setCat('${id}')">${n}</button>`).join('');
+}
+function setGender(g) {
+  gender = g;
+  document.querySelectorAll('.gsw .btn').forEach(b => { const on = b.dataset.g === g; b.classList.toggle('b-black', on); b.classList.toggle('b-light', !on); });
+  renderPills(); renderCatalog();
+}
+function setCat(c) { cat = c; renderPills(); renderCatalog(); }
+
+function renderCatalog() {
+  if (!$('grid')) return;
+  const list = products.filter(p => (p.gender === 'unisex' || p.gender === gender) && (cat === 'all' || p.category === cat));
+  if ($('stock')) $('stock').textContent = loaded ? `${list.filter(p => !p.sold).length} قطع متوفرة` : '...';
+  if ($('empty')) $('empty').classList.toggle('hide', !loaded || list.length > 0);
+  $('grid').innerHTML = list.map(p => {
+    const im = (p.images && p.images.length) ? p.images[0] : (p.image || '');
+    return `
+    <article class="card ${p.sold ? 'sold' : ''}">
+      <div class="ph">
+        <img src="${esc(im)}" alt="${esc(p.title)}" onerror="this.src='data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 100 100\\'><rect fill=\\'#eee\\' width=\\'100\\' height=\\'100\\'/></svg>'">
+        <span class="tag">1 OF 1</span>
+        ${p.sold ? '<div class="so">SOLD OUT</div>' : '

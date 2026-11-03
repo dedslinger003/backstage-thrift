@@ -10,9 +10,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
 
-<!-- 3D Engine -->
+<!-- Three.js + OrbitControls + GLTFLoader -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 
 <style>
 :root{
@@ -80,12 +81,12 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--red);box
   user-select:none;
 }
 .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--line)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
 .b-red{background:var(--red);color:#fff}
 .b-black{background:var(--black);color:#fff}
 .b-light{background:#fff;color:var(--tx)}
 .b-ok{background:var(--ok);color:#fff}
 
-/* Clean Header (No Overflows) */
 header{
   display:flex;
   align-items:center;
@@ -279,7 +280,7 @@ header{
 #threeCanvasContainer{
   width:100%;
   aspect-ratio:1;
-  max-height:360px;
+  max-height:380px;
   background:#e5e1d8;
   position:relative;
   touch-action:none;
@@ -296,6 +297,16 @@ header{
   border-radius:20px;
   pointer-events:none;
 }
+.studio-loader{
+  position:absolute;
+  inset:0;
+  display:none;
+  place-items:center;
+  background:rgba(229,225,216,0.85);
+  font-weight:900;
+  color:var(--red);
+  font-size:14px;
+}
 
 .lbl{display:block;font-size:13px;color:var(--tx);margin:12px 0 6px;font-weight:900}
 .opts{display:flex;gap:8px;flex-wrap:wrap}
@@ -304,7 +315,6 @@ header{
 .sq{min-width:44px;min-height:40px;background:#fff;border:2px solid var(--line);box-shadow:2px 2px 0 var(--line);border-radius:6px;font-weight:900;font-size:13px;padding:0 10px}
 .sq.on{background:var(--red);color:#fff;border-color:var(--line)}
 
-/* Non-overlapping FAB & Player */
 .fab{
   position:fixed;
   right:16px;
@@ -373,7 +383,6 @@ header{
 .ci img,.ci .th{width:54px;height:54px;object-fit:cover;border:1px solid var(--line);background:#eee;border-radius:4px;flex:none;display:grid;place-items:center;font-size:22px}
 .ci div{flex:1;min-width:0}.ci h5{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-/* Admin Stack Layout (Mobile-Proof) */
 .stack-field{display:flex;flex-direction:column;gap:6px}
 .stack-field label{font-size:12px;font-weight:700;color:var(--tx-mut)}
 .stack-two{display:grid;grid-template-columns:1fr;gap:10px}
@@ -433,7 +442,7 @@ header{
     <div class="custom-studio-hero-cta" onclick="openCustomStudio()">
       <div style="text-align:right" id="cta_text_wrap">
         <b class="hd" style="font-size:20px;display:block;color:var(--red)" id="t_cta_head">🎸 صمّم تيشيرتك أو هوديك الخاص (3D)</b>
-        <small style="color:var(--tx-mut)" id="t_cta_sub">معاينة تفاعلية 360 درجة، تغيير الألوان، وإسقاط التصاميم</small>
+        <small style="color:var(--tx-mut)" id="t_cta_sub">موديلات 3D واقعية مع تغيير الألوان، وإسقاط التصاميم</small>
       </div>
       <button class="btn b-red" style="min-height:38px;padding:0 12px;font-size:13px" id="t_cta_btn">دخول الاستوديو ✦</button>
     </div>
@@ -459,7 +468,7 @@ header{
   <div class="empty hide" id="empty" style="text-align:center;padding:40px 16px"><div style="font-size:36px">💀</div><h3 class="hd" style="font-size:22px" id="t_empty">لا توجد قطع معروضة حالياً</h3></div>
 </main>
 
-<!-- 3D CUSTOM STUDIO (MODAL FULLSCREEN) -->
+<!-- 3D CUSTOM STUDIO -->
 <section id="customStudioPage">
   <div class="studio-header">
     <b class="hd" style="font-size:22px">⚡ 3D CUSTOM MERCH STUDIO</b>
@@ -468,6 +477,7 @@ header{
 
   <div id="threeCanvasContainer">
     <div class="touch-hint" id="t_touch_hint">👆 حرّك المجسم بإصبعك للدوران 360°</div>
+    <div class="studio-loader" id="studioLoader">⚡ جارٍ تحميل موديل 3D...</div>
   </div>
 
   <div class="wrap" style="padding-top:16px">
@@ -649,17 +659,18 @@ const getDeliveryFee = (code, speed) => {
   return table[TMAP[code] || 'C'][0];
 };
 
-/* ============ SOLID DEFAULTS (CANNOT BE WIPED) ============ */
+/* ============ GLB REALISTIC MODELS DEFINITIONS ============ */
 const DEFAULT_TYPES = [
-  { id: 'tee', name: 'تيشيرت نصف كم', nameEn: 'Crewneck T-Shirt', price: 2800 },
-  { id: 'long', name: 'تيشيرت طويل الأكمام', nameEn: 'Long Sleeve Tee', price: 3400 },
-  { id: 'hoodie', name: 'هودي Oversized', nameEn: 'Oversized Hoodie', price: 4600 }
+  { id: 'tshirt', file: 'tshirt.glb', name: 'تيشيرت كلاسيك', nameEn: 'Classic T-Shirt', price: 2800, scale: 2.2, y: -1.2, artPos: [0, 0.25, 0.42] },
+  { id: 'hoodie', file: 'hoodie.glb', name: 'هودي Oversized', nameEn: 'Oversized Hoodie', price: 4600, scale: 2.3, y: -1.3, artPos: [0, 0.2, 0.45] }
 ];
+
 const DEFAULT_COLORS = [
   { hex: '#141416', name: 'Vintage Faded Black', nameEn: 'Faded Black' },
   { hex: '#313138', name: 'Washed Charcoal', nameEn: 'Washed Charcoal' },
   { hex: '#ebe8e1', name: 'Raw Off-White', nameEn: 'Raw Off-White' },
-  { hex: '#63101c', name: 'Grunge Crimson', nameEn: 'Grunge Crimson' }
+  { hex: '#63101c', name: 'Grunge Crimson', nameEn: 'Grunge Crimson' },
+  { hex: '#243048', name: 'Faded Navy', nameEn: 'Faded Navy' }
 ];
 const SIZES = ['S','M','L','XL','XXL'];
 
@@ -701,14 +712,14 @@ function applyLanguage() {
 
   $('t_hero_desc').textContent = isAr ? 'ملابس فريب أصلية فريدة (1 of 1) + استوديو تخصيص ثلاثي الأبعاد تفاعلي 360°' : 'Authentic 1-of-1 Vintage Rock Merch & 360° 3D Customizer Studio';
   $('t_cta_head').textContent = isAr ? '🎸 صمّم تيشيرتك أو هوديك الخاص (3D)' : '🎸 Design Your Custom Tee / Hoodie (3D)';
-  $('t_cta_sub').textContent = isAr ? 'معاينة تفاعلية 360 درجة، تغيير الألوان، وإسقاط التصاميم' : 'Real-time 360° interactive view, dynamic colors & custom graphic placement';
+  $('t_cta_sub').textContent = isAr ? 'موديلات 3D واقعية مع تغيير الألوان، وإسقاط التصاميم' : 'Real GLB 3D models with live color tinting & custom graphic projection';
   $('t_cta_btn').textContent = isAr ? 'دخول الاستوديو ✦' : 'Open 3D Studio ✦';
   $('t_btn_men').textContent = isAr ? 'HOMME • رجال' : 'MEN • HOMME';
   $('t_btn_women').textContent = isAr ? 'FEMME • نساء' : 'WOMEN • FEMME';
   $('t_sec_head').textContent = isAr ? 'قطع الأرشيف (1 OF 1)' : 'VAULT ARCHIVE (1 OF 1)';
   $('t_empty').textContent = isAr ? 'لا توجد قطع معروضة حالياً' : 'No pieces available right now';
   $('t_close_studio').textContent = isAr ? '✕ رجوع للمتجر' : '✕ Back to Vault';
-  $('t_touch_hint').textContent = isAr ? '👆 حرّك المجسم بإصبعك للدوران 360°' : '👆 Drag to inspect 360°';
+  $('t_touch_hint').textContent = isAr ? '👆 حرّك المجسم بإصبعك للدوران 360°' : '👆 Drag to rotate 360°';
   $('t_lbl_type').textContent = isAr ? '1. نوع وموديل القطعة:' : '1. Garment Model:';
   $('t_lbl_sz').textContent = isAr ? '3. القياس:' : '3. Size:';
   $('t_lbl_art').textContent = isAr ? '4. ارفع التصميم لإسقاطه فورياً على الموديل 3D:' : '4. Upload Artwork to Project onto 3D Mesh:';
@@ -734,10 +745,6 @@ db.collection('products').orderBy('createdAt', 'desc').onSnapshot(s => {
 
 db.doc('settings/main').onSnapshot(d => {
   const s = d.data();
-  if (s && s.studioConfig && Array.isArray(s.studioConfig.types) && s.studioConfig.types.length > 0) {
-    studioConfig = s.studioConfig;
-    renderStudioAttributes();
-  }
   if (s && s.musicUrl) musicSet(s.musicUrl);
 }, () => {});
 
@@ -794,9 +801,11 @@ function renderCatalog() {
   }).join('');
 }
 
-/* ============ REALISTIC 3D ENGINE (THREE.JS) ============ */
-let scene, camera, renderer, controls, shirtGroup, clothMaterial;
+/* ============ GLTF/GLB 3D STUDIO ENGINE ============ */
+let scene, camera, renderer, controls;
+let activeModelGroup = null, artMeshPlane = null;
 let is3DInit = false;
+const gltfLoader = new THREE.GLTFLoader();
 
 function initThreeEngine() {
   if (is3DInit || typeof THREE === 'undefined') return;
@@ -810,11 +819,12 @@ function initThreeEngine() {
   scene.background = new THREE.Color(0xe5e1d8);
 
   camera = new THREE.PerspectiveCamera(40, w / h, 0.1, 100);
-  camera.position.set(0, 0.2, 5.8);
+  camera.position.set(0, 0.3, 5.2);
 
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(w, h);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.shadowMap.enabled = true;
   container.appendChild(renderer.domElement);
 
@@ -823,23 +833,23 @@ function initThreeEngine() {
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.enablePan = false;
-    controls.minDistance = 3.5;
+    controls.minDistance = 3.0;
     controls.maxDistance = 7.5;
   }
 
   // Realistic Studio Lighting
-  const amb = new THREE.AmbientLight(0xffffff, 0.72);
+  const amb = new THREE.AmbientLight(0xffffff, 0.85);
   scene.add(amb);
 
-  const keyLight = new THREE.DirectionalLight(0xffffff, 0.85);
-  keyLight.position.set(3, 5, 4);
-  scene.add(keyLight);
+  const mainLight = new THREE.DirectionalLight(0xffffff, 0.95);
+  mainLight.position.set(4, 6, 4);
+  scene.add(mainLight);
 
-  const fillLight = new THREE.DirectionalLight(0xffffff, 0.4);
-  fillLight.position.set(-3, -2, -3);
+  const fillLight = new THREE.DirectionalLight(0xffffff, 0.5);
+  fillLight.position.set(-4, -1, -3);
   scene.add(fillLight);
 
-  build3DGarment();
+  loadCurrentGLBModel();
 
   const anim = () => {
     requestAnimationFrame(anim);
@@ -851,90 +861,81 @@ function initThreeEngine() {
   is3DInit = true;
 }
 
-function build3DGarment() {
+function loadCurrentGLBModel() {
   if (!scene) return;
-  if (shirtGroup) scene.remove(shirtGroup);
+  const curType = currentStudioSelection.type;
+  if (!curType || !curType.file) return;
 
-  shirtGroup = new THREE.Group();
+  $('studioLoader').style.display = 'grid';
 
-  clothMaterial = new THREE.MeshStandardMaterial({
-    color: new THREE.Color(currentStudioSelection.color ? currentStudioSelection.color.hex : '#141416'),
-    roughness: 0.82,
-    metalness: 0.08
-  });
-
-  // Body mesh with naturally curved chest
-  const bodyGeom = new THREE.CylinderGeometry(1.2, 1.15, 2.5, 32);
-  bodyGeom.scale(1.15, 1, 0.65);
-  const body = new THREE.Mesh(bodyGeom, clothMaterial);
-  shirtGroup.add(body);
-
-  // Crew neck collar
-  const collarGeom = new THREE.TorusGeometry(0.5, 0.08, 16, 32);
-  const collar = new THREE.Mesh(collarGeom, clothMaterial);
-  collar.rotation.x = Math.PI / 2;
-  collar.position.set(0, 1.25, 0);
-  shirtGroup.add(collar);
-
-  const isLong = currentStudioSelection.type && (currentStudioSelection.type.id === 'long' || currentStudioSelection.type.id === 'hoodie');
-  const isHoodie = currentStudioSelection.type && currentStudioSelection.type.id === 'hoodie';
-
-  // Realistic angled sleeves (45° hanging downwards)
-  const slLen = isLong ? 2.1 : 0.85;
-  const sleeveGeom = new THREE.CylinderGeometry(0.38, isLong ? 0.28 : 0.35, slLen, 24);
-
-  const leftSl = new THREE.Mesh(sleeveGeom, clothMaterial);
-  leftSl.position.set(isLong ? -1.75 : -1.35, isLong ? 0.35 : 0.85, 0);
-  leftSl.rotation.z = Math.PI / (isLong ? 3.6 : 3.2);
-  shirtGroup.add(leftSl);
-
-  const rightSl = new THREE.Mesh(sleeveGeom, clothMaterial);
-  rightSl.position.set(isLong ? 1.75 : 1.35, isLong ? 0.35 : 0.85, 0);
-  rightSl.rotation.z = -Math.PI / (isLong ? 3.6 : 3.2);
-  shirtGroup.add(rightSl);
-
-  // Hoodie Details
-  if (isHoodie) {
-    const hoodGeom = new THREE.SphereGeometry(0.7, 32, 24, 0, Math.PI * 2, 0, Math.PI * 0.75);
-    const hood = new THREE.Mesh(hoodGeom, clothMaterial);
-    hood.position.set(0, 1.55, -0.3);
-    hood.rotation.x = 0.2;
-    shirtGroup.add(hood);
-
-    // Front kangaroo pouch pocket
-    const pocketGeom = new THREE.BoxGeometry(1.2, 0.7, 0.15);
-    const pocket = new THREE.Mesh(pocketGeom, clothMaterial);
-    pocket.position.set(0, -0.55, 0.38);
-    shirtGroup.add(pocket);
+  if (activeModelGroup) {
+    scene.remove(activeModelGroup);
+    activeModelGroup = null;
   }
 
-  // Artwork Projection Plane
-  const artGeom = new THREE.PlaneGeometry(1.1, 1.1);
-  const artMat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false });
-  const artMesh = new THREE.Mesh(artGeom, artMat);
-  artMesh.position.set(0, 0.35, 0.42);
-  artMesh.name = "artPlane";
-  shirtGroup.add(artMesh);
+  gltfLoader.load(curType.file, gltf => {
+    activeModelGroup = gltf.scene;
 
-  scene.add(shirtGroup);
+    const box = new THREE.Box3().setFromObject(activeModelGroup);
+    const center = box.getCenter(new THREE.Vector3());
+    const size = box.getSize(new THREE.Vector3());
+    
+    // Auto-normalize scale
+    const maxDim = Math.max(size.x, size.y, size.z);
+    const targetScale = curType.scale || (3.0 / (maxDim || 1));
+    activeModelGroup.scale.set(targetScale, targetScale, targetScale);
+    activeModelGroup.position.set(-center.x * targetScale, (curType.y !== undefined ? curType.y : -center.y * targetScale), -center.z * targetScale);
 
-  if (currentStudioSelection.artworkDataUrl) update3DArtwork();
+    applyColorToActiveModel();
+
+    // Chest Artwork Projection Plane
+    const artGeom = new THREE.PlaneGeometry(1.0, 1.0);
+    const artMat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false });
+    artMeshPlane = new THREE.Mesh(artGeom, artMat);
+    const p = curType.artPos || [0, 0.25, 0.42];
+    artMeshPlane.position.set(p[0], p[1], p[2]);
+    scene.add(artMeshPlane);
+
+    scene.add(activeModelGroup);
+    $('studioLoader').style.display = 'none';
+
+    if (currentStudioSelection.artworkDataUrl) update3DArtwork();
+  }, undefined, err => {
+    console.warn("Could not load GLB model, falling back:", err);
+    $('studioLoader').textContent = "⚠️ خطأ في قراءة ملف الموديل، تحقق من وجوده في GitHub";
+  });
+}
+
+function applyColorToActiveModel() {
+  if (!activeModelGroup) return;
+  const colHex = currentStudioSelection.color ? currentStudioSelection.color.hex : '#141416';
+  activeModelGroup.traverse(child => {
+    if (child.isMesh && child.material) {
+      if (Array.isArray(child.material)) {
+        child.material.forEach(m => {
+          m.color = new THREE.Color(colHex);
+          m.needsUpdate = true;
+        });
+      } else {
+        child.material.color = new THREE.Color(colHex);
+        child.material.needsUpdate = true;
+      }
+    }
+  });
 }
 
 function update3DArtwork() {
-  if (!shirtGroup) return;
-  const art = shirtGroup.getObjectByName("artPlane");
-  if (!art) return;
+  if (!artMeshPlane) return;
   if (!currentStudioSelection.artworkDataUrl) {
-    art.material.map = null;
-    art.material.opacity = 0;
-    art.material.needsUpdate = true;
+    artMeshPlane.material.map = null;
+    artMeshPlane.material.opacity = 0;
+    artMeshPlane.material.needsUpdate = true;
     return;
   }
   new THREE.TextureLoader().load(currentStudioSelection.artworkDataUrl, tex => {
-    art.material.map = tex;
-    art.material.opacity = 1;
-    art.material.needsUpdate = true;
+    artMeshPlane.material.map = tex;
+    artMeshPlane.material.opacity = 1;
+    artMeshPlane.material.needsUpdate = true;
   });
 }
 
@@ -987,7 +988,7 @@ function pickStudioType(id) {
   if (t) {
     currentStudioSelection.type = t;
     renderStudioAttributes();
-    build3DGarment();
+    loadCurrentGLBModel();
   }
 }
 function pickStudioColor(idx) {
@@ -995,10 +996,7 @@ function pickStudioColor(idx) {
   if (c) {
     currentStudioSelection.color = c;
     renderStudioAttributes();
-    if (clothMaterial) {
-      clothMaterial.color.set(c.hex);
-      clothMaterial.needsUpdate = true;
-    }
+    applyColorToActiveModel();
   }
 }
 
@@ -1157,8 +1155,7 @@ async function addProduct(e) {
 function addCustomType() {
   const name = $('admTypeName').value.trim(), price = Number($('admTypePrice').value);
   if (!name || !price) return;
-  studioConfig.types.push({ id: 't_' + Date.now(), name, nameEn: name, price });
-  db.doc('settings/main').set({ studioConfig }, { merge: true });
+  studioConfig.types.push({ id: 'custom_' + Date.now(), file: 'tshirt.glb', name, nameEn: name, price });
   renderStudioAttributes();
 }
 function addCoupon() {

@@ -195,18 +195,107 @@ header{
 
 .card{background:#fff;border:2px solid var(--line);border-radius:6px;box-shadow:3px 3px 0 var(--line);display:flex;flex-direction:column;overflow:hidden;position:relative}
 .card.sold{opacity:.6;filter:grayscale(70%)}
-.ph{aspect-ratio:3/4;background:#ddd;overflow:hidden;position:relative;border-bottom:2px solid var(--line)}
-.ph img{width:100%;height:100%;object-fit:cover}
-.tag{position:absolute;top:6px;right:6px;background:var(--black);color:#fff;font-family:'Bebas Neue';font-size:11px;padding:2px 6px;border-radius:4px}
-.so{position:absolute;inset:0;display:grid;place-items:center;font-family:'Bebas Neue';font-size:26px;color:#fff;background:rgba(0,0,0,.75);border:2px solid var(--red);transform:rotate(-4deg)}
+.ph{aspect-ratio:3/4;background:#ddd;overflow:hidden;position:relative;border-bottom:2px solid var(--line);cursor:pointer}
+.ph img{width:100%;height:100%;object-fit:cover;transition:transform 0.2s}
+.ph:hover img{transform:scale(1.03)}
+.tag{position:absolute;top:6px;right:6px;background:var(--black);color:#fff;font-family:'Bebas Neue';font-size:11px;padding:2px 6px;border-radius:4px;z-index:2}
+.photo-count-badge{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,0.75);color:#fff;font-size:10px;font-weight:900;padding:2px 6px;border-radius:4px;z-index:2}
+.so{position:absolute;inset:0;display:grid;place-items:center;font-family:'Bebas Neue';font-size:26px;color:#fff;background:rgba(0,0,0,.75);border:2px solid var(--red);transform:rotate(-4deg);z-index:3}
 .cb{padding:8px;display:flex;flex-direction:column;gap:4px;flex:1}
-.cb h3{font-size:13px;font-weight:700;line-height:1.2;min-height:32px}
+.cb h3{font-size:13px;font-weight:700;line-height:1.2;min-height:32px;cursor:pointer}
+.cb h3:hover{color:var(--red)}
 .sz{font-size:10px;font-weight:900;background:var(--card2);padding:2px 6px;border-radius:4px;align-self:flex-start}
 .row{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:6px;border-top:1px dashed var(--line)}
+.price-wrap{display:flex;flex-direction:column;line-height:1}
 .pr{font-family:'Bebas Neue';font-size:20px;color:var(--red)}
 .old-pr{font-family:'Bebas Neue';font-size:13px;color:var(--mut);text-decoration:line-through;margin-inline-end:4px}
 .add{min-height:32px;padding:0 8px;background:#fff;border:2px solid var(--line);box-shadow:2px 2px 0 var(--line);border-radius:4px;font-size:11px;font-weight:900}
 .add:not(:disabled):active{background:var(--red);color:#fff}
+
+/* Product Details View Sheet */
+.pv-carousel{
+  position:relative;
+  width:100%;
+  aspect-ratio:3/4;
+  background:#eae6dd;
+  border:2px solid var(--line);
+  box-shadow:3px 3px 0 var(--line);
+  border-radius:8px;
+  overflow:hidden;
+}
+.pv-images-track{
+  display:flex;
+  width:100%;
+  height:100%;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:none;
+}
+.pv-images-track::-webkit-scrollbar{display:none}
+.pv-slide{
+  flex:0 0 100%;
+  width:100%;
+  height:100%;
+  scroll-snap-align:center;
+}
+.pv-slide img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.pv-nav-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:36px;
+  height:36px;
+  background:#fff;
+  border:2px solid var(--line);
+  border-radius:50%;
+  font-size:18px;
+  font-weight:900;
+  display:grid;
+  place-items:center;
+  box-shadow:2px 2px 0 var(--line);
+  z-index:5;
+}
+.pv-prev{left:8px}
+.pv-next{right:8px}
+.pv-indicator{
+  position:absolute;
+  bottom:8px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(0,0,0,0.75);
+  color:#fff;
+  font-size:11px;
+  font-weight:900;
+  padding:3px 10px;
+  border-radius:20px;
+  z-index:5;
+}
+.pv-thumbnails{
+  display:flex;
+  gap:6px;
+  overflow-x:auto;
+  padding:4px 0;
+  scrollbar-width:none;
+}
+.pv-thumb{
+  width:50px;
+  height:50px;
+  border-radius:4px;
+  border:2px solid var(--line);
+  object-fit:cover;
+  cursor:pointer;
+  opacity:0.6;
+  flex:none;
+}
+.pv-thumb.on{
+  border-color:var(--red);
+  opacity:1;
+  transform:scale(1.05);
+}
 
 /* 2D Interactive Custom Studio (Modal) */
 #customStudioPage{
@@ -272,7 +361,7 @@ header{
 }
 
 .opts{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px}
-.sw{width:38px;height:38px;border:2px solid var(--line);border-radius:6px;box-shadow:2px 2px 0 var(--line)}
+.sw{width:38px;height:38px;border:2px solid var(--line);border-radius:6px;box-shadow:2px 2px 0 var(--line);display:inline-block;position:relative}
 .sw.on{border-color:var(--red);box-shadow:3px 3px 0 var(--red);transform:scale(1.08)}
 .sq{min-width:40px;min-height:38px;background:#fff;border:2px solid var(--line);box-shadow:2px 2px 0 var(--line);border-radius:6px;font-weight:900;font-size:12px;padding:0 8px}
 .sq.on{background:var(--red);color:#fff}
@@ -302,6 +391,10 @@ header{
 .sum .t{border-top:1px dashed var(--line);padding-top:6px;font-weight:900;color:var(--red);font-size:15px}
 .toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);z-index:99;background:var(--black);color:#fff;font-weight:900;font-size:12px;padding:8px 16px;border:2px solid var(--line);border-radius:6px;box-shadow:3px 3px 0 rgba(0,0,0,.3)}
 .hide{display:none!important}
+
+/* Upload Thumbnails Preview */
+.upload-previews{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.up-thumb{width:46px;height:46px;border-radius:4px;border:1px solid var(--line);object-fit:cover}
 
 /* Auth Modal Styles */
 .auth-user-bar{display:flex;justify-content:space-between;align-items:center;background:#fff;border:2px solid var(--line);padding:8px 12px;border-radius:6px;box-shadow:2px 2px 0 var(--line)}
@@ -392,6 +485,43 @@ footer{
   <div class="empty hide" id="empty" style="text-align:center;padding:30px 16px"><div style="font-size:32px">💀</div><h3 class="hd" id="t_empty">لا توجد قطع معروضة حالياً</h3></div>
 </main>
 
+<!-- PRODUCT DETAILS VIEW SHEET (ALL PICTURES + INFO) -->
+<aside class="sheet" id="pViewSheet">
+  <div class="sh">
+    <h3 class="hd" id="pvTitle">تفاصيل القطعة</h3>
+    <button class="ic-btn" onclick="closeAll()">✕</button>
+  </div>
+  <div class="sb">
+    <!-- Carousel Track -->
+    <div class="pv-carousel" id="pvCarousel">
+      <div class="pv-images-track" id="pvTrack"></div>
+      <button class="pv-nav-btn pv-prev" onclick="prevPvImage()">‹</button>
+      <button class="pv-nav-btn pv-next" onclick="nextPvImage()">›</button>
+      <div class="pv-indicator" id="pvIndicator">1 / 1</div>
+    </div>
+    <!-- Thumbnails List -->
+    <div class="pv-thumbnails" id="pvThumbs"></div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="price-wrap">
+        <span class="old-pr hide" id="pvOldPrice"></span>
+        <b class="pr" id="pvPrice" style="font-size:26px">0 دج</b>
+      </div>
+      <span class="sz" id="pvSize" style="font-size:12px">XL</span>
+    </div>
+
+    <div style="background:#fff;border:2px solid var(--line);padding:10px;border-radius:6px;box-shadow:2px 2px 0 var(--line)">
+      <b style="color:var(--red);font-size:13px;display:block;margin-bottom:4px">الوصف والحالة:</b>
+      <p id="pvDesc" style="font-size:13px;color:var(--tx);line-height:1.5"></p>
+    </div>
+
+    <div style="display:flex;gap:6px;margin-top:6px">
+      <button class="btn b-red" id="pvAddBtn" style="flex:1">＋ إضافة القطعة للسلة</button>
+      <button class="btn b-light" onclick="closeAll()">رجوع</button>
+    </div>
+  </div>
+</aside>
+
 <!-- 2D CUSTOM STUDIO (MODAL) -->
 <section id="customStudioPage">
   <div class="studio-bar">
@@ -403,9 +533,7 @@ footer{
   <div class="studio-canvas-wrap">
     <div class="garment-stage" id="garmentStage">
       <!-- Dynamic SVG Garment Mockup -->
-      <svg id="garmentSvg" class="garment-svg" viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg">
-        <!-- Rendered dynamically by update2DGarment() -->
-      </svg>
+      <svg id="garmentSvg" class="garment-svg" viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg"></svg>
       <!-- Real-time Decal Projection Area -->
       <div class="print-area" id="printArea">
         <img id="printImg" class="print-img" alt="Artwork Preview">
@@ -485,7 +613,6 @@ footer{
     <button class="ic-btn" onclick="closeAll()">✕</button>
   </div>
   <div class="sb">
-    <!-- Logged In State Bar -->
     <div id="loggedInBox" class="hide">
       <div class="auth-user-bar">
         <div>
@@ -499,7 +626,6 @@ footer{
       </div>
     </div>
 
-    <!-- Login Form (Only Admins) -->
     <div id="authFormBox">
       <div style="background:var(--card2);border:2px solid var(--line);border-radius:6px;padding:10px;font-size:12px;font-weight:700;color:var(--red);margin-bottom:8px">
         🔒 تسجيل الدخول مخصص لمسؤولي المتجر والإدارة فقط.
@@ -514,9 +640,7 @@ footer{
           <label style="font-size:12px;font-weight:700">كلمة السر</label>
           <input id="authPass" type="password" placeholder="••••••••" required>
         </div>
-
         <div id="authErrMsg" style="color:var(--red);font-size:12px;font-weight:700"></div>
-
         <button class="btn b-red" type="submit" id="authSubmitBtn">دخول الإدارة</button>
       </form>
 
@@ -546,44 +670,91 @@ footer{
     <button class="pill" data-t="tset" onclick="tab('tset')">الإعدادات والشحن</button>
   </div>
 
-  <!-- Products Tab -->
+  <!-- Tab 1: Products -->
   <div class="sb" id="tp">
     <form onsubmit="addProduct(event)" style="display:grid;gap:8px;background:#fff;border:2px solid var(--line);padding:10px;border-radius:6px">
       <b style="color:var(--red)" class="hd">＋ إضافة قطعة أرشيف جديدة (1 of 1)</b>
       <input id="nTitle" placeholder="اسم المنتج *" required>
       <div class="two">
-        <select id="nCat"><option value="tees">Band Tees</option><option value="boots">Boots</option><option value="jackets">Jackets</option><option value="jeans">Jeans</option><option value="flannels">Flannels</option></select>
-        <select id="nGen"><option value="men">رجال</option><option value="women">نساء</option><option value="unisex">Unisex</option></select>
+        <select id="nCat">
+          <option value="tees">Band Tees</option>
+          <option value="boots">Boots</option>
+          <option value="jackets">Jackets</option>
+          <option value="jeans">Jeans</option>
+          <option value="flannels">Flannels</option>
+        </select>
+        <select id="nGen">
+          <option value="men">رجال</option>
+          <option value="women">نساء</option>
+          <option value="unisex">Unisex</option>
+        </select>
       </div>
       <div class="two">
         <input id="nSize" placeholder="القياس (مثال: XL)" required>
         <input id="nPrice" type="number" placeholder="السعر (دج) *" required>
       </div>
       <input id="nOldPrice" type="number" placeholder="السعر القديم المشطوب (اختياري)">
-      <label class="btn b-light" style="cursor:pointer">📷 صور من الهاتف<input type="file" accept="image/*" multiple id="nFile" class="hide" onchange="document.getElementById('nFileName').textContent=this.files.length+' صور'"></label>
+      <textarea id="nDesc" placeholder="وصف وتفاصيل القطعة (الحالة، المقاس الدقيق...)" rows="2"></textarea>
+
+      <!-- Multi-photo File Picker with Instant Previews -->
+      <label class="btn b-light" style="cursor:pointer">
+        📷 اختيار صور من الهاتف (متعددة)
+        <input type="file" accept="image/*" multiple id="nFile" class="hide" onchange="previewUploadFiles(this)">
+      </label>
       <span id="nFileName" style="font-size:11px;color:var(--red);font-weight:700"></span>
-      <button class="btn b-red" id="nBtn" type="submit">نشر القطعة</button>
+      <div class="upload-previews" id="uploadPreviews"></div>
+
+      <textarea id="nUrl" placeholder="أو روابط صور إضافية (رابط في كل سطر)" rows="2"></textarea>
+
+      <button class="btn b-red" id="nBtn" type="submit">نشر القطعة مع كل الصور</button>
     </form>
     <div id="aList" style="display:grid;gap:6px"></div>
   </div>
 
-  <!-- Orders Tab -->
+  <!-- Tab 2: Orders -->
   <div class="sb hide" id="to"><div id="oList" style="display:grid;gap:6px"></div></div>
 
-  <!-- 2D Merch Config -->
+  <!-- Tab 3: 2D Merch Config (Models, Colors & Sizes) -->
   <div class="sb hide" id="tcustom">
+    <!-- Models Section -->
     <div style="background:#fff;border:2px solid var(--line);border-radius:6px;padding:10px;display:grid;gap:6px">
       <b class="hd" style="color:var(--red)">👕 موديلات الاستوديو والأسعار</b>
       <div class="two">
-        <input id="admTypeName" placeholder="اسم الموديل">
-        <input id="admTypePrice" type="number" placeholder="السعر (دج)">
+        <input id="admTypeName" placeholder="اسم الموديل (مثال: هودي قطن ثقيل)">
+        <select id="admTypeTemplate">
+          <option value="tee">تيشيرت نصف كم (Tee)</option>
+          <option value="hoodie">هودي كابيشو (Hoodie)</option>
+          <option value="sweat">سويت شيرت (Sweatshirt)</option>
+        </select>
       </div>
+      <input id="admTypePrice" type="number" placeholder="السعر (دج)">
       <button class="btn b-black" onclick="addCustomType()">＋ إضافة الموديل</button>
       <div id="admTypesList" style="display:grid;gap:4px"></div>
     </div>
+
+    <!-- Colors Section -->
+    <div style="background:#fff;border:2px solid var(--line);border-radius:6px;padding:10px;display:grid;gap:6px">
+      <b class="hd" style="color:var(--red)">🎨 ألوان الأقمشة المتوفرة</b>
+      <div class="two">
+        <input id="admColorName" placeholder="اسم اللون (مثال: زيتي مغسول)">
+        <input id="admColorHex" type="color" value="#141416" style="min-height:44px;padding:2px">
+      </div>
+      <button class="btn b-black" onclick="addCustomColor()">＋ إضافة اللون</button>
+      <div id="admColorsList" style="display:grid;gap:4px"></div>
+    </div>
+
+    <!-- Sizes Section -->
+    <div style="background:#fff;border:2px solid var(--line);border-radius:6px;padding:10px;display:grid;gap:6px">
+      <b class="hd" style="color:var(--red)">📏 المقاسات المتوفرة للتخصيص</b>
+      <div style="display:flex;gap:6px">
+        <input id="admSizeInput" placeholder="أدخل قياس جديد (مثال: 3XL أو XS)">
+        <button class="btn b-black" style="min-height:44px" onclick="addCustomSize()">＋ إضافة</button>
+      </div>
+      <div id="admSizesList" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+    </div>
   </div>
 
-  <!-- Coupons Tab -->
+  <!-- Tab 4: Coupons -->
   <div class="sb hide" id="tcoupons">
     <div style="background:#fff;border:2px solid var(--line);border-radius:6px;padding:10px;display:grid;gap:6px">
       <b class="hd">🎟 إنشاء كود خصم جديد</b>
@@ -597,7 +768,7 @@ footer{
     </div>
   </div>
 
-  <!-- Admin Accounts Creation (Admin Only) -->
+  <!-- Tab 5: Admin Accounts Creation -->
   <div class="sb hide" id="tadmins">
     <div style="background:#fff;border:2px solid var(--line);border-radius:6px;padding:12px;display:grid;gap:8px">
       <b class="hd" style="color:var(--red)">👤 إنشاء حساب أدمن جديد (Admin Creation)</b>
@@ -608,7 +779,7 @@ footer{
     </div>
   </div>
 
-  <!-- Settings, Guepex & YouTube -->
+  <!-- Tab 6: Settings, Guepex & YouTube -->
   <div class="sb hide" id="tset">
     <div style="background:#fff;border:2px solid var(--line);border-radius:6px;padding:10px;display:grid;gap:6px">
       <b class="hd" style="color:var(--red)">🚚 إعدادات GUEPEX والشحن</b>
@@ -644,7 +815,7 @@ footer{
     <div class="footer-dev">
       Developed by <a href="https://www.instagram.com/vxid.000_/" target="_blank" rel="noopener">@vxid.000_</a>
     </div>
-    <div class="footer-version">v2.4.0 (2D Studio & Secure Auth)</div>
+    <div class="footer-version">v2.5.0 (2D Studio & Live Admin)</div>
   </div>
 </footer>
 
@@ -667,9 +838,9 @@ const getDeliveryFee = (code, mode, speed) => {
 
 /* 2D Garment Models */
 const DEFAULT_TYPES = [
-  { id: 'tee', name: 'تيشيرت نصف كم', nameEn: 'Crewneck T-Shirt', price: 2800 },
-  { id: 'hoodie', name: 'هودي كابيشو', nameEn: 'Pullover Hoodie', price: 4600 },
-  { id: 'sweat', name: 'سويت شيرت', nameEn: 'Crewneck Sweatshirt', price: 3800 }
+  { id: 'tee', template: 'tee', name: 'تيشيرت نصف كم', nameEn: 'Crewneck T-Shirt', price: 2800 },
+  { id: 'hoodie', template: 'hoodie', name: 'هودي كابيشو', nameEn: 'Pullover Hoodie', price: 4600 },
+  { id: 'sweat', template: 'sweat', name: 'سويت شيرت', nameEn: 'Crewneck Sweatshirt', price: 3800 }
 ];
 const DEFAULT_COLORS = [
   { hex: '#141416', name: 'Vintage Black' },
@@ -679,15 +850,65 @@ const DEFAULT_COLORS = [
   { hex: '#26334a', name: 'Faded Navy' },
   { hex: '#414838', name: 'Army Olive' }
 ];
-const SIZES = ['S','M','L','XL','XXL'];
+const DEFAULT_SIZES = ['S','M','L','XL','XXL'];
 
-let studioConfig = { types: [...DEFAULT_TYPES], colors: [...DEFAULT_COLORS] };
-let currentStudioSelection = { type: DEFAULT_TYPES[0], color: DEFAULT_COLORS[0], size: 'L', artworkDataUrl: null, artName: '' };
+let studioConfig = {
+  types: [...DEFAULT_TYPES],
+  colors: [...DEFAULT_COLORS],
+  sizes: [...DEFAULT_SIZES]
+};
+let currentStudioSelection = {
+  type: DEFAULT_TYPES[0],
+  color: DEFAULT_COLORS[0],
+  size: 'L',
+  artworkDataUrl: null,
+  artName: ''
+};
 
 const FALLBACK_PRODUCTS = [
-  { id:'p1', title:'1993 Nirvana In Utero Washed Band Tee', category:'tees', gender:'men', size:'XL', price:4800, oldPrice:5800, sold:false, images:['data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><rect fill="%23222" width="300" height="400"/><text x="150" y="210" fill="%23fff" font-size="28" text-anchor="middle" font-family="sans-serif">NIRVANA TEE</text></svg>'] },
-  { id:'p2', title:'Vintage Santiago Harness Heavy Boots', category:'boots', gender:'men', size:'EU 43', price:11500, oldPrice:13800, sold:false, images:['data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><rect fill="%233a1e12" width="300" height="400"/><text x="150" y="210" fill="%23fff" font-size="24" text-anchor="middle" font-family="sans-serif">HARNESS BOOTS</text></svg>'] },
-  { id:'p3', title:'90s Double-Rider Biker Leather Jacket', category:'jackets', gender:'men', size:'L', price:14500, oldPrice:18000, sold:false, images:['data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><rect fill="%23111" width="300" height="400"/><text x="150" y="210" fill="%23c4152f" font-size="24" text-anchor="middle" font-family="sans-serif">LEATHER JACKET</text></svg>'] }
+  {
+    id:'p1',
+    title:'1993 Nirvana In Utero Washed Band Tee',
+    category:'tees',
+    gender:'men',
+    size:'XL',
+    price:4800,
+    oldPrice:5800,
+    sold:false,
+    description:'تيشيرت أصلي فينتاج من جولة In Utero لعام 1993، غسلة فيديد قديمة ممتازة 10/10.',
+    images:[
+      'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><rect fill="%23222" width="300" height="400"/><text x="150" y="210" fill="%23fff" font-size="28" text-anchor="middle" font-family="sans-serif">NIRVANA TEE</text></svg>',
+      'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><rect fill="%23333" width="300" height="400"/><text x="150" y="210" fill="%23c4152f" font-size="24" text-anchor="middle" font-family="sans-serif">BACK PRINT</text></svg>'
+    ]
+  },
+  {
+    id:'p2',
+    title:'Vintage Santiago Harness Heavy Boots',
+    category:'boots',
+    gender:'men',
+    size:'EU 43',
+    price:11500,
+    oldPrice:13800,
+    sold:false,
+    description:'حذاء هارنس كلاسيك جلد طبيعي ثقيل، تفاصيل معدنية أصلية، متانة ممتازة.',
+    images:[
+      'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><rect fill="%233a1e12" width="300" height="400"/><text x="150" y="210" fill="%23fff" font-size="24" text-anchor="middle" font-family="sans-serif">HARNESS BOOTS</text></svg>'
+    ]
+  },
+  {
+    id:'p3',
+    title:'90s Double-Rider Biker Leather Jacket',
+    category:'jackets',
+    gender:'men',
+    size:'L',
+    price:14500,
+    oldPrice:18000,
+    sold:false,
+    description:'جاكيت جلد روك دبل رايدر من التسعينات، سحابات أصلية، خياطة متينة وستايل فريد.',
+    images:[
+      'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><rect fill="%23111" width="300" height="400"/><text x="150" y="210" fill="%23c4152f" font-size="24" text-anchor="middle" font-family="sans-serif">LEATHER JACKET</text></svg>'
+    ]
+  }
 ];
 
 let products = [...FALLBACK_PRODUCTS];
@@ -702,6 +923,56 @@ const fmt = n => Number(n).toLocaleString('en-US') + (currentLang === 'ar' ? ' �
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const saveCart = () => { try { localStorage.setItem('bt_cart', JSON.stringify(cart)); } catch (e) {} };
 function toast(m) { document.querySelector('.toast')?.remove(); const t = document.createElement('div'); t.className = 'toast'; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 2600); }
+
+/* ============ IMAGE COMPRESSOR (CLIENT-SIDE) ============ */
+function compressImage(file, maxDim = 800, quality = 0.75) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onerror = reject;
+      img.onload = () => {
+        let w = img.width;
+        let h = img.height;
+        if (w > maxDim || h > maxDim) {
+          if (w > h) {
+            h = Math.round((h * maxDim) / w);
+            w = maxDim;
+          } else {
+            w = Math.round((w * maxDim) / h);
+            h = maxDim;
+          }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function previewUploadFiles(input) {
+  const container = $('uploadPreviews');
+  container.innerHTML = '';
+  const files = Array.from(input.files || []);
+  $('nFileName').textContent = files.length > 0 ? `${files.length} صور مختارة جاهزة للرفع` : '';
+  files.slice(0, 8).forEach(file => {
+    const r = new FileReader();
+    r.onload = e => {
+      const img = document.createElement('img');
+      img.className = 'up-thumb';
+      img.src = e.target.result;
+      container.appendChild(img);
+    };
+    r.readAsDataURL(file);
+  });
+}
 
 /* ============ FIREBASE AUTH & FIRESTORE ============ */
 let db = null, auth = null;
@@ -720,9 +991,7 @@ try {
 
   auth.onAuthStateChanged(user => {
     currentUser = user;
-    if (user) {
-      isAdmin = true; // Any authenticated user in Firebase is an admin
-    }
+    if (user) isAdmin = true;
     updateAuthUI();
   });
 
@@ -737,6 +1006,7 @@ try {
       if (s.studioConfig && s.studioConfig.types) {
         studioConfig = s.studioConfig;
         renderStudioAttributes();
+        renderStudioAdminLists();
       }
       if (s.musicUrl) musicSet(s.musicUrl);
       if (s.guepexToken) GUEPEX_TOKEN = s.guepexToken;
@@ -780,7 +1050,6 @@ async function handleAuthSubmit(e) {
   const pass = $('authPass').value.trim();
   $('authErrMsg').textContent = '';
 
-  // Master password direct entry
   if (pass === ADMIN_MASTER_PASS) {
     isAdmin = true;
     updateAuthUI();
@@ -812,7 +1081,6 @@ async function createNewAdminAccount() {
   if (!email || !pass) return toast('يرجى إدخال البريد وكلمة السر');
 
   try {
-    // Secondary Firebase App to create user without logging out the current admin
     const secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary");
     await secondaryApp.auth().createUserWithEmailAndPassword(email, pass);
     await secondaryApp.delete();
@@ -848,6 +1116,91 @@ async function doLogout() {
   toast('تم تسجيل الخروج');
 }
 
+/* ============ PRODUCT DETAILS MODAL (ALL PICTURES) ============ */
+let curPvImages = [];
+let curPvIndex = 0;
+
+function openProductDetails(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  closeAll();
+
+  $('pvTitle').textContent = p.title;
+  $('pvSize').textContent = `القياس: ${p.size || '-'}`;
+  $('pvPrice').textContent = fmt(p.price);
+
+  if (p.oldPrice && p.oldPrice > p.price) {
+    $('pvOldPrice').textContent = fmt(p.oldPrice);
+    $('pvOldPrice').classList.remove('hide');
+  } else {
+    $('pvOldPrice').classList.add('hide');
+  }
+
+  $('pvDesc').textContent = p.description || p.desc || 'قطعة أصلية فريدة من أرشيف التسعينات، متوفرة بنسخة واحدة فقط (1 of 1).';
+
+  const addBtn = $('pvAddBtn');
+  if (p.sold) {
+    addBtn.disabled = true;
+    addBtn.textContent = 'بيعت القطعة (Sold Out)';
+  } else {
+    addBtn.disabled = false;
+    addBtn.textContent = '＋ إضافة القطعة للسلة';
+    addBtn.onclick = () => {
+      addPiece(p.id);
+      closeAll();
+    };
+  }
+
+  // Populate Images
+  curPvImages = (p.images && p.images.length > 0) ? p.images : (p.image ? [p.image] : ['data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><rect fill="%23222" width="300" height="400"/><text x="150" y="210" fill="%23fff" font-size="28" text-anchor="middle">NO IMAGE</text></svg>']);
+  curPvIndex = 0;
+
+  const track = $('pvTrack');
+  track.innerHTML = curPvImages.map((src, idx) => `
+    <div class="pv-slide">
+      <img src="${esc(src)}" alt="${esc(p.title)}" loading="lazy">
+    </div>
+  `).join('');
+
+  const thumbs = $('pvThumbs');
+  thumbs.innerHTML = curPvImages.length > 1 ? curPvImages.map((src, idx) => `
+    <img src="${esc(src)}" class="pv-thumb ${idx === 0 ? 'on' : ''}" onclick="goToPvImage(${idx})">
+  `).join('') : '';
+
+  updatePvCarousel();
+
+  $('pViewSheet').classList.add('on');
+  $('ov').classList.add('on');
+}
+
+function updatePvCarousel() {
+  const track = $('pvTrack');
+  if (track) {
+    track.scrollTo({ left: curPvIndex * track.clientWidth, behavior: 'smooth' });
+  }
+  $('pvIndicator').textContent = `${curPvIndex + 1} / ${curPvImages.length}`;
+  document.querySelectorAll('.pv-thumb').forEach((th, idx) => {
+    th.classList.toggle('on', idx === curPvIndex);
+  });
+}
+
+function prevPvImage() {
+  if (curPvImages.length <= 1) return;
+  curPvIndex = (curPvIndex - 1 + curPvImages.length) % curPvImages.length;
+  updatePvCarousel();
+}
+
+function nextPvImage() {
+  if (curPvImages.length <= 1) return;
+  curPvIndex = (curPvIndex + 1) % curPvImages.length;
+  updatePvCarousel();
+}
+
+function goToPvImage(idx) {
+  curPvIndex = idx;
+  updatePvCarousel();
+}
+
 /* ============ 2D INTERACTIVE GARMENT STUDIO ============ */
 const SVG_TEMPLATES = {
   tee: `
@@ -860,7 +1213,7 @@ const SVG_TEMPLATES = {
         <stop offset="100%" stop-color="#000" stop-opacity="0.28"/>
       </linearGradient>
     </defs>
-    <path id="svgBody" d="M 95 35 Q 150 75 205 35 L 265 85 L 230 145 L 205 130 L 210 295 L 90 295 L 95 130 L 70 145 L 35 85 Z" fill="#141416" stroke="#111" stroke-width="3"/>
+    <path d="M 95 35 Q 150 75 205 35 L 265 85 L 230 145 L 205 130 L 210 295 L 90 295 L 95 130 L 70 145 L 35 85 Z" fill="#141416" stroke="#111" stroke-width="3"/>
     <path d="M 95 35 Q 150 75 205 35 L 265 85 L 230 145 L 205 130 L 210 295 L 90 295 L 95 130 L 70 145 L 35 85 Z" fill="url(#teeShade)" pointer-events="none"/>
     <path d="M 95 35 Q 150 75 205 35 Q 150 60 95 35 Z" fill="none" stroke="#222" stroke-width="4"/>
     <line x1="90" y1="288" x2="210" y2="288" stroke="rgba(0,0,0,0.4)" stroke-dasharray="3,3" stroke-width="1.5"/>
@@ -876,7 +1229,7 @@ const SVG_TEMPLATES = {
       </linearGradient>
     </defs>
     <path d="M 100 45 C 80 10 220 10 200 45 Z" fill="#141416" stroke="#111" stroke-width="3"/>
-    <path id="svgBody" d="M 90 45 Q 150 65 210 45 L 285 160 L 255 180 L 215 130 L 215 295 L 85 295 L 85 130 L 45 180 L 15 160 Z" fill="#141416" stroke="#111" stroke-width="3"/>
+    <path d="M 90 45 Q 150 65 210 45 L 285 160 L 255 180 L 215 130 L 215 295 L 85 295 L 85 130 L 45 180 L 15 160 Z" fill="#141416" stroke="#111" stroke-width="3"/>
     <path d="M 90 45 Q 150 65 210 45 L 285 160 L 255 180 L 215 130 L 215 295 L 85 295 L 85 130 L 45 180 L 15 160 Z" fill="url(#hoodShade)" pointer-events="none"/>
     <path d="M 110 200 L 190 200 L 205 260 L 95 260 Z" fill="rgba(0,0,0,0.18)" stroke="#111" stroke-width="2"/>
     <path d="M 135 60 Q 130 110 132 135" stroke="#ddd" stroke-width="3" fill="none" stroke-linecap="round"/>
@@ -891,7 +1244,7 @@ const SVG_TEMPLATES = {
         <stop offset="100%" stop-color="#000" stop-opacity="0.3"/>
       </linearGradient>
     </defs>
-    <path id="svgBody" d="M 95 38 Q 150 68 205 38 L 280 150 L 250 170 L 212 125 L 212 295 L 88 295 L 88 125 L 50 170 L 20 150 Z" fill="#141416" stroke="#111" stroke-width="3"/>
+    <path d="M 95 38 Q 150 68 205 38 L 280 150 L 250 170 L 212 125 L 212 295 L 88 295 L 88 125 L 50 170 L 20 150 Z" fill="#141416" stroke="#111" stroke-width="3"/>
     <path d="M 95 38 Q 150 68 205 38 L 280 150 L 250 170 L 212 125 L 212 295 L 88 295 L 88 125 L 50 170 L 20 150 Z" fill="url(#swShade)" pointer-events="none"/>
     <path d="M 95 38 Q 150 68 205 38 Q 150 55 95 38 Z" fill="none" stroke="#222" stroke-width="4"/>
     <path d="M 140 56 L 150 72 L 160 56" fill="none" stroke="rgba(0,0,0,0.3)" stroke-width="2"/>
@@ -900,7 +1253,7 @@ const SVG_TEMPLATES = {
 };
 
 function update2DGarment() {
-  const curType = currentStudioSelection.type ? currentStudioSelection.type.id : 'tee';
+  const curType = currentStudioSelection.type ? (currentStudioSelection.type.template || currentStudioSelection.type.id || 'tee') : 'tee';
   const curColor = currentStudioSelection.color ? currentStudioSelection.color.hex : '#141416';
   const svgEl = $('garmentSvg');
 
@@ -936,6 +1289,7 @@ function renderStudioAttributes() {
   const isAr = currentLang === 'ar';
   if (!studioConfig.types || !studioConfig.types.length) studioConfig.types = [...DEFAULT_TYPES];
   if (!studioConfig.colors || !studioConfig.colors.length) studioConfig.colors = [...DEFAULT_COLORS];
+  if (!studioConfig.sizes || !studioConfig.sizes.length) studioConfig.sizes = [...DEFAULT_SIZES];
 
   if (!currentStudioSelection.type) currentStudioSelection.type = studioConfig.types[0];
   if (!currentStudioSelection.color) currentStudioSelection.color = studioConfig.colors[0];
@@ -948,7 +1302,7 @@ function renderStudioAttributes() {
   $('studioColorsList').innerHTML = studioConfig.colors.map((c, i) => `
     <button class="sw ${currentStudioSelection.color.hex === c.hex ? 'on' : ''}" style="background:${c.hex}" onclick="pickStudioColor(${i})" aria-label="${c.name}"></button>`).join('');
 
-  $('szs').innerHTML = SIZES.map(s => `
+  $('szs').innerHTML = studioConfig.sizes.map(s => `
     <button class="sq ${currentStudioSelection.size === s ? 'on' : ''}" onclick="currentStudioSelection.size='${s}';renderStudioAttributes()">${s}</button>`).join('');
 
   $('colName').textContent = currentStudioSelection.color.name;
@@ -1075,17 +1429,22 @@ function renderCatalog() {
   $('stock').textContent = `${list.filter(p => !p.sold).length} ${isAr ? 'قطع متوفرة' : 'pieces'}`;
   $('sub').textContent = `${gender === 'men' ? 'HOMME' : 'FEMME'} // ${cat.toUpperCase()}`;
   $('empty').classList.toggle('hide', list.length > 0);
+
   $('grid').innerHTML = list.map(p => {
-    const im = (p.images && p.images[0]) || p.image || '';
+    const imList = (p.images && p.images.length > 0) ? p.images : (p.image ? [p.image] : ['']);
+    const im = imList[0];
+    const photoCount = imList.length;
+
     return `
     <article class="card ${p.sold ? 'sold' : ''}">
-      <div class="ph">
+      <div class="ph" onclick="openProductDetails('${p.id}')">
         <img src="${esc(im)}" alt="${esc(p.title)}" loading="lazy">
         <span class="tag">1 OF 1</span>
+        ${photoCount > 1 ? `<span class="photo-count-badge">📷 ${photoCount}</span>` : ''}
         ${p.sold ? '<div class="so">SOLD OUT</div>' : ''}
       </div>
       <div class="cb">
-        <h3>${esc(p.title)}</h3>
+        <h3 onclick="openProductDetails('${p.id}')">${esc(p.title)}</h3>
         <span class="sz">${esc(p.size)}</span>
         <div class="row">
           <div class="price-wrap">
@@ -1104,7 +1463,8 @@ function addPiece(id) {
   const p = products.find(x => x.id === id);
   if (!p || p.sold) return toast('Sold out');
   if (cart.some(i => i.id === id)) { cartOpen(true); return; }
-  cart.push({ cartId: 'c_' + id, id, title: p.title, price: p.price, size: p.size, image: (p.images && p.images[0]) || p.image || '' });
+  const imList = (p.images && p.images.length > 0) ? p.images : (p.image ? [p.image] : ['']);
+  cart.push({ cartId: 'c_' + id, id, title: p.title, price: p.price, size: p.size, image: imList[0] || '' });
   saveCart(); renderCart(); toast(currentLang === 'ar' ? 'تمت الإضافة للسلة' : 'Added to cart');
 }
 function rmItem(cid) { cart = cart.filter(i => i.cartId !== cid); saveCart(); renderCart(); }
@@ -1244,39 +1604,168 @@ function renderAdminList() {
 
 async function addProduct(e) {
   e.preventDefault();
-  const title = $('nTitle').value.trim(), price = Number($('nPrice').value);
-  const doc = {
-    title, category: $('nCat').value, gender: $('nGen').value, size: $('nSize').value.trim(),
-    price, sold: false, createdAt: Date.now(),
-    images: ['data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><rect fill="%23222" width="300" height="400"/><text x="150" y="210" fill="%23fff" font-size="28" text-anchor="middle">NEW PIECE</text></svg>']
-  };
-  if (db) await db.collection('products').add(doc);
-  else products.unshift({ id: 'p_' + Date.now(), ...doc });
-  e.target.reset(); renderCatalog(); renderAdminList(); toast('Published ⚡');
+  const btn = $('nBtn');
+  btn.disabled = true;
+  btn.textContent = 'جارٍ معالجة الصور ورفعها...';
+
+  try {
+    const title = $('nTitle').value.trim();
+    const price = Number($('nPrice').value);
+    const category = $('nCat').value;
+    const gender = $('nGen').value;
+    const size = $('nSize').value.trim();
+    const oldPrice = Number($('nOldPrice').value) || 0;
+    const description = $('nDesc').value.trim();
+
+    // 1. Process multiple image files from mobile
+    const fileInput = $('nFile');
+    const files = Array.from(fileInput.files || []);
+    let compressedImages = [];
+    if (files.length > 0) {
+      compressedImages = await Promise.all(files.map(f => compressImage(f, 800, 0.75)));
+    }
+
+    // 2. Process image URLs if provided
+    const urlText = $('nUrl').value.trim();
+    let urlImages = [];
+    if (urlText) {
+      urlImages = urlText.split(/[\s,]+/).map(s => s.trim()).filter(Boolean);
+    }
+
+    const allImages = [...compressedImages, ...urlImages];
+    if (allImages.length === 0) {
+      allImages.push('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><rect fill="%23222" width="300" height="400"/><text x="150" y="210" fill="%23fff" font-size="28" text-anchor="middle">NEW PIECE</text></svg>');
+    }
+
+    const doc = {
+      title,
+      category,
+      gender,
+      size,
+      price,
+      oldPrice: oldPrice > price ? oldPrice : 0,
+      description,
+      images: allImages,
+      image: allImages[0],
+      sold: false,
+      createdAt: Date.now()
+    };
+
+    if (db) {
+      await db.collection('products').add(doc);
+    } else {
+      products.unshift({ id: 'p_' + Date.now(), ...doc });
+    }
+
+    e.target.reset();
+    $('uploadPreviews').innerHTML = '';
+    $('nFileName').textContent = '';
+    renderCatalog();
+    renderAdminList();
+    toast('تم نشر القطعة بجميع صورها بنجاح ⚡');
+  } catch (err) {
+    console.error(err);
+    toast('حدث خطأ أثناء رفع المنتج');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'نشر القطعة مع كل الصور';
+  }
 }
 
+/* ============ ADMIN 2D STUDIO CONFIG (MODELS, COLORS, SIZES) ============ */
 function renderStudioAdminLists() {
+  // 1. Models List
   $('admTypesList').innerHTML = studioConfig.types.map((t, idx) => `
-    <div style="display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--line);padding:4px 6px;font-size:12px">
-      <span><b>${esc(t.name)}</b> - ${fmt(t.price)}</span>
-      <button class="ic-btn" style="width:26px;height:26px" onclick="delCustomType(${idx})">🗑</button>
-    </div>`).join('');
+    <div style="display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--line);padding:6px;font-size:12px;border-radius:4px">
+      <div>
+        <b>${esc(t.name)}</b> <small style="color:var(--mut)">(${t.template || 'tee'})</small><br>
+        <span style="color:var(--red);font-weight:700">${fmt(t.price)}</span>
+      </div>
+      <button class="ic-btn" style="width:28px;height:28px" onclick="delCustomType(${idx})">🗑</button>
+    </div>`).join('') || '<p style="font-size:12px">لا توجد موديلات</p>';
+
+  // 2. Colors List
+  $('admColorsList').innerHTML = studioConfig.colors.map((c, idx) => `
+    <div style="display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--line);padding:6px;font-size:12px;border-radius:4px">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="width:22px;height:22px;background:${c.hex};border:1px solid #000;border-radius:4px;display:inline-block"></span>
+        <b>${esc(c.name)}</b> <small style="color:var(--mut)">${c.hex}</small>
+      </div>
+      <button class="ic-btn" style="width:28px;height:28px" onclick="delCustomColor(${idx})">🗑</button>
+    </div>`).join('') || '<p style="font-size:12px">لا توجد ألوان</p>';
+
+  // 3. Sizes List
+  $('admSizesList').innerHTML = studioConfig.sizes.map((s, idx) => `
+    <span class="sq" style="display:inline-flex;align-items:center;gap:6px">
+      ${esc(s)}
+      <button style="color:var(--red);font-weight:900" onclick="delCustomSize(${idx})">✕</button>
+    </span>`).join('') || '<p style="font-size:12px">لا توجد قياسات</p>';
 }
 
 function addCustomType() {
-  const name = $('admTypeName').value.trim(), price = Number($('admTypePrice').value) || 2800;
-  if (!name) return;
-  studioConfig.types.push({ id: 't_' + Date.now(), name, nameEn: name, price });
-  if (db) db.doc('settings/main').set({ studioConfig }, { merge: true });
-  renderStudioAttributes(); renderStudioAdminLists(); toast('تمت إضافة الموديل ⚡');
+  const name = $('admTypeName').value.trim();
+  const template = $('admTypeTemplate').value;
+  const price = Number($('admTypePrice').value) || 2800;
+  if (!name) return toast('يرجى كتابة اسم الموديل');
+
+  const id = 't_' + Date.now();
+  studioConfig.types.push({ id, template, name, nameEn: name, price });
+  saveStudioConfig();
+  $('admTypeName').value = '';
+  $('admTypePrice').value = '';
+  toast('تمت إضافة الموديل بنجاح ⚡');
 }
 
 function delCustomType(idx) {
-  if (confirm('حذف؟')) {
+  if (confirm('حذف هذا الموديل؟')) {
     studioConfig.types.splice(idx, 1);
-    if (db) db.doc('settings/main').set({ studioConfig }, { merge: true });
-    renderStudioAttributes(); renderStudioAdminLists();
+    saveStudioConfig();
   }
+}
+
+function addCustomColor() {
+  const name = $('admColorName').value.trim();
+  const hex = $('admColorHex').value;
+  if (!name) return toast('يرجى كتابة اسم اللون');
+
+  studioConfig.colors.push({ name, hex });
+  saveStudioConfig();
+  $('admColorName').value = '';
+  toast('تمت إضافة اللون بنجاح 🎨');
+}
+
+function delCustomColor(idx) {
+  if (confirm('حذف هذا اللون؟')) {
+    studioConfig.colors.splice(idx, 1);
+    saveStudioConfig();
+  }
+}
+
+function addCustomSize() {
+  const s = $('admSizeInput').value.trim().toUpperCase();
+  if (!s) return toast('يرجى إدخال القياس');
+  if (studioConfig.sizes.includes(s)) return toast('القياس موجود مسبقاً');
+
+  studioConfig.sizes.push(s);
+  saveStudioConfig();
+  $('admSizeInput').value = '';
+  toast('تمت إضافة القياس 📏');
+}
+
+function delCustomSize(idx) {
+  if (confirm('حذف هذا القياس؟')) {
+    studioConfig.sizes.splice(idx, 1);
+    saveStudioConfig();
+  }
+}
+
+function saveStudioConfig() {
+  if (db) {
+    db.doc('settings/main').set({ studioConfig }, { merge: true });
+  }
+  renderStudioAttributes();
+  renderStudioAdminLists();
+  update2DGarment();
 }
 
 function addCoupon() {
@@ -1326,3 +1815,4 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+

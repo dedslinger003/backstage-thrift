@@ -318,7 +318,7 @@ footer{
     <img src="1000178346_2.jpg" alt="Logo" class="logo-img" onerror="this.onerror=null;this.src='1000178346.jpg';this.onerror=()=>this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><text y=\'.9em\' font-size=\'90\'>💀</text></svg>'">
     <div>
       <b>BACKSTAGE</b>
-      <small>VINTAGE & 2D STUDIO</small>
+      <small id="t_brand_sub">VINTAGE & 2D STUDIO</small>
     </div>
   </a>
   <div class="hdr-actions">
@@ -329,13 +329,13 @@ footer{
 </header>
 
 <section class="hero">
-  <span class="hero-tag">★ ARCHIVE VAULT & 2D STUDIO ★</span>
+  <span class="hero-tag" id="t_hero_tag">★ ARCHIVE VAULT & 2D STUDIO ★</span>
   <h1 class="hd">ROCK 'N' ROLL <em>THRIFT VAULT</em></h1>
   <p id="t_hero_desc">ملابس فريب أصلية فريدة (1 of 1) + استوديو تخصيص تفاعلي حي متعدد الرسمات</p>
 
   <div class="wrap" style="padding:0">
     <div class="cta-box" onclick="openCustomStudio()">
-      <div style="text-align:right">
+      <div style="text-align:right" id="cta_text_wrap">
         <b class="hd" style="font-size:19px;color:var(--red);display:block" id="t_cta_head">🎸 صمّم تيشيرتك أو هوديك بعدة رسمات (2D STUDIO)</b>
         <small style="color:var(--mut)" id="t_cta_sub">معاينة تفاعلية حية، إمكانية اختيار موضع كل رسمة (+500 دج لكل رسمة إضافية)</small>
       </div>
@@ -384,13 +384,13 @@ footer{
     </div>
 
     <div style="background:#fff;border:2px solid var(--line);padding:10px;border-radius:6px;box-shadow:2px 2px 0 var(--line)">
-      <b style="color:var(--red);font-size:13px;display:block;margin-bottom:4px">الوصف والحالة:</b>
+      <b style="color:var(--red);font-size:13px;display:block;margin-bottom:4px" id="t_pv_desc_lbl">الوصف والحالة:</b>
       <p id="pvDesc" style="font-size:13px;color:var(--tx);line-height:1.5"></p>
     </div>
 
     <div style="display:flex;gap:6px;margin-top:6px">
       <button class="btn b-red" id="pvAddBtn" style="flex:1">＋ إضافة القطعة للسلة</button>
-      <button class="btn b-light" onclick="closeAll()">رجوع</button>
+      <button class="btn b-light" onclick="closeAll()" id="t_pv_back">رجوع</button>
     </div>
   </div>
 </aside>
@@ -405,7 +405,6 @@ footer{
   <div class="studio-canvas-wrap">
     <div class="garment-stage" id="garmentStage">
       <svg id="garmentSvg" class="garment-svg" viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg"></svg>
-      <!-- Multi-Position Overlays -->
       <div class="print-area chest" id="pArea_chest"><img id="pImg_chest" class="print-img"></div>
       <div class="print-area back" id="pArea_back" style="display:none"><img id="pImg_back" class="print-img"></div>
       <div class="print-area sleeve-left" id="pArea_sleeve_left" style="display:none"><img id="pImg_sleeve_left" class="print-img"></div>
@@ -414,7 +413,6 @@ footer{
   </div>
 
   <div class="wrap" style="padding-top:4px">
-    <!-- Realtime Price readout with Extra Arts calculation -->
     <div style="display:flex;justify-content:space-between;align-items:center;background:#fff;padding:10px;border:2px solid var(--line);box-shadow:2px 2px 0 var(--line);border-radius:6px">
       <div>
         <span class="pr" id="teePriceDisplay" style="font-size:26px">2,800 دج</span>
@@ -424,11 +422,11 @@ footer{
     </div>
 
     <!-- CCP Payment Notice for Custom Orders -->
-    <div class="ccp-alert-box" style="margin-top:10px">
+    <div class="ccp-alert-box" style="margin-top:10px" id="t_ccp_box">
       <span style="font-size:18px">💳</span>
       <div>
-        <b>ملاحظة هامة حول دفع البضاعة المخصصة:</b>
-        نظراً لأن القطعة يتم تفصيلها وطباعتها خصيصاً لك، يتطلب تأكيد الطلب دفع ثمن السلعة مسبقاً عبر **CCP / BaridiMob**، مع دفع سعر الشحن فقط عند الاستلام.
+        <b id="t_ccp_title">ملاحظة هامة حول دفع البضاعة المخصصة:</b>
+        <span id="t_ccp_text">نظراً لأن القطعة يتم تفصيلها وطباعتها خصيصاً لك، يتطلب تأكيد الطلب دفع ثمن السلعة مسبقاً عبر **CCP / BaridiMob**، مع دفع سعر الشحن فقط عند الاستلام.</span>
       </div>
     </div>
 
@@ -444,10 +442,10 @@ footer{
     <!-- Multi-Artwork & Placement Upload Section -->
     <div style="background:#fff;border:2px solid var(--line);border-radius:6px;box-shadow:2px 2px 0 var(--line);padding:10px;margin-top:10px">
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <b style="font-size:13px;color:var(--black)">4. رفع الرسمات وتحديد مواضع الطباعة:</b>
-        <span class="art-badge-fee">+500 دج لكل رسمة إضافية</span>
+        <b style="font-size:13px;color:var(--black)" id="t_art_heading">4. رفع الرسمات وتحديد مواضع الطباعة:</b>
+        <span class="art-badge-fee" id="t_art_fee_badge">+500 دج لكل رسمة إضافية</span>
       </div>
-      <p style="font-size:11px;color:var(--mut);margin-top:2px">الرسمة الأولى مشمولة في السعر. يمكنك إضافة رسمات أخرى للظهر أو الأكمام.</p>
+      <p style="font-size:11px;color:var(--mut);margin-top:2px" id="t_art_sub">الرسمة الأولى مشمولة في السعر. يمكنك إضافة رسمات أخرى للظهر أو الأكمام.</p>
 
       <div id="artworksContainer" style="margin-top:8px"></div>
 
@@ -473,12 +471,12 @@ footer{
     <!-- Coupon Input and Catalog Opener -->
     <div style="background:#fff;border:2px solid var(--line);border-radius:6px;padding:8px;display:grid;gap:6px">
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <label style="font-size:11px;font-weight:900">🎟 كود الخصم (يطبق على السلع فقط ولا يمس الشحن):</label>
-        <button style="font-size:11px;color:var(--red);font-weight:900;text-decoration:underline" onclick="openCouponsCatalog()">كتالوج الكوبونات ✦</button>
+        <label style="font-size:11px;font-weight:900" id="t_lbl_coupon_rule">🎟 كود الخصم (يطبق على السلع فقط ولا يمس الشحن):</label>
+        <button style="font-size:11px;color:var(--red);font-weight:900;text-decoration:underline" onclick="openCouponsCatalog()" id="t_btn_coupon_catalog">كتالوج الكوبونات ✦</button>
       </div>
       <div style="display:flex;gap:6px">
         <input id="cCouponInput" placeholder="أدخل الكود..." style="min-height:36px;font-size:13px;text-transform:uppercase">
-        <button class="btn b-black" style="min-height:36px;padding:0 10px" onclick="applyCoupon()">تطبيق</button>
+        <button class="btn b-black" style="min-height:36px;padding:0 10px" onclick="applyCoupon()" id="t_btn_apply_coupon">تطبيق</button>
       </div>
       <div id="couponMsg" style="font-size:11px;font-weight:700"></div>
     </div>
@@ -487,8 +485,8 @@ footer{
     <div id="cartCcpNotice" class="ccp-alert-box hide">
       <span style="font-size:18px">💳</span>
       <div>
-        <b>تنبيه بخصوص القطع المخصصة في سلتك:</b>
-        يتم دفع ثمن القطع المخصصة (Custom Merch) مسبقاً عبر CCP / BaridiMob للبدء في الطباعة، ومصاريف التوصيل عند الاستلام.
+        <b id="t_cart_ccp_title">تنبيه بخصوص القطع المخصصة في سلتك:</b>
+        <span id="t_cart_ccp_desc">يتم دفع ثمن القطع المخصصة (Custom Merch) مسبقاً عبر CCP / BaridiMob للبدء في الطباعة، ومصاريف التوصيل عند الاستلام.</span>
       </div>
     </div>
 
@@ -505,14 +503,14 @@ footer{
       <label style="font-size:12px;font-weight:700"><input type="radio" name="speed" value="eco" onchange="totals()"> Économique 📦</label>
     </div>
     <div class="two">
-      <label style="font-size:12px;font-weight:700"><input type="radio" name="dm" value="home" checked onchange="totals()"> لباب المنزل</label>
-      <label style="font-size:12px;font-weight:700"><input type="radio" name="dm" value="desk" onchange="totals()"> مكتب Stop-Desk</label>
+      <label style="font-size:12px;font-weight:700"><input type="radio" name="dm" value="home" checked onchange="totals()" id="t_dm_home"> لباب المنزل</label>
+      <label style="font-size:12px;font-weight:700"><input type="radio" name="dm" value="desk" onchange="totals()" id="t_dm_desk"> مكتب Stop-Desk</label>
     </div>
     <div class="sum">
-      <div><span>مجموع السلع</span><span id="sSub">0 دج</span></div>
-      <div id="rowDiscount" class="hide" style="color:var(--ok)"><span>خصم الكوبون (السلع فقط)</span><span id="sDiscount">-0 دج</span></div>
-      <div><span>التوصيل (طرد Guepex موحد)</span><span id="sShip" style="color:var(--red)">حدد الولاية</span></div>
-      <div class="t"><span>المجموع الإجمالي</span><span id="sTot">0 دج</span></div>
+      <div><span id="t_s_sub">مجموع السلع</span><span id="sSub">0 دج</span></div>
+      <div id="rowDiscount" class="hide" style="color:var(--ok)"><span id="t_s_disc">خصم الكوبون (السلع فقط)</span><span id="sDiscount">-0 دج</span></div>
+      <div><span id="t_s_ship">التوصيل (طرد Guepex موحد)</span><span id="sShip" style="color:var(--red)">حدد الولاية</span></div>
+      <div class="t"><span id="t_s_tot">المجموع الإجمالي</span><span id="sTot">0 دج</span></div>
     </div>
     <button class="btn b-ok" id="sendBtn" onclick="sendOrder()">💬 تأكيد الطلبية عبر واتساب</button>
   </div>
@@ -521,11 +519,11 @@ footer{
 <!-- COUPONS CATALOG MODAL -->
 <aside class="sheet" id="couponsCatalogSheet">
   <div class="sh">
-    <h3 class="hd">🎟 كتالوج الكوبونات والعروض</h3>
+    <h3 class="hd" id="t_coupons_cat_head">🎟 كتالوج الكوبونات والعروض</h3>
     <button class="ic-btn" onclick="closeAll();cartOpen(true)">✕</button>
   </div>
   <div class="sb">
-    <div style="font-size:12px;color:var(--mut)">الكوبونات صالحة للاستخدام لمرة واحدة فقط وتُخصم حصراً من مجموع السلع دون التأثير على سعر الشحن.</div>
+    <div style="font-size:12px;color:var(--mut)" id="t_coupons_cat_sub">الكوبونات صالحة للاستخدام لمرة واحدة فقط وتُخصم حصراً من مجموع السلع دون التأثير على سعر الشحن.</div>
     <div id="catalogCouponsList" style="display:grid;gap:8px"></div>
   </div>
 </aside>
@@ -705,13 +703,13 @@ footer{
   <div class="wrap">
     <div><b>BACKSTAGE THRIFT</b> // 1-OF-1 VINTAGE VAULT & 2D STUDIO</div>
     <div class="footer-dev">Developed by <a href="https://www.instagram.com/vxid.000_/" target="_blank" rel="noopener">@vxid.000_</a></div>
-    <div class="footer-version">v2.6.0 (Multi-Artworks & Dynamic Coupons)</div>
+    <div class="footer-version">v2.2 (Multi-Artworks & Dynamic Coupons)</div>
   </div>
 </footer>
 
 <script>
 /* ============ CONFIG & STATE ============ */
-const ADMIN_MASTER_PASS = 'backstage';
+const ADMIN_MASTER_PASS = 'wadoudsalah0703';
 let GUEPEX_TOKEN = "98Dpox1uVHmUSlAfqvCYgPWasiR4nGe02N6JFQXbw7zM3jLtdrchTkBIO5ZKyE";
 let STORE_WA = "213697783635";
 
@@ -746,10 +744,10 @@ let currentStudioSelection = {
   type: DEFAULT_TYPES[0],
   color: DEFAULT_COLORS[0],
   size: 'L',
-  artworks: [] // Array of { id, name, dataUrl, position }
+  artworks: []
 };
 
-let couponsCatalog = []; // Loaded live from Firestore
+let couponsCatalog = [];
 
 const FALLBACK_PRODUCTS = [
   {
@@ -843,7 +841,6 @@ try {
     renderCatalog();
   }, () => renderCatalog());
 
-  // Realtime Coupons Catalog
   db.collection('coupons').where('used', '==', false).onSnapshot(s => {
     couponsCatalog = s.docs.map(d => ({ id: d.id, ...d.data() }));
   });
@@ -905,7 +902,7 @@ function openProductDetails(id) {
   if (!p) return;
   closeAll();
   $('pvTitle').textContent = p.title;
-  $('pvSize').textContent = `القياس: ${p.size || '-'}`;
+  $('pvSize').textContent = `${currentLang === 'ar' ? 'القياس' : 'Size'}: ${p.size || '-'}`;
   $('pvPrice').textContent = fmt(p.price);
   if (p.oldPrice && p.oldPrice > p.price) {
     $('pvOldPrice').textContent = fmt(p.oldPrice);
@@ -913,12 +910,12 @@ function openProductDetails(id) {
   } else {
     $('pvOldPrice').classList.add('hide');
   }
-  $('pvDesc').textContent = p.description || 'قطعة أصلية فريدة من أرشيف التسعينات، متوفرة بنسخة واحدة فقط (1 of 1).';
+  $('pvDesc').textContent = p.description || (currentLang === 'ar' ? 'قطعة أصلية فريدة من أرشيف التسعينات، متوفرة بنسخة واحدة فقط (1 of 1).' : 'Authentic 90s vintage piece, 1-of-1 archive vault item.');
   const addBtn = $('pvAddBtn');
   if (p.sold) {
-    addBtn.disabled = true; addBtn.textContent = 'بيعت القطعة (Sold Out)';
+    addBtn.disabled = true; addBtn.textContent = 'SOLD OUT';
   } else {
-    addBtn.disabled = false; addBtn.textContent = '＋ إضافة القطعة للسلة';
+    addBtn.disabled = false; addBtn.textContent = currentLang === 'ar' ? '＋ إضافة القطعة للسلة' : '＋ Add Piece to Cart';
     addBtn.onclick = () => { addPiece(p.id); closeAll(); };
   }
   curPvImages = (p.images && p.images.length > 0) ? p.images : (p.image ? [p.image] : ['']);
@@ -952,13 +949,11 @@ function update2DGarment() {
   svgEl.innerHTML = SVG_TEMPLATES[curType] || SVG_TEMPLATES.tee;
   svgEl.querySelectorAll('[fill="#141416"]').forEach(p => p.setAttribute('fill', curColor));
 
-  // Reset Overlays
   ['chest', 'back', 'sleeve_left', 'sleeve_right'].forEach(pos => {
     const box = $(`pArea_${pos}`), img = $(`pImg_${pos}`);
     if (box && img) { box.style.display = 'none'; img.style.display = 'none'; img.src = ''; }
   });
 
-  // Apply each artwork to its selected position
   currentStudioSelection.artworks.forEach(art => {
     const box = $(`pArea_${art.position}`), img = $(`pImg_${art.position}`);
     if (box && img) {
@@ -993,13 +988,12 @@ function renderStudioAttributes() {
   $('szs').innerHTML = studioConfig.sizes.map(s => `<button class="sq ${currentStudioSelection.size === s ? 'on' : ''}" onclick="currentStudioSelection.size='${s}';renderStudioAttributes()">${s}</button>`).join('');
 
   $('colName').textContent = currentStudioSelection.color.name;
-  $('teeTypeDesc').textContent = `(${currentStudioSelection.type.name})`;
+  $('teeTypeDesc').textContent = `(${isAr ? currentStudioSelection.type.name : (currentStudioSelection.type.nameEn || currentStudioSelection.type.name)})`;
 
-  // Calculate pricing with extra artwork fees
   const calc = calculateCustomTotal();
   $('teePriceDisplay').textContent = fmt(calc.total);
   if (calc.extraCount > 0) {
-    $('extraArtFeeNotice').textContent = `(يشمل +${fmt(calc.extraFee)} مقابل ${calc.extraCount} رسمات إضافية)`;
+    $('extraArtFeeNotice').textContent = isAr ? `(يشمل +${fmt(calc.extraFee)} مقابل ${calc.extraCount} رسمات إضافية)` : `(Includes +${fmt(calc.extraFee)} for ${calc.extraCount} extra artwork)`;
   } else {
     $('extraArtFeeNotice').textContent = '';
   }
@@ -1021,7 +1015,6 @@ function handleNewArtworkUpload(e) {
   if (!f) return;
   const r = new FileReader();
   r.onload = () => {
-    // Default next position
     const usedPositions = currentStudioSelection.artworks.map(a => a.position);
     const posOrder = ['chest', 'back', 'sleeve_left', 'sleeve_right'];
     const nextPos = posOrder.find(p => !usedPositions.includes(p)) || 'chest';
@@ -1035,7 +1028,7 @@ function handleNewArtworkUpload(e) {
 
     renderStudioAttributes();
     update2DGarment();
-    toast('تمت إضافة الرسمة بنجاح ⚡');
+    toast(currentLang === 'ar' ? 'تمت إضافة الرسمة بنجاح ⚡' : 'Artwork added successfully ⚡');
   };
   r.readAsDataURL(f);
 }
@@ -1043,8 +1036,9 @@ function handleNewArtworkUpload(e) {
 function renderArtworksList() {
   const container = $('artworksContainer');
   if (!container) return;
+  const isAr = currentLang === 'ar';
   if (currentStudioSelection.artworks.length === 0) {
-    container.innerHTML = '<div style="font-size:12px;color:var(--mut);text-align:center;padding:8px">لم تقم بإضافة أي رسمة بعد (الرسمة الأولى مجانية).</div>';
+    container.innerHTML = `<div style="font-size:12px;color:var(--mut);text-align:center;padding:8px">${isAr ? 'لم تقم بإضافة أي رسمة بعد (الرسمة الأولى مجانية).' : 'No artworks added yet (first print is included).'}</div>`;
     return;
   }
   container.innerHTML = currentStudioSelection.artworks.map((art, idx) => `
@@ -1052,14 +1046,14 @@ function renderArtworksList() {
       <img src="${art.dataUrl}" alt="">
       <div style="flex:1">
         <div style="display:flex;justify-content:space-between;align-items:center">
-          <b style="font-size:12px">${idx === 0 ? 'الرسمة 1 (الأساسية):' : `الرسمة ${idx + 1} (+500 دج):`}</b>
-          ${idx > 0 ? '<span class="art-badge-fee">+500 دج</span>' : '<span style="font-size:10px;color:var(--ok);font-weight:700">مشمولة</span>'}
+          <b style="font-size:12px">${isAr ? (idx === 0 ? 'الرسمة 1 (الأساسية):' : `الرسمة ${idx + 1} (+500 دج):`) : (idx === 0 ? 'Art 1 (Included):' : `Art ${idx + 1} (+500 DZD):`)}</b>
+          ${idx > 0 ? '<span class="art-badge-fee">+500 دج</span>' : `<span style="font-size:10px;color:var(--ok);font-weight:700">${isAr ? 'مشمولة' : 'Included'}</span>`}
         </div>
         <select style="min-height:34px;padding:4px 8px;font-size:12px;margin-top:4px" onchange="changeArtworkPos('${art.id}', this.value)">
-          <option value="chest" ${art.position === 'chest' ? 'selected' : ''}>الصدر الأمامي (Front Chest)</option>
-          <option value="back" ${art.position === 'back' ? 'selected' : ''}>الظهر بالكامل (Full Back)</option>
-          <option value="sleeve_left" ${art.position === 'sleeve_left' ? 'selected' : ''}>الكم الأيسر (Left Sleeve)</option>
-          <option value="sleeve_right" ${art.position === 'sleeve_right' ? 'selected' : ''}>الكم الأيمن (Right Sleeve)</option>
+          <option value="chest" ${art.position === 'chest' ? 'selected' : ''}>${isAr ? 'الصدر الأمامي (Front Chest)' : 'Front Chest'}</option>
+          <option value="back" ${art.position === 'back' ? 'selected' : ''}>${isAr ? 'الظهر بالكامل (Full Back)' : 'Full Back'}</option>
+          <option value="sleeve_left" ${art.position === 'sleeve_left' ? 'selected' : ''}>${isAr ? 'الكم الأيسر (Left Sleeve)' : 'Left Sleeve'}</option>
+          <option value="sleeve_right" ${art.position === 'sleeve_right' ? 'selected' : ''}>${isAr ? 'الكم الأيمن (Right Sleeve)' : 'Right Sleeve'}</option>
         </select>
       </div>
       <button class="ic-btn" style="width:30px;height:30px" onclick="removeArtwork('${art.id}')">🗑</button>
@@ -1079,8 +1073,9 @@ function removeArtwork(artId) {
 
 function addCustomToCart() {
   const calc = calculateCustomTotal();
-  const title = `2D Custom ${currentStudioSelection.type.name} (${currentStudioSelection.color.name})`;
-  const artPlacementsSummary = currentStudioSelection.artworks.map((a, i) => `رسمة ${i+1}: ${a.position}`).join(' | ');
+  const isAr = currentLang === 'ar';
+  const title = `2D Custom ${isAr ? currentStudioSelection.type.name : currentStudioSelection.type.nameEn} (${currentStudioSelection.color.name})`;
+  const artPlacementsSummary = currentStudioSelection.artworks.map((a, i) => `${isAr ? 'رسمة' : 'Art'} ${i+1}: ${a.position}`).join(' | ');
 
   cart.push({
     cartId: 'cst_' + Date.now(),
@@ -1095,23 +1090,24 @@ function addCustomToCart() {
   });
 
   saveCart(); renderCart(); closeCustomStudio(); cartOpen(true);
-  toast('تمت إضافة القطعة المخصصة للسلة ⚡');
+  toast(isAr ? 'تمت إضافة القطعة المخصصة للسلة ⚡' : 'Custom piece added to cart ⚡');
 }
 
 /* ============ COUPONS CATALOG & SINGLE USE LOGIC ============ */
 function openCouponsCatalog() {
   const list = $('catalogCouponsList');
   if (!list) return;
+  const isAr = currentLang === 'ar';
   if (couponsCatalog.length === 0) {
-    list.innerHTML = '<div style="text-align:center;padding:16px;color:var(--mut)">لا توجد كوبونات خصم متاحة حالياً.</div>';
+    list.innerHTML = `<div style="text-align:center;padding:16px;color:var(--mut)">${isAr ? 'لا توجد كوبونات خصم متاحة حالياً.' : 'No active coupons available right now.'}</div>`;
   } else {
     list.innerHTML = couponsCatalog.map(c => `
       <div class="coupon-item-card">
         <div>
           <span class="coupon-tag-code">${esc(c.code)}</span>
-          <div style="font-size:11px;color:var(--mut);margin-top:4px">خصم ${c.value}${c.type==='percent'?'%':' دج'} على مجموع السلع</div>
+          <div style="font-size:11px;color:var(--mut);margin-top:4px">${isAr ? `خصم ${c.value}${c.type==='percent'?'%':' دج'} على مجموع السلع` : `${c.value}${c.type==='percent'?'%':' DZD'} discount on items`}</div>
         </div>
-        <button class="btn b-black" style="min-height:34px;padding:0 12px;font-size:11px" onclick="useCouponFromCatalog('${esc(c.code)}')">استخدام الآن</button>
+        <button class="btn b-black" style="min-height:34px;padding:0 12px;font-size:11px" onclick="useCouponFromCatalog('${esc(c.code)}')">${isAr ? 'استخدام الآن' : 'Apply Now'}</button>
       </div>
     `).join('');
   }
@@ -1130,17 +1126,18 @@ function useCouponFromCatalog(code) {
 async function applyCoupon() {
   const code = $('cCouponInput').value.trim().toUpperCase();
   const msg = $('couponMsg');
+  const isAr = currentLang === 'ar';
   if (!code) return;
   if (!db) return toast('Coupon system offline');
   try {
     const q = await db.collection('coupons').where('code', '==', code).limit(1).get();
     if (q.empty || q.docs[0].data().used) {
-      msg.textContent = 'هذا الكوبون غير صالح أو تم استخدامه مسبقاً (صالح لمرة واحدة)';
+      msg.textContent = isAr ? 'هذا الكوبون غير صالح أو تم استخدامه مسبقاً (صالح لمرة واحدة)' : 'Invalid or already used coupon (Single use only)';
       msg.style.color = 'var(--red)'; appliedCoupon = null; totals(); return;
     }
     const d = q.docs[0].data();
     appliedCoupon = { id: q.docs[0].id, code: d.code, value: Number(d.value) || 10, type: d.type || 'percent' };
-    msg.textContent = `✔ تم تفعيل خصم ${appliedCoupon.value}${appliedCoupon.type==='percent'?'%':' دج'} على السلع!`;
+    msg.textContent = isAr ? `✔ تم تفعيل خصم ${appliedCoupon.value}${appliedCoupon.type==='percent'?'%':' دج'} على السلع!` : `✔ ${appliedCoupon.value}${appliedCoupon.type==='percent'?'%':' DZD'} OFF applied on items!`;
     msg.style.color = 'var(--ok)';
     totals();
   } catch (e) { msg.textContent = 'Error'; }
@@ -1153,7 +1150,7 @@ function addPiece(id) {
   if (cart.some(i => i.id === id)) { cartOpen(true); return; }
   const imList = (p.images && p.images.length > 0) ? p.images : (p.image ? [p.image] : ['']);
   cart.push({ cartId: 'c_' + id, id, title: p.title, price: p.price, size: p.size, image: imList[0] || '' });
-  saveCart(); renderCart(); toast('تمت الإضافة للسلة');
+  saveCart(); renderCart(); toast(currentLang === 'ar' ? 'تمت الإضافة للسلة' : 'Added to cart');
 }
 function rmItem(cid) { cart = cart.filter(i => i.cartId !== cid); saveCart(); renderCart(); }
 function renderCart() {
@@ -1162,16 +1159,17 @@ function renderCart() {
   const hasCustom = cart.some(i => i.custom);
   $('cartCcpNotice').classList.toggle('hide', !hasCustom);
 
+  const isAr = currentLang === 'ar';
   $('items').innerHTML = cart.length ? cart.map(i => `
     <div style="display:flex;gap:8px;align-items:center;background:#fff;border:1px solid var(--line);padding:6px;border-radius:4px">
       ${i.custom ? '<div style="font-size:24px">👕</div>' : `<img src="${esc(i.image)}" style="width:40px;height:40px;object-fit:cover;border:1px solid #000;border-radius:4px">`}
       <div style="flex:1">
         <h5 style="font-size:12px">${esc(i.title)}</h5>
-        <small>${esc(i.size)} ${i.custom ? `• ${i.artworksCount || 1} رسمات` : ''}</small><br>
+        <small>${esc(i.size)} ${i.custom ? `• ${i.artworksCount || 1} ${isAr ? 'رسمات' : 'artworks'}` : ''}</small><br>
         <b style="color:var(--red);font-size:13px">${fmt(i.price)}</b>
       </div>
       <button class="ic-btn" style="width:28px;height:28px" onclick="rmItem('${i.cartId}')">🗑</button>
-    </div>`).join('') : '<div style="text-align:center;padding:12px;color:var(--mut);font-size:12px">السلة فارغة</div>';
+    </div>`).join('') : `<div style="text-align:center;padding:12px;color:var(--mut);font-size:12px">${isAr ? 'السلة فارغة' : 'Your cart is empty'}</div>`;
   totals();
 }
 
@@ -1182,7 +1180,6 @@ function totals() {
   const speed = document.querySelector('[name=speed]:checked') ? document.querySelector('[name=speed]:checked').value : 'express';
   const sh = w ? getDeliveryFee(w, mode, speed) : 0;
 
-  // Coupon STRICTLY applies to merchandise subtotal, NEVER affects shipping
   let discount = 0;
   if (appliedCoupon && sub > 0) {
     discount = appliedCoupon.type === 'percent' ? Math.round(sub * (appliedCoupon.value / 100)) : Math.min(sub, appliedCoupon.value);
@@ -1194,7 +1191,7 @@ function totals() {
   const itemsAfterDiscount = Math.max(0, sub - discount);
 
   $('sSub').textContent = fmt(sub);
-  $('sShip').textContent = w ? `${fmt(sh)} (${speed.toUpperCase()})` : 'حدد الولاية';
+  $('sShip').textContent = w ? `${fmt(sh)} (${speed.toUpperCase()})` : (currentLang === 'ar' ? 'حدد الولاية' : 'Select Wilaya');
   $('sTot').textContent = fmt(itemsAfterDiscount + sh);
 }
 
@@ -1202,11 +1199,12 @@ function cartOpen(o) { closeAll(); if (o) { $('cart').classList.add('on'); $('ov
 function closeAll() { document.querySelectorAll('.sheet').forEach(s => s.classList.remove('on')); $('ov').classList.remove('on'); document.body.style.overflow = ''; }
 
 async function sendOrder() {
-  if (!cart.length) return toast('السلة فارغة');
+  const isAr = currentLang === 'ar';
+  if (!cart.length) return toast(isAr ? 'السلة فارغة' : 'Cart is empty');
   const name = $('cName').value.trim(), phone = $('cPhone').value.trim(), w = Number($('cWil').value), com = $('cCom').value.trim();
   const mode = document.querySelector('[name=dm]:checked').value;
   const speed = document.querySelector('[name=speed]:checked').value;
-  if (!name || !phone || !w || !com) return toast('أكمل جميع معلومات الشحن');
+  if (!name || !phone || !w || !com) return toast(isAr ? 'أكمل جميع معلومات الشحن' : 'Fill all shipping fields');
 
   const btn = $('sendBtn'); btn.disabled = true;
   const sub = cart.reduce((a, i) => a + Number(i.price), 0);
@@ -1222,7 +1220,6 @@ async function sendOrder() {
     if (db) {
       const b = db.batch();
       cart.filter(i => !i.custom).forEach(i => b.update(db.collection('products').doc(i.id), { sold: true }));
-      // Invalidate single-use coupon
       if (appliedCoupon) {
         b.update(db.collection('coupons').doc(appliedCoupon.id), { used: true, usedByPhone: phone, usedAt: Date.now() });
       }
@@ -1387,10 +1384,11 @@ function saveSettings() {
 }
 
 /* ============ CATALOG ============ */
-const CATS = [['all','الكل'],['tees','Band Tees'],['boots','Boots'],['jackets','Jackets'],['jeans','Jeans'],['flannels','Flannels']];
+const CATS = [['all','الكل','All'],['tees','Band Tees','Band Tees'],['boots','Boots','Boots'],['jackets','Jackets','Jackets'],['jeans','Jeans','Jeans'],['flannels','Flannels','Flannels']];
 function renderPills() {
-  $('pills').innerHTML = `<button class="pill g ${gender === 'men' ? 'on' : ''}" onclick="setGender('men')">رجال</button><button class="pill g ${gender === 'women' ? 'on' : ''}" onclick="setGender('women')">نساء</button><span class="sep"></span>` +
-    CATS.map(([id, ar]) => `<button class="pill ${cat === id ? 'on' : ''}" onclick="setCat('${id}')">${ar}</button>`).join('');
+  const isAr = currentLang === 'ar';
+  $('pills').innerHTML = `<button class="pill g ${gender === 'men' ? 'on' : ''}" onclick="setGender('men')">${isAr ? 'رجال' : 'Men'}</button><button class="pill g ${gender === 'women' ? 'on' : ''}" onclick="setGender('women')">${isAr ? 'نساء' : 'Women'}</button><span class="sep"></span>` +
+    CATS.map(([id, ar, en]) => `<button class="pill ${cat === id ? 'on' : ''}" onclick="setCat('${id}')">${isAr ? ar : en}</button>`).join('');
 }
 function setGender(g) {
   gender = g;
@@ -1401,7 +1399,8 @@ function setCat(c) { cat = c; renderPills(); renderCatalog(); }
 function renderCatalog() {
   if (!$('grid')) return;
   const list = products.filter(p => (p.gender === 'unisex' || p.gender === gender) && (cat === 'all' || p.category === cat));
-  $('stock').textContent = `${list.filter(p => !p.sold).length} قطع متوفرة`;
+  const isAr = currentLang === 'ar';
+  $('stock').textContent = `${list.filter(p => !p.sold).length} ${isAr ? 'قطع متوفرة' : 'pieces'}`;
   $('sub').textContent = `${gender === 'men' ? 'HOMME' : 'FEMME'} // ${cat.toUpperCase()}`;
   $('empty').classList.toggle('hide', list.length > 0);
   $('grid').innerHTML = list.map(p => {
@@ -1422,11 +1421,88 @@ function renderCatalog() {
             ${p.oldPrice && p.oldPrice > p.price ? `<span class="old-pr">${fmt(p.oldPrice)}</span>` : ''}
             <b class="pr">${fmt(p.price)}</b>
           </div>
-          <button class="add" ${p.sold ? 'disabled' : ''} onclick="addPiece('${p.id}')">${p.sold ? 'SOLD' : '＋ للسلة'}</button>
+          <button class="add" ${p.sold ? 'disabled' : ''} onclick="addPiece('${p.id}')">${p.sold ? 'SOLD' : (isAr ? '＋ للسلة' : '＋ Add')}</button>
         </div>
       </div>
     </article>`;
   }).join('');
+}
+
+/* ============ LANGUAGE SWITCHER (ROBUST & COMPLETE) ============ */
+function toggleLang() {
+  currentLang = currentLang === 'ar' ? 'en' : 'ar';
+  localStorage.setItem('bt_lang', currentLang);
+  applyLanguage();
+}
+
+function applyLanguage() {
+  const isAr = currentLang === 'ar';
+  document.documentElement.lang = isAr ? 'ar' : 'en';
+  document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+
+  // Toggle button label
+  if ($('langBtn')) $('langBtn').textContent = isAr ? 'EN' : 'عربي';
+
+  // Header and Hero
+  if ($('t_brand_sub')) $('t_brand_sub').textContent = isAr ? 'VINTAGE & 2D STUDIO' : 'VINTAGE & 2D STUDIO';
+  if ($('t_hero_tag')) $('t_hero_tag').textContent = isAr ? '★ ARCHIVE VAULT & 2D STUDIO ★' : '★ ARCHIVE VAULT & 2D STUDIO ★';
+  if ($('t_hero_desc')) $('t_hero_desc').textContent = isAr ? 'ملابس فريب أصلية فريدة (1 of 1) + استوديو تخصيص تفاعلي حي متعدد الرسمات' : 'Authentic 1-of-1 Vintage Rock Merch & 2D Multi-Placement Merch Studio';
+  if ($('t_cta_head')) $('t_cta_head').textContent = isAr ? '🎸 صمّم تيشيرتك أو هوديك بعدة رسمات (2D STUDIO)' : '🎸 Design Your Custom Tee / Hoodie (2D Studio)';
+  if ($('t_cta_sub')) $('t_cta_sub').textContent = isAr ? 'معاينة تفاعلية حية، إمكانية اختيار موضع كل رسمة (+500 دج لكل رسمة إضافية)' : 'Live interactive preview, custom placements (+500 DZD per extra artwork)';
+  if ($('t_cta_btn')) $('t_cta_btn').textContent = isAr ? 'دخول الاستوديو ✦' : 'Open Studio ✦';
+  if ($('t_btn_men')) $('t_btn_men').textContent = isAr ? 'HOMME • رجال' : 'MEN • HOMME';
+  if ($('t_btn_women')) $('t_btn_women').textContent = isAr ? 'FEMME • نساء' : 'WOMEN • FEMME';
+
+  // Section
+  if ($('t_sec_head')) $('t_sec_head').textContent = isAr ? 'قطع الأرشيف (1 OF 1)' : 'VAULT ARCHIVE (1 OF 1)';
+  if ($('t_empty')) $('t_empty').textContent = isAr ? 'لا توجد قطع معروضة حالياً' : 'No pieces available right now';
+
+  // Product View Sheet
+  if ($('pvTitle')) $('pvTitle').textContent = isAr ? 'تفاصيل القطعة' : 'Piece Details';
+  if ($('t_pv_desc_lbl')) $('t_pv_desc_lbl').textContent = isAr ? 'الوصف والحالة:' : 'Description & Condition:';
+  if ($('t_pv_back')) $('t_pv_back').textContent = isAr ? 'رجوع' : 'Back';
+
+  // 2D Studio
+  if ($('t_close_studio')) $('t_close_studio').textContent = isAr ? '✕ رجوع للمتجر' : '✕ Back to Vault';
+  if ($('t_lbl_type')) $('t_lbl_type').textContent = isAr ? '1. نوع وموديل القطعة:' : '1. Garment Model:';
+  if ($('t_lbl_col')) $('t_lbl_col').childNodes[0].nodeValue = isAr ? '2. لون القماش: ' : '2. Fabric Color: ';
+  if ($('t_lbl_sz')) $('t_lbl_sz').textContent = isAr ? '3. القياس:' : '3. Size:';
+  if ($('t_art_heading')) $('t_art_heading').textContent = isAr ? '4. رفع الرسمات وتحديد مواضع الطباعة:' : '4. Upload Artworks & Choose Placements:';
+  if ($('t_art_fee_badge')) $('t_art_fee_badge').textContent = isAr ? '+500 دج لكل رسمة إضافية' : '+500 DZD per extra artwork';
+  if ($('t_art_sub')) $('t_art_sub').textContent = isAr ? 'الرسمة الأولى مشمولة في السعر. يمكنك إضافة رسمات أخرى للظهر أو الأكمام.' : 'First print is included in base price. Additional prints available for back & sleeves.';
+  if ($('t_btn_upload')) $('t_btn_upload').childNodes[0].nodeValue = isAr ? '＋ إضافة رسمة جديدة (PNG / JPG) ' : '＋ Add New Artwork (PNG / JPG) ';
+  if ($('t_lbl_note')) $('t_lbl_note').textContent = isAr ? '5. ملاحظات إضافية على التصميم أو المقاس:' : '5. Additional Design / Placement Notes:';
+  if ($('t_btn_add_custom')) $('t_btn_add_custom').textContent = isAr ? '＋ إضافة القطعة المخصصة للسلة' : '＋ Add Custom Piece to Cart';
+
+  // CCP Alert Box
+  if ($('t_ccp_title')) $('t_ccp_title').textContent = isAr ? 'ملاحظة هامة حول دفع البضاعة المخصصة:' : 'Notice Regarding Custom Orders Payment:';
+  if ($('t_ccp_text')) $('t_ccp_text').textContent = isAr ? 'نظراً لأن القطعة يتم تفصيلها وطباعتها خصيصاً لك، يتطلب تأكيد الطلب دفع ثمن السلعة مسبقاً عبر CCP / BaridiMob، مع دفع سعر الشحن فقط عند الاستلام.' : 'Because custom merch is tailor-made and printed specifically for you, confirmation requires upfront payment via CCP / BaridiMob, while delivery fee is paid upon receipt.';
+
+  // Cart
+  if ($('t_fab_cart')) $('t_fab_cart').textContent = isAr ? 'السلة' : 'Cart';
+  if ($('t_cart_head')) $('t_cart_head').textContent = isAr ? 'سلة المشتريات' : 'Shopping Cart';
+  if ($('t_lbl_coupon_rule')) $('t_lbl_coupon_rule').textContent = isAr ? '🎟 كود الخصم (يطبق على السلع فقط ولا يمس الشحن):' : '🎟 Promo Code (Applies to items only):';
+  if ($('t_btn_coupon_catalog')) $('t_btn_coupon_catalog').textContent = isAr ? 'كتالوج الكوبونات ✦' : 'Coupons Catalog ✦';
+  if ($('t_btn_apply_coupon')) $('t_btn_apply_coupon').textContent = isAr ? 'تطبيق' : 'Apply';
+  if ($('t_cart_ccp_title')) $('t_cart_ccp_title').textContent = isAr ? 'تنبيه بخصوص القطع المخصصة في سلتك:' : 'Notice on Custom Items in Your Cart:';
+  if ($('t_cart_ccp_desc')) $('t_cart_ccp_desc').textContent = isAr ? 'يتم دفع ثمن القطع المخصصة (Custom Merch) مسبقاً عبر CCP / BaridiMob للبدء في الطباعة، ومصاريف التوصيل عند الاستلام.' : 'Custom pieces require payment via CCP / BaridiMob to initiate production, shipping is collected upon delivery.';
+  if ($('t_dm_home')) $('t_dm_home').childNodes[1].nodeValue = isAr ? ' لباب المنزل' : ' Home Delivery';
+  if ($('t_dm_desk')) $('t_dm_desk').childNodes[1].nodeValue = isAr ? ' مكتب Stop-Desk' : ' Stop-Desk Pickup';
+  if ($('t_s_sub')) $('t_s_sub').textContent = isAr ? 'مجموع السلع' : 'Items Subtotal';
+  if ($('t_s_disc')) $('t_s_disc').textContent = isAr ? 'خصم الكوبون (السلع فقط)' : 'Coupon Discount (Items)';
+  if ($('t_s_ship')) $('t_s_ship').textContent = isAr ? 'التوصيل (طرد Guepex موحد)' : 'Shipping (Unified Guepex)';
+  if ($('t_s_tot')) $('t_s_tot').textContent = isAr ? 'المجموع الإجمالي' : 'Total Due';
+  if ($('sendBtn')) $('sendBtn').textContent = isAr ? '💬 تأكيد الطلبية عبر واتساب' : '💬 Confirm Order via WhatsApp';
+
+  // Coupons Catalog Modal
+  if ($('t_coupons_cat_head')) $('t_coupons_cat_head').textContent = isAr ? '🎟 كتالوج الكوبونات والعروض' : '🎟 Available Coupons Catalog';
+  if ($('t_coupons_cat_sub')) $('t_coupons_cat_sub').textContent = isAr ? 'الكوبونات صالحة للاستخدام لمرة واحدة فقط وتُخصم حصراً من مجموع السلع دون التأثير على سعر الشحن.' : 'Coupons are single-use only and deducted strictly from items subtotal without affecting shipping.';
+
+  renderPills();
+  renderCatalog();
+  renderStudioAttributes();
+  renderCart();
+  update2DGarment();
 }
 
 /* ============ YOUTUBE ROCK PLAYER ============ */
@@ -1452,10 +1528,7 @@ function musicVol(v) { if (ytReady) yt.setVolume(Number(v)); }
 /* ============ INITIAL LOAD ============ */
 document.addEventListener('DOMContentLoaded', () => {
   $('cWil').innerHTML = '<option value="" disabled selected>-- الولاية / Wilaya --</option>' + WIL.map((w, i) => `<option value="${i + 1}">${String(i + 1).padStart(2, '0')} - ${w.split('|')[0]}</option>`).join('');
-  renderPills();
-  renderCatalog();
-  renderCart();
-  renderStudioAttributes();
+  applyLanguage();
   loadAdminData();
 });
 </script>

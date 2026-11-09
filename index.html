@@ -3,20 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Backstage Thrift | Vintage & Grunge Apparel</title>
+  <title>Backstage Thrift | Vintage & Grunge Archives</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --bg-dark: #0a0a0a;
-      --card-bg: #141414;
-      --accent-red: #c02626;
-      --accent-hover: #e02828;
-      --text-main: #f3f3f3;
-      --text-muted: #9e9e9e;
-      --border-color: #272727;
-      --font-heading: 'Cinzel', serif;
+      --bg: #09090b;
+      --card-bg: #121215;
+      --card-border: #222227;
+      --accent: #dc2626;
+      --accent-hover: #b91c1c;
+      --text: #f4f4f5;
+      --muted: #a1a1aa;
+      --font-display: 'Cinzel', serif;
       --font-body: 'Space Grotesk', sans-serif;
     }
 
@@ -27,249 +28,336 @@
     }
 
     body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
+      background-color: var(--bg);
+      color: var(--text);
       font-family: var(--font-body);
-      line-height: 1.6;
-      background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
-      background-size: 24px 24px;
+      line-height: 1.5;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 0);
+      background-size: 20px 20px;
     }
 
+    /* Header & Navigation */
     header {
-      border-bottom: 1px solid var(--border-color);
-      padding: 1.25rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(10, 10, 10, 0.95);
       position: sticky;
       top: 0;
       z-index: 50;
+      background: rgba(9, 9, 11, 0.95);
+      border-bottom: 1px solid var(--card-border);
       backdrop-filter: blur(8px);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .logo {
-      font-family: var(--font-heading);
-      font-size: 1.6rem;
+    .brand-logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
       font-weight: 900;
       letter-spacing: 2px;
-      color: var(--text-main);
+      color: var(--text);
       text-transform: uppercase;
       text-decoration: none;
     }
 
-    .logo span {
-      color: var(--accent-red);
+    .brand-logo span {
+      color: var(--accent);
     }
 
-    .nav-links a {
-      color: var(--text-muted);
+    .nav-actions {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+    }
+
+    .nav-actions a, .cart-trigger {
+      color: var(--muted);
       text-decoration: none;
-      margin-left: 1.5rem;
-      font-weight: 500;
-      transition: color 0.2s ease;
+      font-weight: 600;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 0.95rem;
+      font-family: var(--font-body);
+      transition: color 0.2s;
     }
 
-    .nav-links a:hover {
-      color: var(--text-main);
+    .nav-actions a:hover, .cart-trigger:hover {
+      color: var(--text);
     }
 
+    /* Hero */
     .hero {
-      padding: 4rem 2rem;
       text-align: center;
-      border-bottom: 1px solid var(--border-color);
-      background: linear-gradient(180deg, rgba(192, 38, 38, 0.08) 0%, transparent 100%);
+      padding: 4rem 1.5rem 3rem;
+      border-bottom: 1px solid var(--card-border);
+      background: linear-gradient(180deg, rgba(220, 38, 38, 0.08) 0%, transparent 100%);
     }
 
     .hero h1 {
-      font-family: var(--font-heading);
-      font-size: 2.8rem;
-      text-transform: uppercase;
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.2rem);
       letter-spacing: 3px;
-      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
     }
 
     .hero p {
-      color: var(--text-muted);
-      font-size: 1.1rem;
+      color: var(--muted);
       max-width: 600px;
-      margin: 0 auto;
+      margin: 0 auto 1.5rem;
     }
 
-    .main-container {
+    .hero-badge {
+      display: inline-block;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Layout */
+    .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 3rem 1.5rem;
     }
 
-    .section-title {
-      font-family: var(--font-heading);
-      font-size: 1.8rem;
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
       margin-bottom: 2rem;
-      letter-spacing: 1px;
-      border-left: 4px solid var(--accent-red);
+      border-left: 3px solid var(--accent);
       padding-left: 1rem;
     }
 
-    .products-grid {
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    /* Products Grid */
+    .catalog-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 2rem;
+      gap: 1.75rem;
+      margin-bottom: 4rem;
     }
 
     .product-card {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
       border-radius: 4px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      transition: transform 0.2s, border-color 0.2s;
     }
 
     .product-card:hover {
       transform: translateY(-4px);
-      border-color: #444;
+      border-color: #3f3f46;
     }
 
-    .product-image {
+    .product-thumb {
       width: 100%;
       height: 320px;
       object-fit: cover;
-      background-color: #1e1e1e;
+      background: #18181b;
     }
 
-    .product-details {
+    .product-body {
       padding: 1.25rem;
-      flex-grow: 1;
       display: flex;
       flex-direction: column;
+      flex-grow: 1;
       justify-content: space-between;
     }
 
-    .product-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-
-    .product-price {
-      font-size: 1.2rem;
-      color: var(--accent-red);
-      font-weight: 700;
+    .product-meta {
       margin-bottom: 1rem;
     }
 
+    .product-tag {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .product-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0.25rem 0;
+    }
+
+    .product-price {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 1.15rem;
+    }
+
+    /* Buttons & Inputs */
     .btn {
-      background-color: var(--accent-red);
+      background: var(--accent);
       color: #fff;
       border: none;
       padding: 0.75rem 1.25rem;
-      font-family: var(--font-body);
       font-weight: 700;
+      font-family: var(--font-body);
       text-transform: uppercase;
       letter-spacing: 1px;
       cursor: pointer;
       border-radius: 2px;
-      transition: background-color 0.2s ease;
       width: 100%;
+      transition: background 0.2s;
     }
 
     .btn:hover {
-      background-color: var(--accent-hover);
+      background: var(--accent-hover);
     }
 
     .btn-secondary {
       background: transparent;
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
+      border: 1px solid var(--card-border);
+      color: var(--text);
     }
 
     .btn-secondary:hover {
-      background: #222;
-      border-color: #555;
+      background: #1f1f23;
+      border-color: #52525b;
     }
 
-    /* Modal Styling */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(4px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 100;
-    }
-
-    .modal-box {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      padding: 2rem;
-      width: 90%;
-      max-width: 420px;
-      border-radius: 4px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-
-    .modal-box h3 {
-      font-family: var(--font-heading);
-      margin-bottom: 1.5rem;
-      font-size: 1.4rem;
-      text-align: center;
-    }
-
-    .input-field {
+    .input-box {
       width: 100%;
-      background: #0d0d0d;
-      border: 1px solid var(--border-color);
+      background: #09090b;
+      border: 1px solid var(--card-border);
       padding: 0.75rem 1rem;
-      color: var(--text-main);
+      color: var(--text);
       font-family: var(--font-body);
-      font-size: 0.95rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.85rem;
       border-radius: 2px;
     }
 
-    .input-field:focus {
+    .input-box:focus {
       outline: none;
-      border-color: var(--accent-red);
+      border-color: var(--accent);
     }
 
-    /* Secured Admin Panel */
-    #admin-panel {
-      display: none !important;
-      border-top: 2px solid var(--accent-red);
-      background: #0f0f0f;
-      padding: 3rem 1.5rem;
-      margin-top: 4rem;
+    /* Custom Design Studio Box */
+    .custom-lab {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 4px;
+      padding: 2.5rem;
+      margin-bottom: 4rem;
     }
 
-    .admin-header {
+    .custom-lab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    /* Cart Sidebar */
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 100%;
+      max-width: 440px;
+      height: 100vh;
+      background: #0f0f12;
+      border-left: 1px solid var(--card-border);
+      box-shadow: -8px 0 24px rgba(0,0,0,0.7);
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      transition: right 0.3s ease;
+      overflow-y: auto;
+    }
+
+    .cart-drawer.active {
+      right: 0;
+    }
+
+    .cart-items-wrapper {
+      flex-grow: 1;
+      margin: 1.5rem 0;
+    }
+
+    .cart-item-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .remove-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .remove-btn:hover {
+      color: var(--accent);
+    }
+
+    /* Modal dialog */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(5px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+    }
+
+    .modal-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 2rem;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 4px;
+    }
+
+    /* Protected Admin View */
+    #admin-panel {
+      display: none !important;
+      background: #0d0d0f;
+      border-top: 2px solid var(--accent);
+      padding: 3rem 1.5rem;
+      margin-top: 5rem;
     }
 
     .admin-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 1.5rem;
+      margin-top: 1rem;
     }
 
     .admin-table th, .admin-table td {
-      border: 1px solid var(--border-color);
-      padding: 0.75rem 1rem;
+      border: 1px solid var(--card-border);
+      padding: 0.75rem;
       text-align: left;
     }
 
     .admin-table th {
-      background-color: #1a1a1a;
-      color: var(--text-muted);
+      background: #18181b;
+      color: var(--muted);
     }
   </style>
 </head>
@@ -277,181 +365,434 @@
 
   <!-- Navigation -->
   <header>
-    <a href="#" class="logo">Backstage <span>Thrift</span></a>
-    <nav class="nav-links">
-      <a href="#catalog">Collection</a>
-      <a href="#custom">Custom Lab</a>
-    </nav>
+    <a href="#" class="brand-logo">Backstage <span>Thrift</span></a>
+    <div class="nav-actions">
+      <a href="#catalog">Archives</a>
+      <a href="#custom-studio">Custom Studio</a>
+      <a href="https://instagram.com/backstage_thrift.dz" target="_blank" rel="noopener">@backstage_thrift.dz</a>
+      <button class="cart-trigger" id="open-cart-btn">Cart (<span id="cart-count">0</span>)</button>
+    </div>
   </header>
 
-  <!-- Hero Banner -->
+  <!-- Hero Section -->
   <section class="hero">
-    <h1>Rock & Grunge Archives</h1>
-    <p>Authentic 1-of-1 vintage picks, graphic hoodies, and custom streetwear.</p>
+    <div class="hero-badge">Est. Algeria • Rock & Alternative Fashion</div>
+    <h1 style="margin-top: 1rem;">Vintage Grunge & Custom Apparel</h1>
+    <p>1-of-1 hand-picked vintage denim, heavy graphic hoodies, boots, and customized rock aesthetic streetwear.</p>
   </section>
 
-  <!-- Public Catalog -->
-  <main class="main-container" id="catalog">
-    <h2 class="section-title">Latest Drops</h2>
-    <div class="products-grid" id="products-container">
-      <p style="color: var(--text-muted);">Loading archives...</p>
+  <!-- Main Container -->
+  <main class="container">
+    
+    <!-- Catalog Section -->
+    <div class="section-header" id="catalog">
+      <div>
+        <div style="font-size: 0.8rem; color: var(--accent); font-weight: 700; text-transform: uppercase;">Curated Drops</div>
+        <h2 class="section-title">The Archive</h2>
+      </div>
     </div>
+    <div class="catalog-grid" id="catalog-container">
+      <p style="color: var(--muted);">Loading collections...</p>
+    </div>
+
+    <!-- Custom Studio -->
+    <section class="custom-lab" id="custom-studio">
+      <div class="section-header" style="border-left-color: #fff; margin-bottom: 1.5rem;">
+        <div>
+          <div style="font-size: 0.8rem; color: var(--muted); font-weight: 700; text-transform: uppercase;">Made to Order</div>
+          <h2 class="section-title">Custom Graphic Studio</h2>
+        </div>
+      </div>
+      <div class="custom-lab-grid">
+        <div>
+          <p style="color: var(--muted); margin-bottom: 1.5rem;">
+            Order your own customized rock, band, or grunge graphic tee or hoodie. Choose size, cut, and upload your design asset.
+          </p>
+          <form id="custom-apparel-form">
+            <select class="input-box" id="custom-apparel-type">
+              <option value="Vintage Washed T-Shirt (2800 DZD)">Vintage Heavyweight Tee - 2800 DZD</option>
+              <option value="Distressed Oversized Hoodie (4800 DZD)">Heavy Distressed Hoodie - 4800 DZD</option>
+            </select>
+            <select class="input-box" id="custom-apparel-size">
+              <option value="M">Size Medium (Boxy Fit)</option>
+              <option value="L">Size Large (Oversized)</option>
+              <option value="XL">Size XL (Vintage Drop Shoulder)</option>
+            </select>
+            <input type="text" class="input-box" id="custom-graphic-title" placeholder="Design / Band Name (e.g., Nirvana In Utero Backprint)" required />
+            <input type="url" class="input-box" id="custom-graphic-link" placeholder="Direct Image Link / Design File Link" required />
+            <button type="submit" class="btn">Add Custom Piece to Cart</button>
+          </form>
+        </div>
+        <div style="border: 1px dashed var(--card-border); padding: 2rem; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+          <h4 style="font-family: var(--font-display); margin-bottom: 0.5rem;">58 Wilayas Fast Delivery</h4>
+          <p style="color: var(--muted); font-size: 0.9rem;">
+            Shipped via Guepex. Pay in cash when your piece arrives at your door or local desk.
+          </p>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- Hidden Secure Admin Login Modal (Triggered by Ctrl+Shift+A) -->
+  <!-- Cart Sidebar Drawer -->
+  <aside class="cart-drawer" id="cart-drawer">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 1rem;">
+      <h3 style="font-family: var(--font-display);">Your Haul</h3>
+      <button class="remove-btn" id="close-cart-btn">&times;</button>
+    </div>
+
+    <div class="cart-items-wrapper" id="cart-items-wrapper">
+      <p style="color: var(--muted); font-size: 0.9rem;">Your cart is empty.</p>
+    </div>
+
+    <div style="border-top: 1px solid var(--card-border); padding-top: 1rem;">
+      <h4 style="font-family: var(--font-display); font-size: 0.95rem; margin-bottom: 0.75rem;">Guepex Shipping & Checkout</h4>
+      <input type="text" id="order-customer-name" class="input-box" placeholder="Full Name" required />
+      <input type="tel" id="order-customer-phone" class="input-box" placeholder="Phone Number (e.g., 0697...)" required />
+      
+      <select class="input-box" id="order-wilaya" onchange="calculateGuepexRate()">
+        <option value="">Select Delivery Wilaya (1-58)</option>
+        <option value="16 - Algiers">16 - Alger</option>
+        <option value="21 - Skikda">21 - Skikda</option>
+        <option value="25 - Constantine">25 - Constantine</option>
+        <option value="31 - Oran">31 - Oran</option>
+        <option value="23 - Annaba">23 - Annaba</option>
+        <option value="09 - Blida">09 - Blida</option>
+        <option value="06 - Bejaia">06 - Béjaïa</option>
+        <option value="15 - Tizi Ouzou">15 - Tizi Ouzou</option>
+        <option value="Other">Other 58 Wilayas (Standard)</option>
+      </select>
+
+      <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+        <label style="font-size: 0.85rem; display: flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+          <input type="radio" name="delivery-mode" value="home" checked onchange="calculateGuepexRate()" /> Home (Domicile)
+        </label>
+        <label style="font-size: 0.85rem; display: flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+          <input type="radio" name="delivery-mode" value="desk" onchange="calculateGuepexRate()" /> Stop-Desk (Bureau)
+        </label>
+      </div>
+
+      <div style="background: #141417; padding: 0.75rem; border: 1px solid var(--card-border); margin-bottom: 1rem; font-size: 0.9rem;">
+        <div style="display: flex; justify-content: space-between;"><span>Subtotal:</span> <span id="cart-subtotal">0 DZD</span></div>
+        <div style="display: flex; justify-content: space-between;"><span>Shipping:</span> <span id="cart-shipping">0 DZD</span></div>
+        <div style="display: flex; justify-content: space-between; font-weight: 700; color: var(--accent); margin-top: 0.4rem; border-top: 1px solid var(--card-border); padding-top: 0.4rem;">
+          <span>Total (COD):</span> <span id="cart-grandtotal">0 DZD</span>
+        </div>
+      </div>
+
+      <button class="btn" id="confirm-order-btn">Submit Order via WhatsApp</button>
+    </div>
+  </aside>
+
+  <!-- Secret Login Modal (Triggered by Ctrl+Shift+A) -->
   <div class="modal-overlay" id="admin-auth-modal">
-    <div class="modal-box">
-      <h3>Admin Sign In</h3>
-      <form id="admin-login-form">
-        <input type="email" id="admin-login-email" class="input-field" placeholder="Admin Email" autocomplete="username" required />
-        <input type="password" id="admin-login-password" class="input-field" placeholder="Password" autocomplete="current-password" required />
+    <div class="modal-card">
+      <h3 style="font-family: var(--font-display); margin-bottom: 1rem;">Backstage Terminal</h3>
+      <form id="admin-auth-form">
+        <input type="email" id="admin-auth-email" class="input-box" placeholder="Admin Email" autocomplete="username" required />
+        <input type="password" id="admin-auth-password" class="input-box" placeholder="Password" autocomplete="current-password" required />
         <button type="submit" class="btn">Authenticate</button>
       </form>
-      <p id="admin-auth-error" style="color: var(--accent-red); display: none; margin-top: 1rem; font-size: 0.9rem; text-align: center;"></p>
-      <button type="button" id="close-modal-btn" class="btn btn-secondary" style="margin-top: 0.5rem;">Cancel</button>
+      <p id="admin-auth-err" style="color: var(--accent); display: none; font-size: 0.85rem; margin-top: 0.75rem; text-align: center;"></p>
+      <button class="btn btn-secondary" id="close-auth-modal-btn" style="margin-top: 0.5rem;">Cancel</button>
     </div>
   </div>
 
-  <!-- Locked Admin Control Panel -->
+  <!-- Locked Admin Dashboard (Restricted to authenticated Firebase UID) -->
   <section id="admin-panel">
-    <div class="main-container">
-      <div class="admin-header">
-        <h2 class="section-title" style="margin-bottom: 0;">Backstage Control Room</h2>
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h2 class="section-title">Store Management Dashboard</h2>
         <button id="admin-logout-btn" class="btn btn-secondary" style="width: auto;">Log Out</button>
       </div>
 
-      <!-- Add New Product -->
-      <div style="background: var(--card-bg); border: 1px solid var(--border-color); padding: 1.5rem; margin-bottom: 2rem;">
-        <h3 style="margin-bottom: 1rem;">Add Inventory Drop</h3>
-        <form id="add-product-form" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-          <input type="text" id="new-item-title" class="input-field" placeholder="Product Title (e.g., Vintage Levi's 501)" required />
-          <input type="number" id="new-item-price" class="input-field" placeholder="Price (DZD)" required />
-          <input type="url" id="new-item-image" class="input-field" placeholder="Image Direct URL" required />
-          <button type="submit" class="btn">Upload Item</button>
+      <!-- Add 1-of-1 Drop Form -->
+      <div style="background: var(--card-bg); border: 1px solid var(--card-border); padding: 1.5rem; margin-bottom: 2rem;">
+        <h3 style="font-family: var(--font-display); margin-bottom: 1rem;">Add New 1-of-1 Drop</h3>
+        <form id="create-product-form" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+          <input type="text" id="add-title" class="input-box" placeholder="Title (e.g. Levi's 517 Bootcut 32x32)" required />
+          <input type="number" id="add-price" class="input-box" placeholder="Price (DZD)" required />
+          <input type="text" id="add-tag" class="input-box" placeholder="Tag (e.g. Denim, Boots, Outerwear)" required />
+          <input type="url" id="add-img" class="input-box" placeholder="Image URL" required />
+          <button type="submit" class="btn">Publish Piece</button>
         </form>
       </div>
 
-      <!-- Order Management -->
-      <h3>Recent Customer Orders</h3>
+      <!-- Realtime Orders -->
+      <h3 style="font-family: var(--font-display); margin-bottom: 0.75rem;">Received Orders</h3>
       <table class="admin-table">
         <thead>
           <tr>
-            <th>Order ID</th>
             <th>Customer</th>
             <th>Phone</th>
             <th>Wilaya</th>
-            <th>Status</th>
+            <th>Items</th>
+            <th>Total Amount</th>
           </tr>
         </thead>
-        <tbody id="admin-orders-list">
-          <tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No pending orders.</td></tr>
+        <tbody id="orders-table-body">
+          <tr><td colspan="5" style="color: var(--muted); text-align: center;">No orders recorded.</td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
-  <!-- Modular Firebase Application Logic -->
+  <!-- Modular Firebase & Store Logic -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, collection, getDocs, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-    // 1. Firebase Configuration (Safe for client browsers)
+    // 1. Firebase Exact Production Project Config
     const firebaseConfig = {
-      apiKey: "AIzaSy...", // Your Firebase Web API Key
+      apiKey: "AIzaSyAfBwswaphXEWocZholBZCGwuj2q5LJ0kQ",
       authDomain: "backstage-thrift-a4e79.firebaseapp.com",
+      databaseURL: "https://backstage-thrift-a4e79-default-rtdb.europe-west1.firebasedatabase.app",
       projectId: "backstage-thrift-a4e79",
-      storageBucket: "backstage-thrift-a4e79.appspot.com",
-      appId: "1:..."
+      storageBucket: "backstage-thrift-a4e79.firebasestorage.app",
+      messagingSenderId: "65548238073",
+      appId: "1:65548238073:web:2fb37229f9f0021957b628"
     };
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const auth = getAuth(app);
 
-    // PASTE YOUR AUTHENTICATION USER UID HERE FROM FIREBASE CONSOLE
-    const OWNER_UID = "PASTE_YOUR_FIREBASE_AUTH_UID_HERE";
+    // Exact Owner UID for Backstage Thrift Admin
+    const OWNER_UID = "kgKTF8mZ36e1f0mscNx6qLXSeI73";
 
-    // 2. Load Public Products from Firestore
-    async function fetchCatalog() {
-      const container = document.getElementById("products-container");
+    // 2. Cart State & Guepex Calculator
+    let cart = [];
+    let shippingCost = 0;
+
+    window.calculateGuepexRate = function() {
+      const wilaya = document.getElementById("order-wilaya").value;
+      const isHome = document.querySelector('input[name="delivery-mode"]:checked').value === "home";
+      
+      if (!wilaya) {
+        shippingCost = 0;
+      } else if (wilaya.includes("Skikda")) {
+        shippingCost = isHome ? 400 : 250;
+      } else if (wilaya.includes("Alger") || wilaya.includes("Constantine") || wilaya.includes("Annaba")) {
+        shippingCost = isHome ? 600 : 400;
+      } else {
+        shippingCost = isHome ? 800 : 500;
+      }
+      renderCart();
+    };
+
+    function renderCart() {
+      const wrapper = document.getElementById("cart-items-wrapper");
+      document.getElementById("cart-count").innerText = cart.length;
+
+      if (cart.length === 0) {
+        wrapper.innerHTML = `<p style="color: var(--muted); font-size: 0.9rem;">Your cart is empty.</p>`;
+        document.getElementById("cart-subtotal").innerText = "0 DZD";
+        document.getElementById("cart-shipping").innerText = "0 DZD";
+        document.getElementById("cart-grandtotal").innerText = "0 DZD";
+        return;
+      }
+
+      wrapper.innerHTML = "";
+      let subtotal = 0;
+      cart.forEach((item, index) => {
+        subtotal += item.price;
+        wrapper.innerHTML += `
+          <div class="cart-item-row">
+            <div>
+              <div style="font-weight: 700; font-size: 0.95rem;">${item.title}</div>
+              <div style="color: var(--accent); font-size: 0.85rem;">${item.price} DZD</div>
+            </div>
+            <button class="remove-btn" onclick="removeFromCart(${index})">&times;</button>
+          </div>
+        `;
+      });
+
+      document.getElementById("cart-subtotal").innerText = `${subtotal} DZD`;
+      document.getElementById("cart-shipping").innerText = `${shippingCost} DZD`;
+      document.getElementById("cart-grandtotal").innerText = `${subtotal + shippingCost} DZD`;
+    }
+
+    window.removeFromCart = function(index) {
+      cart.splice(index, 1);
+      renderCart();
+    };
+
+    window.addToCart = function(title, price) {
+      cart.push({ title, price: Number(price) });
+      renderCart();
+      document.getElementById("cart-drawer").classList.add("active");
+    };
+
+    // 3. Load Catalog from Firestore
+    async function loadCatalog() {
+      const container = document.getElementById("catalog-container");
       try {
-        const snapshot = await getDocs(collection(db, "products"));
-        if (snapshot.empty) {
-          container.innerHTML = `<p style="color: var(--text-muted);">No drops active right now. Check back soon.</p>`;
+        const querySnapshot = await getDocs(collection(db, "products"));
+        if (querySnapshot.empty) {
+          container.innerHTML = `<p style="color: var(--muted);">No archive items currently posted. Stay tuned on Instagram.</p>`;
           return;
         }
         container.innerHTML = "";
-        snapshot.forEach((doc) => {
-          const item = doc.data();
+        querySnapshot.forEach((docSnap) => {
+          const item = docSnap.data();
           container.innerHTML += `
             <div class="product-card">
-              <img src="${item.imageUrl || 'https://via.placeholder.com/300'}" alt="${item.title}" class="product-image">
-              <div class="product-details">
-                <div>
+              <img src="${item.imageUrl || 'https://via.placeholder.com/300'}" alt="${item.title}" class="product-thumb">
+              <div class="product-body">
+                <div class="product-meta">
+                  <span class="product-tag">${item.tag || 'Vintage Archive'}</span>
                   <div class="product-title">${item.title}</div>
                   <div class="product-price">${item.price} DZD</div>
                 </div>
-                <button class="btn" onclick="alert('Order received for ${item.title}')">Order Piece</button>
+                <button class="btn" onclick="addToCart('${item.title.replace(/'/g, "\\'")}', ${item.price})">Add to Haul</button>
               </div>
             </div>
           `;
         });
-      } catch (err) {
-        container.innerHTML = `<p style="color: var(--text-muted);">Failed to load catalog.</p>`;
+      } catch (e) {
+        container.innerHTML = `<p style="color: var(--muted);">Catalog sync error. Reload page.</p>`;
       }
     }
-    fetchCatalog();
+    loadCatalog();
 
-    // 3. Admin Authentication & State Observer
+    // Custom Graphic Studio submission
+    document.getElementById("custom-apparel-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const type = document.getElementById("custom-apparel-type").value;
+      const size = document.getElementById("custom-apparel-size").value;
+      const design = document.getElementById("custom-graphic-title").value;
+      const link = document.getElementById("custom-graphic-link").value;
+      const price = type.includes("2800") ? 2800 : 4800;
+
+      const title = `Custom: ${design} (${size}) [Asset: ${link}]`;
+      addToCart(title, price);
+      e.target.reset();
+    });
+
+    // 4. WhatsApp Order Submission
+    document.getElementById("confirm-order-btn").addEventListener("click", async () => {
+      if (cart.length === 0) return alert("Cart is empty.");
+      const name = document.getElementById("order-customer-name").value.trim();
+      const phone = document.getElementById("order-customer-phone").value.trim();
+      const wilaya = document.getElementById("order-wilaya").value;
+      const mode = document.querySelector('input[name="delivery-mode"]:checked').value;
+
+      if (!name || !phone || !wilaya) return alert("Please fill in your delivery details.");
+
+      let subtotal = cart.reduce((acc, cur) => acc + cur.price, 0);
+      const total = subtotal + shippingCost;
+
+      // Save order to Firestore
+      try {
+        await addDoc(collection(db, "orders"), {
+          customerName: name,
+          phone,
+          wilaya,
+          deliveryMode: mode,
+          items: cart,
+          totalAmount: total,
+          createdAt: new Date().toISOString()
+        });
+      } catch (err) {
+        console.warn("Firestore order log bypassed");
+      }
+
+      // WhatsApp redirection (0697783635)
+      const itemsList = cart.map(i => `• ${i.title} (${i.price} DZD)`).join("\n");
+      const msg = `⚡ *NEW ORDER - BACKSTAGE THRIFT*\n\n*Customer:* ${name}\n*Phone:* ${phone}\n*Wilaya:* ${wilaya} (${mode.toUpperCase()})\n\n*Pieces:*\n${itemsList}\n\n*Subtotal:* ${subtotal} DZD\n*Shipping:* ${shippingCost} DZD\n*Total Due (COD):* ${total} DZD`;
+
+      window.open(`https://wa.me/213697783635?text=${encodeURIComponent(msg)}`, "_blank");
+    });
+
+    // UI Drawer handlers
+    document.getElementById("open-cart-btn").onclick = () => document.getElementById("cart-drawer").classList.add("active");
+    document.getElementById("close-cart-btn").onclick = () => document.getElementById("cart-drawer").classList.remove("active");
+
+    // 5. Protected Admin Session Handling
     const adminPanel = document.getElementById("admin-panel");
     const authModal = document.getElementById("admin-auth-modal");
-    const loginForm = document.getElementById("admin-login-form");
-    const authError = document.getElementById("admin-auth-error");
+    const authForm = document.getElementById("admin-auth-form");
+    const authErr = document.getElementById("admin-auth-err");
 
     onAuthStateChanged(auth, (user) => {
       if (user && user.uid === OWNER_UID) {
         adminPanel.style.setProperty("display", "block", "important");
         authModal.style.display = "none";
+        listenToOrders();
       } else {
         adminPanel.style.setProperty("display", "none", "important");
       }
     });
 
-    // Login Form Handler
-    loginForm.addEventListener("submit", async (e) => {
+    authForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      authError.style.display = "none";
-      const email = document.getElementById("admin-login-email").value.trim();
-      const password = document.getElementById("admin-login-password").value;
+      authErr.style.display = "none";
+      const email = document.getElementById("admin-auth-email").value.trim();
+      const pass = document.getElementById("admin-auth-password").value;
 
       try {
-        const cred = await signInWithEmailAndPassword(auth, email, password);
+        const cred = await signInWithEmailAndPassword(auth, email, pass);
         if (cred.user.uid !== OWNER_UID) {
           await signOut(auth);
-          throw new Error("Unauthorized account");
+          throw new Error("Unauthorized");
         }
-        loginForm.reset();
+        authForm.reset();
       } catch (err) {
-        authError.textContent = "Access denied: Unauthorized credentials.";
-        authError.style.display = "block";
+        authErr.innerText = "Invalid credentials. Unauthorized access prohibited.";
+        authErr.style.display = "block";
       }
     });
 
-    // Log Out
-    document.getElementById("admin-logout-btn").addEventListener("click", () => signOut(auth));
+    document.getElementById("admin-logout-btn").onclick = () => signOut(auth);
 
-    // Secret Keybind: Press Ctrl + Shift + A to reveal the login screen
+    // Keyboard trigger: Ctrl + Shift + A
     window.addEventListener("keydown", (e) => {
       if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "a") {
         e.preventDefault();
         authModal.style.display = authModal.style.display === "flex" ? "none" : "flex";
       }
     });
+    document.getElementById("close-auth-modal-btn").onclick = () => authModal.style.display = "none";
 
-    document.getElementById("close-modal-btn").addEventListener("click", () => {
-      authModal.style.display = "none";
+    // Admin: Create product item
+    document.getElementById("create-product-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const title = document.getElementById("add-title").value.trim();
+      const price = Number(document.getElementById("add-price").value);
+      const tag = document.getElementById("add-tag").value.trim();
+      const imageUrl = document.getElementById("add-img").value.trim();
+
+      await addDoc(collection(db, "products"), { title, price, tag, imageUrl });
+      alert("Drop added successfully.");
+      e.target.reset();
+      loadCatalog();
     });
+
+    // Admin: Live orders feed
+    function listenToOrders() {
+      onSnapshot(collection(db, "orders"), (snap) => {
+        const tbody = document.getElementById("orders-table-body");
+        if (snap.empty) {
+          tbody.innerHTML = `<tr><td colspan="5" style="color: var(--muted); text-align: center;">No orders recorded.</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = "";
+        snap.forEach((doc) => {
+          const o = doc.data();
+          const itemsStr = (o.items || []).map(i => i.title).join(", ");
+          tbody.innerHTML += `
+            <tr>
+              <td>${o.customerName || 'N/A'}</td>
+              <td>${o.phone || 'N/A'}</td>
+              <td>${o.wilaya || 'N/A'}</td>
+              <td>${itemsStr}</td>
+              <td style="color: var(--accent); font-weight: 700;">${o.totalAmount || 0} DZD</td>
+            </tr>
+          `;
+        });
+      });
+    }
   </script>
 </body>
 </html>

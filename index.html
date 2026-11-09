@@ -1474,7 +1474,7 @@ function renderCatalog() {
   }).join('');
 }
 
-/* ============ LANGUAGE SWITCHER (ROBUST & COMPLETE) ============ */
+/* ============ LANGUAGE SWITCHER ============ */
 function toggleLang() {
   currentLang = currentLang === 'ar' ? 'en' : 'ar';
   localStorage.setItem('bt_lang', currentLang);
@@ -1486,29 +1486,20 @@ function applyLanguage() {
   document.documentElement.lang = isAr ? 'ar' : 'en';
   document.documentElement.dir = isAr ? 'rtl' : 'ltr';
 
-  // Toggle button label
   if ($('langBtn')) $('langBtn').textContent = isAr ? 'EN' : 'عربي';
-
-  // Header and Hero
-  if ($('t_brand_sub')) $('t_brand_sub').textContent = isAr ? 'VINTAGE & 2D STUDIO' : 'VINTAGE & 2D STUDIO';
-  if ($('t_hero_tag')) $('t_hero_tag').textContent = isAr ? '★ ARCHIVE VAULT & 2D STUDIO ★' : '★ ARCHIVE VAULT & 2D STUDIO ★';
+  if ($('t_brand_sub')) $('t_brand_sub').textContent = 'VINTAGE & 2D STUDIO';
+  if ($('t_hero_tag')) $('t_hero_tag').textContent = '★ ARCHIVE VAULT & 2D STUDIO ★';
   if ($('t_hero_desc')) $('t_hero_desc').textContent = isAr ? 'ملابس فريب أصلية فريدة (1 of 1) + استوديو تخصيص تفاعلي حي متعدد الرسمات' : 'Authentic 1-of-1 Vintage Rock Merch & 2D Multi-Placement Merch Studio';
   if ($('t_cta_head')) $('t_cta_head').textContent = isAr ? '🎸 صمّم تيشيرتك أو هوديك بعدة رسمات (2D STUDIO)' : '🎸 Design Your Custom Tee / Hoodie (2D Studio)';
   if ($('t_cta_sub')) $('t_cta_sub').textContent = isAr ? 'معاينة تفاعلية حية، إمكانية اختيار موضع كل رسمة (+500 دج لكل رسمة إضافية)' : 'Live interactive preview, custom placements (+500 DZD per extra artwork)';
   if ($('t_cta_btn')) $('t_cta_btn').textContent = isAr ? 'دخول الاستوديو ✦' : 'Open Studio ✦';
   if ($('t_btn_men')) $('t_btn_men').textContent = isAr ? 'HOMME • رجال' : 'MEN • HOMME';
   if ($('t_btn_women')) $('t_btn_women').textContent = isAr ? 'FEMME • نساء' : 'WOMEN • FEMME';
-
-  // Section
   if ($('t_sec_head')) $('t_sec_head').textContent = isAr ? 'قطع الأرشيف (1 OF 1)' : 'VAULT ARCHIVE (1 OF 1)';
   if ($('t_empty')) $('t_empty').textContent = isAr ? 'لا توجد قطع معروضة حالياً' : 'No pieces available right now';
-
-  // Product View Sheet
   if ($('pvTitle')) $('pvTitle').textContent = isAr ? 'تفاصيل القطعة' : 'Piece Details';
   if ($('t_pv_desc_lbl')) $('t_pv_desc_lbl').textContent = isAr ? 'الوصف والحالة:' : 'Description & Condition:';
   if ($('t_pv_back')) $('t_pv_back').textContent = isAr ? 'رجوع' : 'Back';
-
-  // 2D Studio
   if ($('t_close_studio')) $('t_close_studio').textContent = isAr ? '✕ رجوع للمتجر' : '✕ Back to Vault';
   if ($('t_lbl_type')) $('t_lbl_type').textContent = isAr ? '1. نوع وموديل القطعة:' : '1. Garment Model:';
   if ($('t_lbl_col')) $('t_lbl_col').childNodes[0].nodeValue = isAr ? '2. لون القماش: ' : '2. Fabric Color: ';
@@ -1519,12 +1510,8 @@ function applyLanguage() {
   if ($('t_btn_upload')) $('t_btn_upload').childNodes[0].nodeValue = isAr ? '＋ إضافة رسمة جديدة (PNG / JPG) ' : '＋ Add New Artwork (PNG / JPG) ';
   if ($('t_lbl_note')) $('t_lbl_note').textContent = isAr ? '5. ملاحظات إضافية على التصميم أو المقاس:' : '5. Additional Design / Placement Notes:';
   if ($('t_btn_add_custom')) $('t_btn_add_custom').textContent = isAr ? '＋ إضافة القطعة المخصصة للسلة' : '＋ Add Custom Piece to Cart';
-
-  // CCP Alert Box
   if ($('t_ccp_title')) $('t_ccp_title').textContent = isAr ? 'ملاحظة هامة حول دفع البضاعة المخصصة:' : 'Notice Regarding Custom Orders Payment:';
   if ($('t_ccp_text')) $('t_ccp_text').textContent = isAr ? 'نظراً لأن القطعة يتم تفصيلها وطباعتها خصيصاً لك، يتطلب تأكيد الطلب دفع ثمن السلعة مسبقاً عبر CCP / BaridiMob، مع دفع سعر الشحن فقط عند الاستلام.' : 'Because custom merch is tailor-made and printed specifically for you, confirmation requires upfront payment via CCP / BaridiMob, while delivery fee is paid upon receipt.';
-
-  // Cart
   if ($('t_fab_cart')) $('t_fab_cart').textContent = isAr ? 'السلة' : 'Cart';
   if ($('t_cart_head')) $('t_cart_head').textContent = isAr ? 'سلة المشتريات' : 'Shopping Cart';
   if ($('t_lbl_coupon_rule')) $('t_lbl_coupon_rule').textContent = isAr ? '🎟 كود الخصم (يطبق على السلع فقط ولا يمس الشحن):' : '🎟 Promo Code (Applies to items only):';
@@ -1539,8 +1526,6 @@ function applyLanguage() {
   if ($('t_s_ship')) $('t_s_ship').textContent = isAr ? 'التوصيل (طرد Guepex موحد)' : 'Shipping (Unified Guepex)';
   if ($('t_s_tot')) $('t_s_tot').textContent = isAr ? 'المجموع الإجمالي' : 'Total Due';
   if ($('sendBtn')) $('sendBtn').textContent = isAr ? '💬 تأكيد الطلبية عبر واتساب' : '💬 Confirm Order via WhatsApp';
-
-  // Coupons Catalog Modal
   if ($('t_coupons_cat_head')) $('t_coupons_cat_head').textContent = isAr ? '🎟 كتالوج الكوبونات والعروض' : '🎟 Available Coupons Catalog';
   if ($('t_coupons_cat_sub')) $('t_coupons_cat_sub').textContent = isAr ? 'الكوبونات صالحة للاستخدام لمرة واحدة فقط وتُخصم حصراً من مجموع السلع دون التأثير على سعر الشحن.' : 'Coupons are single-use only and deducted strictly from items subtotal without affecting shipping.';
 
